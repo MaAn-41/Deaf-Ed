@@ -1,8 +1,8 @@
-const User = require('../models/User');
-const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const otpStore = {};
 
+// Configure Nodemailer
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -11,49 +11,64 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.forgotPassword = async (req, res) => {
+// Generate OTP
+const generateOtp = async (req, res, purpose) => {
   const { email } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: 'Email not found' });
-    }
-
+    // Generate OTP
     const otp = crypto.randomInt(100000, 999999).toString();
-    otpStore[email] = { otp, expiration: Date.now() + 10 * 60 * 1000 };
 
+    // Store OTP with expiration and purpose
+    otpStore[email] = {
+      otp,
+      purpose,
+      expiration: Date.now() + 10 * 60 * 1000, // 10 minutes
+    };
+
+    // Send OTP via email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Password Reset OTP',
+      subject: `Your OTP for ${purpose}`,
       text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
     });
 
-    res.status(200).json({ message: 'OTP sent to your email' });
+    res.status(200).json({ message: `OTP sent for ${purpose}` });
   } catch (err) {
-    res.status(500).json({ message: 'Error during OTP generation', error: err.message });
+    res.status(500).json({ message: 'Error sending OTP', error: err.message });
   }
 };
 
-exports.resetPassword = async (req, res) => {
-  const { email, newPassword, confirmPassword } = req.body;
-
-  if (newPassword !== confirmPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' });
-  }
+// Verify OTP
+const verifyOtp = (req, res) => {
+  const { email, otp, purpose } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: 'Email not found' });
+    if (!otpStore[email]) {
+      return res.status(400).json({ message: 'OTP not generated or expired' });
     }
 
-    user.password = newPassword;
-    await user.save();
+    const storedOtp = otpStore[email];
 
-    res.status(200).json({ message: 'Password reset successful' });
+    if (storedOtp.purpose !== purpose) {
+      return res.status(400).json({ message: 'OTP purpose mismatch' });
+    }
+
+    if (Date.now() > storedOtp.expiration) {
+      delete otpStore[email];
+      return res.status(400).json({ message: 'OTP has expired' });
+    }
+
+    if (otp !== storedOtp.otp) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    delete otpStore[email];
+    res.status(200).json({ message: 'OTP verified successfully' });
   } catch (err) {
-    res.status(500).json({ message: 'Error during password reset', error: err.message });
+    res.status(500).json({ message: 'Error verifying OTP', error: err.message });
   }
 };
+
+module.exports = { generateOtp, verifyOtp };

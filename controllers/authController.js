@@ -32,7 +32,7 @@ exports.generateOtp = async (req, res) => {
 
 exports.verifyOtp = (req, res) => {
   const { email, otp } = req.body;
-
+  console.log(email,otp);
   if (!otpStore[email]) {
     return res.status(400).json({ message: 'OTP not generated or expired' });
   }

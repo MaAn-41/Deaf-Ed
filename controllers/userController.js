@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-exports.signup = async (req, res) => {
+const signup = async (req, res) => {
   const { username, email, password, userType, age } = req.body;
 
   try {
@@ -9,26 +9,42 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-    const newUser = new User({ username, email, password, userType, age, verified: true });
-    await newUser.save();
+    const newUser = new User({
+      username,
+      email,
+      password,
+      userType,
+      age,
+      verified: true,
+    });
 
+    await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Error during signup', error: err.message });
   }
 };
 
-exports.login = async (req, res) => {
-  const { email, password } = req.body;
+const resetPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
 
   try {
-    const user = await User.findOne({ email, password });
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
     }
 
-    res.status(200).json({ message: 'Login successful', user });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Email not found' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: 'Password reset successful' });
   } catch (err) {
-    res.status(500).json({ message: 'Error during login', error: err.message });
+    res.status(500).json({ message: 'Error during password reset', error: err.message });
   }
 };
+
+module.exports = { signup, resetPassword };

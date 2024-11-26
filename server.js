@@ -256,13 +256,12 @@ app.listen(process.env.PORT, process.env.HOST, () => {
 
 // const express = require('express');
 // const mongoose = require('mongoose');
-// const cors = require('cors');
 // const bodyParser = require('body-parser');
+// const cors = require('cors');
 // require('dotenv').config();
 
-// const { generateOtp, verifyOtp } = require('./controllers/authController');
-// const { signup, login } = require('./controllers/userController');
-// const { forgotPassword, resetPassword } = require('./controllers/otpController');
+// const { generateOtp, verifyOtp } = require('./controllers/otpController');
+// const { signup, resetPassword } = require('./controllers/userController');
 
 // const app = express();
 // app.use(cors());
@@ -275,14 +274,16 @@ app.listen(process.env.PORT, process.env.HOST, () => {
 //   .catch((err) => console.error('MongoDB connection error:', err));
 
 // // Routes
-// app.post('/generate-otp', generateOtp);
+// app.post('/generate-otp', (req, res) => generateOtp(req, res, 'signup'));
 // app.post('/verify-otp', verifyOtp);
 // app.post('/signup', signup);
-// app.post('/login', login);
-// app.post('/forgot-password', forgotPassword);
+
+// app.post('/generate-reset-otp', (req, res) => generateOtp(req, res, 'resetPassword'));
+// app.post('/verify-reset-otp', (req, res) => verifyOtp(req, res));
 // app.post('/reset-password', resetPassword);
 
 // // Start Server
 // app.listen(process.env.PORT, () => {
-//   console.log(`Server running on port ${process.env.PORT}`);
+//   console.log(`Server is running on port ${process.env.PORT}`);
 // });
+
