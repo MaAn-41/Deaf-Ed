@@ -54,7 +54,8 @@ const StudentDashboard = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#3e8e41', '#2c6f32']} style={styles.gradientBackground}>
+      {/* Apply the new gradient */}
+      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         {/* Top Navigation Bar */}
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navButton} onPress={handleManageProfile}>
