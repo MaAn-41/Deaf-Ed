@@ -43,7 +43,7 @@ const StudentDashboard = () => {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Logout',
-        onPress: () => navigation.navigate('LoginScreen'), // Navigate to the Login screen
+        onPress: () => navigation.navigate('WelcomeScreen'), // Navigate to the Login screen
       },
     ]);
   };
