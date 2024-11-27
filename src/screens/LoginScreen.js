@@ -21,11 +21,12 @@ const LoginScreen = ({ navigation, route }) => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', `Welcome, ${userType}!`);
-        navigation.navigate(`${userType}Dashboard`); // Redirect to respective dashboard
-      } else {
+        navigation.navigate(`${userType}Dashboard`, {
+          email: email // Pass the email variable to the dashboard screen
+        });
+      }else {
         Alert.alert('Error', data.message || 'Login failed!');
       }
     } catch (error) {

@@ -1,173 +1,133 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient'; // Importing LinearGradient
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const StudentDashboard = () => {
-  const [studentName] = useState('John Doe'); // Dummy student name
+  const [studentName, setStudentName] = useState(''); // To store actual student name
+  const [studentData, setStudentData] = useState(null); // To store other student data
+  const [loading, setLoading] = useState(true); // To manage loading state
   const navigation = useNavigation();
-  const [showMenu, setShowMenu] = useState(false);
-  const slideAnim = useState(new Animated.Value(-300))[0]; // Initial position for the menu
-  const buttonAnim = useState(new Animated.Value(1))[0]; // Button opacity animation
+  const route = useRoute();
+  const { email } = route.params; // Getting email passed from login
 
-  const handleMenuToggle = () => {
-    if (showMenu) {
-      // Slide menu out when it's already open
-      Animated.timing(slideAnim, {
-        toValue: -300,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      // Buttons slide back to normal position
-      Animated.timing(buttonAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      // Slide menu in when it's closed
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      // Buttons slide up behind navbar
-      Animated.timing(buttonAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-    setShowMenu(!showMenu);
-  };
+  // Effect to fetch student data on component mount
+  useEffect(() => {
+    const retrieveStudentData = async () => {
+      try {
+        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
+        const data = await response.json();
 
-  const handleLogout = () => {
-    console.log('Logout pressed');
-    // Add navigation to login page here
-  };
+        if (response.ok) {
+          setStudentName(data.name); // Set actual student name
+          setStudentData(data); // Store other student data
+        } else {
+          Alert.alert('Error', 'Student data not found');
+        }
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'An error occurred while fetching data');
+      } finally {
+        setLoading(false); // Set loading to false after API call
+      }
+    };
 
-  const handleUpdateProfile = () => {
-    console.log('Update Profile pressed');
-    // Add navigation to profile update page here
-  };
+    retrieveStudentData(); // Call the function to fetch data when the component mounts
+  }, [email]); // Re-run the effect when email changes
 
-  const handleLesson = () => {
-    console.log('Lesson button pressed');
-    // Add navigation to lesson page here
-  };
-
-  const handleTest = () => {
-    console.log('Test button pressed');
-    // Add navigation to test page here
-  };
-
-  const handleProgressReport = () => {
-    console.log('Progress Report button pressed');
-    // Add navigation to progress report page here
-  };
+  if (loading) {
+    return <Text>Loading...</Text>; // Show loading state until data is fetched
+  }
 
   return (
-    <LinearGradient
-      colors={['#4c6ef5', '#1e3c72']} // Gradient colors
-      style={styles.container}
-    >
-      {/* Navbar Button */}
-      <TouchableOpacity style={styles.navbarButton} onPress={handleMenuToggle}>
-        <Ionicons name="menu" size={30} color="white" />
-      </TouchableOpacity>
-
-      {/* Slide-in Menu */}
-      <Animated.View
-        style={[styles.menu, { transform: [{ translateX: slideAnim }] }]}
+    <View style={styles.container}>
+      <LinearGradient
+        colors={['#3e8e41', '#2c6f32']} // Gradient colors, adjust as needed
+        style={styles.gradientBackground}
       >
-        <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
-          <Text style={styles.menuText}>Logout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleUpdateProfile} style={styles.menuItem}>
-          <Text style={styles.menuText}>Update Profile</Text>
-        </TouchableOpacity>
-      </Animated.View>
+        <View style={styles.content}>
+          <Text style={styles.welcomeText}>Welcome to the Dashboard, {studentName}!</Text>
+          <Text style={styles.emailText}>Email: {studentData?.email}</Text>
+          <Text style={styles.ageText}>Age: {studentData?.age}</Text> {/* Display Age */}
 
-      {/* Welcome Message */}
-      <Text style={styles.welcomeText}>Welcome, {studentName}!</Text>
+          {/* Buttons for Lesson, Test, and Progress Report */}
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('LessonScreen')}
+            >
+              <Text style={styles.buttonText}>Lesson</Text>
+            </TouchableOpacity>
 
-      {/* Action Buttons */}
-      <Animated.View
-        style={[styles.buttonContainer, { opacity: buttonAnim }]} // Control button visibility
-      >
-        <TouchableOpacity style={styles.button} onPress={handleLesson}>
-          <Text style={styles.buttonText}>Lesson</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleTest}>
-          <Text style={styles.buttonText}>Test</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleProgressReport}>
-          <Text style={styles.buttonText}>Progress Report</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </LinearGradient>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('TestScreen')}
+            >
+              <Text style={styles.buttonText}>Test</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('ProgressReportScreen')}
+            >
+              <Text style={styles.buttonText}>Progress Report</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  gradientBackground: {
+    flex: 1,
     padding: 20,
   },
-  navbarButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    zIndex: 10,
-    padding: 10,
-    backgroundColor: '#FF8C00', // Orange background for the navbar button
-    borderRadius: 30,
-  },
-  menu: {
-    position: 'absolute',
-    top: 80,
-    left: 0,
-    backgroundColor: 'transparent', // Same gradient as the rest of the app
-    borderRadius: 8,
-    padding: 20,
-    elevation: 5,
-    height: '100%',
-    width: 250, // Width of the slide-in menu
-    paddingTop: 50,
-  },
-  menuItem: {
-    paddingVertical: 20,
-  },
-  menuText: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#FFF',
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
-    marginTop: 100,
+    color: '#fff',
+    marginBottom: 20,
   },
-  buttonContainer: {
-    marginTop: 200, // Adjusted to make sure buttons don't overlap with navbar
+  emailText: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 10,
+  },
+  ageText: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 40, // Adjusted margin
+  },
+  buttonsContainer: {
+    width: '100%',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#FF8C00', // Orange buttons
-    padding: 20,
-    borderRadius: 15, // More square-like but rounded corners
+    backgroundColor: '#FFA500', // Orange color
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginBottom: 15,
+    borderRadius: 5,
     width: '80%',
-    marginVertical: 15,
     alignItems: 'center',
-    elevation: 5,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#fff',
   },
 });
 

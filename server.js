@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const studentController = require('./controllers/studentController');
 require('dotenv').config();
 
 const {
@@ -37,6 +38,10 @@ app.post('/login', login);
 app.post('/forgot-password', forgotPassword);
 app.post('/verify-reset-otp', verifyResetOtp);
 app.post('/reset-password', resetPassword);
+
+
+//retriving student data
+app.get('/students/:email', studentController.retrieveStudentData)
 
 // Start Server
 app.listen(process.env.PORT, () => {
