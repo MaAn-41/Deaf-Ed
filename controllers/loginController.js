@@ -16,8 +16,8 @@ const transporter = nodemailer.createTransport({
 });
 
 // Login
-exports.login= async (req, res) => {
-  const { email, password } = req.body;
+exports.login = async (req, res) => {
+  const { email, password, userType } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -30,11 +30,17 @@ exports.login= async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+    // Check if the user type matches the role
+    if (userType !== user.userType) {
+      return res.status(400).json({ message: `Error: Your role is ${user.userType}` });
+    }
+
     res.status(200).json({ message: 'Login successful', user });
   } catch (err) {
     res.status(500).json({ message: 'Error during login', error: err.message });
   }
 };
+
 
 // Forgot Password
 exports.forgotPassword = async (req, res) => {

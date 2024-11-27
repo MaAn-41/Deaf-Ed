@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient'; // Importing LinearGradient
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const StudentDashboard = () => {
-  const [studentName, setStudentName] = useState(''); // To store actual student name
-  const [studentData, setStudentData] = useState(null); // To store other student data
-  const [loading, setLoading] = useState(true); // To manage loading state
+  const [studentName, setStudentName] = useState('');
+  const [studentData, setStudentData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const route = useRoute();
-  const { email } = route.params; // Getting email passed from login
+  const { email } = route.params;
 
-  // Effect to fetch student data on component mount
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
@@ -20,8 +18,8 @@ const StudentDashboard = () => {
         const data = await response.json();
 
         if (response.ok) {
-          setStudentName(data.name); // Set actual student name
-          setStudentData(data); // Store other student data
+          setStudentName(data.name || 'Guest');
+          setStudentData(data);
         } else {
           Alert.alert('Error', 'Student data not found');
         }
@@ -29,29 +27,56 @@ const StudentDashboard = () => {
         console.error(error);
         Alert.alert('Error', 'An error occurred while fetching data');
       } finally {
-        setLoading(false); // Set loading to false after API call
+        setLoading(false);
       }
     };
 
-    retrieveStudentData(); // Call the function to fetch data when the component mounts
-  }, [email]); // Re-run the effect when email changes
+    retrieveStudentData();
+  }, [email]);
+
+  const handleManageProfile = () => {
+    navigation.navigate('ManageProfileScreen'); // Navigate to the Manage Profile screen
+  };
+
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        onPress: () => navigation.navigate('LoginScreen'), // Navigate to the Login screen
+      },
+    ]);
+  };
 
   if (loading) {
-    return <Text>Loading...</Text>; // Show loading state until data is fetched
+    return <Text>Loading...</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#3e8e41', '#2c6f32']} // Gradient colors, adjust as needed
-        style={styles.gradientBackground}
-      >
-        <View style={styles.content}>
-          <Text style={styles.welcomeText}>Welcome to the Dashboard, {studentName}!</Text>
-          <Text style={styles.emailText}>Email: {studentData?.email}</Text>
-          <Text style={styles.ageText}>Age: {studentData?.age}</Text> {/* Display Age */}
+      <LinearGradient colors={['#3e8e41', '#2c6f32']} style={styles.gradientBackground}>
+        {/* Top Navigation Bar */}
+        <View style={styles.navBar}>
+          <TouchableOpacity style={styles.navButton} onPress={handleManageProfile}>
+            <Text style={styles.navButtonText}>Manage Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={handleLogout}>
+            <Text style={styles.navButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
 
-          {/* Buttons for Lesson, Test, and Progress Report */}
+        {/* Main Content */}
+        <View style={styles.content}>
+          <Text style={styles.welcomeText}>
+            Welcome to the Dashboard, {studentName || 'Guest'}!
+          </Text>
+          <Text style={styles.emailText}>
+            Email: {studentData?.email || 'Not Available'}
+          </Text>
+          <Text style={styles.ageText}>
+            Age: {studentData?.age ? String(studentData.age) : 'Not Available'}
+          </Text>
+
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -89,6 +114,26 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#2c6f32',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  navButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    backgroundColor: '#FFA500', // Orange color
+    borderRadius: 5,
+  },
+  navButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
   content: {
     flex: 1,
     justifyContent: 'center',
@@ -108,7 +153,7 @@ const styles = StyleSheet.create({
   ageText: {
     fontSize: 18,
     color: '#fff',
-    marginBottom: 40, // Adjusted margin
+    marginBottom: 40,
   },
   buttonsContainer: {
     width: '100%',
@@ -116,7 +161,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#FFA500', // Orange color
+    backgroundColor: '#FFA500',
     paddingVertical: 15,
     paddingHorizontal: 30,
     marginBottom: 15,
