@@ -1,7 +1,12 @@
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const otpStore = {}; // In-memory OTP store
 
+// In-memory OTP storage
+const otpStore = {};
+
+// Email transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -10,12 +15,21 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Generate OTP for signup
 exports.generateOtp = async (req, res) => {
   const { email } = req.body;
 
   try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already registered' });
+    }
+
     const otp = crypto.randomInt(100000, 999999).toString();
-    otpStore[email] = { otp, expiration: Date.now() + 10 * 60 * 1000 };
+    otpStore[email] = {
+      otp,
+      expiration: Date.now() + 10 * 60 * 1000,
+    };
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -30,9 +44,10 @@ exports.generateOtp = async (req, res) => {
   }
 };
 
+// Verify OTP for signup
 exports.verifyOtp = (req, res) => {
   const { email, otp } = req.body;
-  console.log(email,otp);
+
   if (!otpStore[email]) {
     return res.status(400).json({ message: 'OTP not generated or expired' });
   }
@@ -49,4 +64,31 @@ exports.verifyOtp = (req, res) => {
 
   delete otpStore[email];
   res.status(200).json({ message: 'OTP verified successfully' });
+};
+
+// Signup
+exports.signup = async (req, res) => {
+  const { username, email, password, userType, age } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already registered' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      userType,
+      age,
+      verified: true,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: 'User registered successfully. You can now log in.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error during signup', error: err.message });
+  }
 };
