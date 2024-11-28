@@ -14,7 +14,7 @@ const EducatorDashboard = () => {
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(`http://10.54.9.192:5000/educators/${email}`);
+        const response = await fetch(`http://192.168.1.117:5000/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {

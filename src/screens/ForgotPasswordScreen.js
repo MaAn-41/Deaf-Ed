@@ -16,7 +16,7 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.9.192:5000/forgot-password', {
+      const response = await fetch('http://192.168.1.117:5000/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -41,7 +41,7 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.9.192:5000/verify-reset-otp', {
+      const response = await fetch('http://192.168.1.117:5000/verify-reset-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
@@ -71,7 +71,7 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.9.192:5000/reset-password', {
+      const response = await fetch('http://192.168.1.117:5000/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
