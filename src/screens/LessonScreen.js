@@ -1,19 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 const LessonScreen = () => {
   const navigation = useNavigation();
-
-  // Show "Coming Soon" alert
-  const showComingSoon = (moduleName) => {
-    Alert.alert(
-      `${moduleName} Module`,
-      `${moduleName} module is coming soon!`,
-      [{ text: 'OK', style: 'default' }]
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -39,14 +30,14 @@ const LessonScreen = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => showComingSoon('Foundational Words')}
+            onPress={() => navigation.navigate('FoundationalWordsScreen')}
           >
             <Text style={styles.buttonText}>Foundational Words</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => showComingSoon('Urdu')}
+            onPress={() => navigation.navigate('UrduLessonScreen')}
           >
             <Text style={styles.buttonText}>Urdu</Text>
           </TouchableOpacity>
