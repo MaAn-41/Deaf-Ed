@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 const EducatorDashboard = () => {
   const [educatorName, setEducatorName] = useState('');
@@ -14,7 +14,7 @@ const EducatorDashboard = () => {
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(`http://192.168.1.117:5000/educators/${email}`);
+        const response = await fetch(`http://10.54.9.192:5000/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -43,10 +43,30 @@ const EducatorDashboard = () => {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Logout',
-        onPress: () => navigation.navigate('WelcomeScreen'), // Navigate to the Login screen
+        onPress: () => navigation.navigate('WelcomeScreen'), // Navigate to the Welcome screen
       },
     ]);
   };
+
+  // Handle Back Button Press
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Logout', 'Are you sure you want to logout?', [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Logout',
+            onPress: () => navigation.navigate('WelcomeScreen'),
+          },
+        ]);
+        return true; // Prevent default back button behavior
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation])
+  );
 
   if (loading) {
     return <Text>Loading...</Text>;
