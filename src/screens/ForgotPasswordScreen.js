@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const ForgotPasswordScreen = ({ navigation,route }) => {
+const ForgotPasswordScreen = ({ navigation, route }) => {
   const { userType } = route.params;
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [otpVerified, setOtpVerified] = useState(false); // State to track OTP verification
 
   const handleRequestOtp = async () => {
     if (!email) {
@@ -51,6 +52,7 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
 
       if (response.ok) {
         Alert.alert('Success', 'OTP verified!');
+        setOtpVerified(true); // Set OTP verified to true
       } else {
         Alert.alert('Error', data.message || 'Invalid OTP!');
       }
@@ -81,9 +83,7 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
 
       if (response.ok) {
         Alert.alert('Success', 'Password reset successful!');
-        navigation.navigate('LoginScreen',{userType});
-        // navigation.navigate('LoginScreen',{userType});
-
+        navigation.navigate('LoginScreen', { userType });
       } else {
         Alert.alert('Error', data.message || 'Failed to reset password!');
       }
@@ -93,53 +93,56 @@ const ForgotPasswordScreen = ({ navigation,route }) => {
   };
 
   return (
-    <LinearGradient
-      colors={['#1e3c72', '#2a5298']}
-      style={styles.container}
-    >
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        placeholderTextColor="#aaa"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleRequestOtp}>
-        <Text style={styles.buttonText}>Request OTP</Text>
-      </TouchableOpacity>
+    <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.container}>
+      {!otpVerified ? (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email"
+            placeholderTextColor="#aaa"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <TouchableOpacity style={styles.button} onPress={handleRequestOtp}>
+            <Text style={styles.buttonText}>Request OTP</Text>
+          </TouchableOpacity>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter OTP"
-        placeholderTextColor="#aaa"
-        value={otp}
-        onChangeText={setOtp}
-        keyboardType="numeric"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
-        <Text style={styles.buttonText}>Verify OTP</Text>
-      </TouchableOpacity>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Enter new password"
-        placeholderTextColor="#aaa"
-        value={newPassword}
-        onChangeText={setNewPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm new password"
-        placeholderTextColor="#aaa"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-        <Text style={styles.buttonText}>Reset Password</Text>
-      </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter OTP"
+            placeholderTextColor="#aaa"
+            value={otp}
+            onChangeText={setOtp}
+            keyboardType="numeric"
+          />
+          <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
+            <Text style={styles.buttonText}>Verify OTP</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter new password"
+            placeholderTextColor="#aaa"
+            value={newPassword}
+            onChangeText={setNewPassword}
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm new password"
+            placeholderTextColor="#aaa"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+          />
+          <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
+            <Text style={styles.buttonText}>Reset Password</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </LinearGradient>
   );
 };

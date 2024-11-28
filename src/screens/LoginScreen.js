@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, BackHandler } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation, route }) => {
   const { userType } = route.params; // Determine if it's Student or Educator
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Handle Android back button to navigate to WelcomeScreen
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate('WelcomeScreen'); // Navigate to WelcomeScreen
+        return true; // Prevent default behavior
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [navigation])
+  );
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -24,9 +41,9 @@ const LoginScreen = ({ navigation, route }) => {
       if (response.ok) {
         Alert.alert('Success', `Welcome, ${userType}!`);
         navigation.navigate(`${userType}Dashboard`, {
-          email: email // Pass the email variable to the dashboard screen
+          email: email, // Pass the email variable to the dashboard screen
         });
-      }else {
+      } else {
         Alert.alert('Error', data.message || 'Login failed!');
       }
     } catch (error) {
@@ -35,10 +52,7 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient
-      colors={['#1e3c72', '#2a5298']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.container}>
       <Text style={styles.title}>{userType} Login</Text>
       <TextInput
         style={styles.input}
@@ -65,7 +79,7 @@ const LoginScreen = ({ navigation, route }) => {
       >
         <Text style={styles.buttonOutlineText}>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen',{userType})}>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen', { userType })}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
     </LinearGradient>
