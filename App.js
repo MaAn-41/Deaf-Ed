@@ -10,6 +10,7 @@ import EducatorDashboard from './src/screens/EducatorDashboard';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen'; // Import ForgotPasswordScreen
 import LessonScreen from './src/screens/LessonScreen';
 import EnglishLessonScreen from './src/screens/EnglishLessonScreen';
+import CountingLessonScreen from './src/screens/CountingLessonScreen';
 
 
 const Stack = createStackNavigator();
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
         <Stack.Screen name="LessonScreen" component={LessonScreen} />
         <Stack.Screen name="EnglishLessonScreen" component={EnglishLessonScreen} />
+        <Stack.Screen name="CountingLessonScreen" component={CountingLessonScreen} />
 
 
         </Stack.Navigator>
