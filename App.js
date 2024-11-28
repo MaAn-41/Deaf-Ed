@@ -13,7 +13,7 @@ import EnglishLessonScreen from './src/screens/LessonScreenFolder/EnglishLessonS
 import CountingLessonScreen from './src/screens/LessonScreenFolder/CountingLessonScreen';
 import UrduLessonScreen from './src/screens/LessonScreenFolder/UrduLessonScreen';
 import FoundationalWordsScreen from './src/screens/LessonScreenFolder/FoundationalWordsScreen';
-
+import TestScreen from './src/screens/TestScreenFolder/TestScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +32,7 @@ export default function App() {
         <Stack.Screen name="CountingLessonScreen" component={CountingLessonScreen} />
         <Stack.Screen name="UrduLessonScreen" component={UrduLessonScreen} />
         <Stack.Screen name="FoundationalWordsScreen" component={FoundationalWordsScreen} />
+        <Stack.Screen name="TestScreen" component={TestScreen} />
 
 
         
