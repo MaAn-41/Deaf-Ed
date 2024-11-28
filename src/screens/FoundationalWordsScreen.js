@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const EnglishLessonScreen = () => {
+const FoundationalWordsScreen = () => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        <Text style={styles.title}>English Lessons</Text>
+        <Text style={styles.title}>Foundational Words</Text>
         <Text style={styles.subtitle}>Content Coming Soon...</Text>
       </LinearGradient>
     </View>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EnglishLessonScreen;
+export default FoundationalWordsScreen;

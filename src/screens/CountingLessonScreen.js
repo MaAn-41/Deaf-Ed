@@ -7,7 +7,7 @@ const CountingLessonScreen = () => {
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         <Text style={styles.title}>Counting Lessons</Text>
-        <Text style={styles.subtitle}>Next Dashboard Coming Soon...</Text>
+        <Text style={styles.subtitle}>Content Coming Soon...</Text>
       </LinearGradient>
     </View>
   );
