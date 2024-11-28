@@ -8,6 +8,9 @@ import SignupScreen from './src/screens/SignupScreen'; // Ensure this is correct
 import StudentDashboard from './src/screens/StudentDashboard';
 import EducatorDashboard from './src/screens/EducatorDashboard';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen'; // Import ForgotPasswordScreen
+import LessonScreen from './src/screens/LessonScreen';
+import EnglishLessonScreen from './src/screens/EnglishLessonScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -21,6 +24,10 @@ export default function App() {
         <Stack.Screen name="StudentDashboard" component={StudentDashboard} />
         <Stack.Screen name="EducatorDashboard" component={EducatorDashboard} />
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+        <Stack.Screen name="LessonScreen" component={LessonScreen} />
+        <Stack.Screen name="EnglishLessonScreen" component={EnglishLessonScreen} />
+
+
         </Stack.Navigator>
     </NavigationContainer>
   );
