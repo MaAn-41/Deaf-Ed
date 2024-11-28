@@ -8,11 +8,11 @@ import SignupScreen from './src/screens/SignupScreen'; // Ensure this is correct
 import StudentDashboard from './src/screens/StudentDashboard';
 import EducatorDashboard from './src/screens/EducatorDashboard';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen'; // Import ForgotPasswordScreen
-import LessonScreen from './src/screens/LessonScreen';
-import EnglishLessonScreen from './src/screens/EnglishLessonScreen';
-import CountingLessonScreen from './src/screens/CountingLessonScreen';
-import UrduLessonScreen from './src/screens/UrduLessonScreen';
-import FoundationalWordsScreen from './src/screens/FoundationalWordsScreen';
+import LessonScreen from './src/screens/LessonScreenFolder/LessonScreen';
+import EnglishLessonScreen from './src/screens/LessonScreenFolder/EnglishLessonScreen';
+import CountingLessonScreen from './src/screens/LessonScreenFolder/CountingLessonScreen';
+import UrduLessonScreen from './src/screens/LessonScreenFolder/UrduLessonScreen';
+import FoundationalWordsScreen from './src/screens/LessonScreenFolder/FoundationalWordsScreen';
 
 
 const Stack = createStackNavigator();
