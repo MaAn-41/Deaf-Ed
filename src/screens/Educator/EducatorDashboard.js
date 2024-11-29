@@ -59,7 +59,7 @@ const EducatorDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.1.117:5000/delete-educator/${email}`, {
+              const response = await fetch(`http://192.168.1.117:5000/delete-educator/${educatorName}`, {
                 method: 'DELETE',
               });
               if (response.ok) {
