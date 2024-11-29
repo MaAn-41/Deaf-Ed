@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient'; // Ensure you have installed expo-linear-gradient
+import { LinearGradient } from 'expo-linear-gradient'; 
 
 const WelcomeScreen = ({ navigation }) => {
   return (
     <LinearGradient
-      colors={['#4c669f', '#3b5998', '#192f6a']} // Gradient colors
+      colors={['#4c669f', '#3b5998', '#192f6a']} 
       style={styles.container}
     >
       <Text style={styles.title}>Welcome to DeafED</Text>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 5, // Adds a shadow for Android
+    elevation: 5,
   },
   buttonText: {
     fontSize: 18,

@@ -11,7 +11,7 @@ const addStudent = async (req, res) => {
       return res.status(404).json({ message: 'Student username does not exist.' });
     }
 
-    if (studentExists.userType !== 'student') {
+    if (studentExists.userType !== 'Student') {
       return res.status(400).json({ message: 'You can only add Student.' });
     }
 

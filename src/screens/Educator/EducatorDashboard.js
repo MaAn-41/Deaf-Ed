@@ -34,7 +34,7 @@ const EducatorDashboard = () => {
   }, [email]);
 
   const handleManageProfile = () => {
-    navigation.navigate('ManageProfileScreen'); // Navigate to the Manage Profile screen
+    navigation.navigate('ManageProfileScreen');
   };
 
   const handleLogout = () => {
