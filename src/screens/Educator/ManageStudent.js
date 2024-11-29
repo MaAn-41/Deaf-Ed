@@ -1,16 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const ManageStudentScreen = ({ navigation }) => {
-    const handleAddStudent = () => {
-        navigation.navigate('AddStudentScreen');
-      };
-      
-      const handleRemoveStudent = () => {
-        navigation.navigate('RemoveStudentScreen');
-      };
-      
+const ManageStudentScreen = ({ navigation, route }) => {
+  const { email, username } = route.params; // Extract email and username from route params
+
+  const handleAddStudent = () => {
+    navigation.navigate('AddStudentScreen', { email, username }); // Pass email and username to AddStudentScreen
+  };
+  
+
+  const handleRemoveStudent = () => {
+    navigation.navigate('RemoveStudentScreen', { email, username }); // Pass email and username to RemoveStudentScreen
+  };
 
   return (
     <LinearGradient

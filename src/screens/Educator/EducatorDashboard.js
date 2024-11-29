@@ -74,7 +74,6 @@ const EducatorDashboard = () => {
 
   return (
     <View style={styles.container}>
-      {/* Apply the new gradient */}
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         {/* Top Navigation Bar */}
         <View style={styles.navBar}>
@@ -105,7 +104,12 @@ const EducatorDashboard = () => {
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('ManageStudentScreen')}
+              onPress={() =>
+                navigation.navigate('ManageStudentScreen', {
+                  email: educatorData?.email,
+                  username: educatorName,
+                })
+              }
             >
               <Text style={styles.buttonText}>Manage Student</Text>
             </TouchableOpacity>
