@@ -17,13 +17,19 @@ const transporter = nodemailer.createTransport({
 
 // Generate OTP for signup
 exports.generateOtp = async (req, res) => {
-  const { email } = req.body;
-
+  const { email,username } = req.body;
   try {
+    const isuserNameExists= await User.findOne({username});
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already registered' });
     }
+
+    if (isuserNameExists) {
+      return res.status(400).json({ message: 'Username Already Exist' });
+    }
+
 
     const otp = crypto.randomInt(100000, 999999).toString();
     otpStore[email] = {

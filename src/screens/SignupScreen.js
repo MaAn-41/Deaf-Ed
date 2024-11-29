@@ -18,7 +18,7 @@ const SignupScreen = ({ navigation, route }) => {
       const response = await fetch('http://192.168.137.157:5000/generate-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email,username }),
       });
 
       const data = await response.json();
@@ -93,6 +93,8 @@ const SignupScreen = ({ navigation, route }) => {
       if (response.ok) {
         Alert.alert('Success', 'Account created successfully!');
         navigation.navigate('LoginScreen', { userType });
+      } else if (data.message.includes('username')) {
+        Alert.alert('Error', 'This username is already taken. Please choose another.');
       } else {
         Alert.alert('Error', data.message || 'Signup failed!');
       }
@@ -183,38 +185,23 @@ const SignupScreen = ({ navigation, route }) => {
           </View>
         </Modal>
 
-            {otpVerified && (
-      <View style={{ alignItems: 'center' }}>
-        <TouchableOpacity onPress={handleSignup} style={[styles.button, { marginTop: 20 }]}>
-          <Text style={styles.buttonText}>Signup</Text>
-        </TouchableOpacity>
-      </View>
-)}
+        {otpVerified && (
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={handleSignup} style={[styles.button, { marginTop: 20 }]}>
+              <Text style={styles.buttonText}>Signup</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 28,
-    color: '#ffffff',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  inputContainer: {
-    marginBottom: 20,
-    alignItems: 'center',
-  },
+  gradient: { flex: 1 },
+  container: { flex: 1, justifyContent: 'center', paddingHorizontal: 20 },
+  title: { fontSize: 28, color: '#fff', fontWeight: 'bold', textAlign: 'center', marginBottom: 30 },
+  inputContainer: { marginBottom: 20, alignItems: 'center' },
   input: {
     width: '90%',
     height: 50,
@@ -237,11 +224,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 6,
   },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#fff',
-  },
+  buttonText: { fontSize: 18, fontWeight: '600', color: '#fff' },
   modalBackground: {
     flex: 1,
     justifyContent: 'center',
@@ -251,18 +234,12 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '85%',
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     borderRadius: 15,
     alignItems: 'center',
     elevation: 8,
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    color: '#333333',
-    textAlign: 'center',
-  },
+  modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 15, color: '#333', textAlign: 'center' },
 });
 
 export default SignupScreen;
