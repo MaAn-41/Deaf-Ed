@@ -8,8 +8,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [otpVerified, setOtpVerified] = useState(false); // State to track OTP verification
-
+  const [otpVerified, setOtpVerified] = useState(false); 
   const handleRequestOtp = async () => {
     if (!email) {
       Alert.alert('Error', 'Please enter your email address!');
@@ -17,7 +16,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.5.170:5000/forgot-password', {
+      const response = await fetch('http://192.168.1.117:5000/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -42,7 +41,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.5.170:5000/verify-reset-otp', {
+      const response = await fetch('http://192.168.1.117:5000/verify-reset-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
@@ -52,7 +51,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
 
       if (response.ok) {
         Alert.alert('Success', 'OTP verified!');
-        setOtpVerified(true); // Set OTP verified to true
+        setOtpVerified(true); 
       } else {
         Alert.alert('Error', data.message || 'Invalid OTP!');
       }
@@ -73,7 +72,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
     }
 
     try {
-      const response = await fetch('http://10.54.5.170:5000/reset-password', {
+      const response = await fetch('http://192.168.1.117:5000/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, newPassword, confirmPassword }),

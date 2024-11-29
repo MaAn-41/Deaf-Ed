@@ -3,10 +3,16 @@ const User = require('../models/User');
 
 const addStudent = async (req, res) => {
   const { studentUsername, educatorUsername, section } = req.body;
+
   try {
     const studentExists = await User.findOne({ username: studentUsername });
+
     if (!studentExists) {
       return res.status(404).json({ message: 'Student username does not exist.' });
+    }
+
+    if (studentExists.userType !== 'student') {
+      return res.status(400).json({ message: 'You can only add Student.' });
     }
 
     const existingEntry = await EducatorStudent.findOne({ studentUsername, educatorUsername });

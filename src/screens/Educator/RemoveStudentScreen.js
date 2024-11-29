@@ -11,16 +11,18 @@ const RemoveStudentScreen = ({ route }) => {
   const [loadingSections, setLoadingSections] = useState(false);
   const [loadingStudents, setLoadingStudents] = useState(false);
 
+  const [sectionDropdownOpen, setSectionDropdownOpen] = useState(false);
+  const [studentDropdownOpen, setStudentDropdownOpen] = useState(false);
+
   useEffect(() => {
     fetchSections();
   }, []);
 
-  // Fetch sections for this educator
   const fetchSections = async () => {
     setLoadingSections(true);
     try {
       const response = await fetch(
-        `http://10.54.5.170:5000/sections?educatorUsername=${educatorUsername}`
+        `http://192.168.1.117:5000/sections?educatorUsername=${educatorUsername}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -36,7 +38,6 @@ const RemoveStudentScreen = ({ route }) => {
     }
   };
 
-  // Fetch students in the selected section
   const fetchStudents = async () => {
     if (!selectedSection) {
       Alert.alert('Validation Error', 'Please select a section first.');
@@ -45,7 +46,7 @@ const RemoveStudentScreen = ({ route }) => {
     setLoadingStudents(true);
     try {
       const response = await fetch(
-        `http://10.54.5.170:5000/api/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+        `http://192.168.1.117:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -61,14 +62,13 @@ const RemoveStudentScreen = ({ route }) => {
     }
   };
 
-  // Remove the selected student
   const handleRemoveStudent = async () => {
     if (!selectedStudent) {
       Alert.alert('Validation Error', 'Please select a student to remove.');
       return;
     }
     try {
-      const response = await fetch(`http://10.54.5.170:5000/api/remove-student`, {
+      const response = await fetch(`http://192.168.1.117:5000/remove-student`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ educatorUsername, section: selectedSection, student: selectedStudent }),
@@ -76,8 +76,8 @@ const RemoveStudentScreen = ({ route }) => {
       const data = await response.json();
       if (response.ok) {
         Alert.alert('Success', data.message || 'Student removed successfully');
-        setStudents((prev) => prev.filter((s) => s.value !== selectedStudent)); // Update dropdown
-        setSelectedStudent(null); // Reset selected student
+        setStudents((prev) => prev.filter((s) => s.value !== selectedStudent)); 
+        setSelectedStudent(null); 
       } else {
         Alert.alert('Error', data.message || 'Failed to remove student');
       }
@@ -91,25 +91,27 @@ const RemoveStudentScreen = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Remove Student</Text>
 
-      {/* Section Dropdown */}
       <DropDownPicker
         items={sections}
-        open={true}
+        open={sectionDropdownOpen}
+        setOpen={setSectionDropdownOpen}
         value={selectedSection}
         setValue={setSelectedSection}
         placeholder="Select a section"
         loading={loadingSections}
         style={styles.dropdown}
       />
-      <TouchableOpacity style={styles.findButton} onPress={fetchStudents}>
-        <Text style={styles.buttonText}>Find Students</Text>
-      </TouchableOpacity>
+      {!sectionDropdownOpen && (
+        <TouchableOpacity style={styles.findButton} onPress={fetchStudents}>
+          <Text style={styles.buttonText}>Find Students</Text>
+        </TouchableOpacity>
+      )}
 
-      {/* Student Dropdown */}
       {students.length > 0 && (
         <DropDownPicker
           items={students}
-          open={true}
+          open={studentDropdownOpen}
+          setOpen={setStudentDropdownOpen}
           value={selectedStudent}
           setValue={setSelectedStudent}
           placeholder="Select a student"
@@ -118,8 +120,7 @@ const RemoveStudentScreen = ({ route }) => {
         />
       )}
 
-      {/* Remove Button */}
-      {selectedStudent && (
+      {selectedStudent && !studentDropdownOpen && (
         <TouchableOpacity style={styles.removeButton} onPress={handleRemoveStudent}>
           <Text style={styles.buttonText}>Remove Student</Text>
         </TouchableOpacity>
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     marginBottom: 15,
-    zIndex: 10, // Ensure dropdown is rendered on top
+    zIndex: 10, 
   },
   findButton: {
     backgroundColor: '#4CAF50',

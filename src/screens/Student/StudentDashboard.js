@@ -14,7 +14,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://10.54.5.170:5000/students/${email}`);
+        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -35,7 +35,7 @@ const StudentDashboard = () => {
   }, [email]);
 
   const handleManageProfile = () => {
-    navigation.navigate('ManageProfileScreen'); // Navigate to the Manage Profile screen
+    navigation.navigate('ManageProfileScreen'); 
   };
 
   const handleLogout = () => {
@@ -43,12 +43,11 @@ const StudentDashboard = () => {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Logout',
-        onPress: () => navigation.navigate('WelcomeScreen'), // Navigate to the Welcome screen
+        onPress: () => navigation.navigate('WelcomeScreen'), 
       },
     ]);
   };
 
-  // Handle Back Button Press
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -59,7 +58,7 @@ const StudentDashboard = () => {
             onPress: () => navigation.navigate('WelcomeScreen'),
           },
         ]);
-        return true; // Prevent default back button behavior
+        return true; 
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -75,7 +74,6 @@ const StudentDashboard = () => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        {/* Top Navigation Bar */}
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navButton} onPress={handleManageProfile}>
             <Text style={styles.navButtonText}>Manage Profile</Text>
@@ -85,7 +83,6 @@ const StudentDashboard = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
             Welcome to the Dashboard, {studentName || 'Guest'}!
@@ -146,7 +143,7 @@ const styles = StyleSheet.create({
   navButton: {
     paddingVertical: 8,
     paddingHorizontal: 15,
-    backgroundColor: '#FFA500', // Orange color
+    backgroundColor: '#FFA500', 
     borderRadius: 5,
   },
   navButtonText: {

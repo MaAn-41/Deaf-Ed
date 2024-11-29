@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 const AddStudentScreen = ({ route }) => {
-  const { educatorEmail, educatorUsername } = route.params; // Receive educatorEmail and educatorUsername
+  const { educatorEmail, educatorUsername } = route.params; 
   const [studentUsername, setStudentUsername] = useState('');
   const [section, setSection] = useState('');
 
   const handleAddStudent = async () => {
-    // Validate Section (One Capital Letter)
     if (!/^[A-Z]{1}$/.test(section)) {
       Alert.alert('Invalid Section', 'Section must be a single capital alphabet.');
       return;
     }
 
     try {
-      const response = await fetch('http://10.54.5.170:5000/add-student', {
+      const response = await fetch('http://192.168.1.117:5000/add-student', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,6 +29,8 @@ const AddStudentScreen = ({ route }) => {
 
       if (response.ok) {
         Alert.alert('Success', 'Student added successfully!');
+        setStudentUsername(''); 
+        setSection('');
       } else {
         Alert.alert('Error', data.message || 'Failed to add student.');
       }

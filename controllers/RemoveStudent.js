@@ -1,40 +1,36 @@
 const EducatorStudent = require('../models/Educator_Student');
 
-// Fetch sections for a specific educator
 exports.getSections = async (req, res) => {
   try {
     const { educatorUsername } = req.query;
     const sections = await EducatorStudent.find({ educatorUsername: educatorUsername }).distinct(
-      'Section'
+      'section'
     );
-    console.log(educatorUsername);
     res.status(200).json({ sections });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch sections' });
   }
 };
 
-// Fetch students in a specific section for an educator
 exports.getStudents = async (req, res) => {
   try {
     const { educatorUsername, section } = req.query;
-    const students = await EducatorStudent.find({ EducatorUsername: educatorUsername, Section: section }).select(
-      'StudentUserName -_id'
+    const students = await EducatorStudent.find({ educatorUsername: educatorUsername, section: section }).select(
+      'studentUsername'
     );
-    res.status(200).json({ students: students.map((s) => s.StudentUserName) });
+    res.status(200).json({ students: students.map((s) => s.studentUsername) });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch students' });
   }
 };
 
-// Remove a student from a section
 exports.removeStudent = async (req, res) => {
   try {
     const { educatorUsername, section, student } = req.body;
     const result = await EducatorStudent.deleteOne({
-      EducatorUsername: educatorUsername,
-      Section: section,
-      StudentUserName: student,
+      educatorUsername: educatorUsername,
+      section: section,
+      studentUsername: student,
     });
 
     if (result.deletedCount > 0) {

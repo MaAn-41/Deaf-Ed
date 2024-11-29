@@ -9,10 +9,8 @@ const LessonScreen = () => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        {/* Screen Header */}
         <Text style={styles.headerText}>Select a Lesson</Text>
 
-        {/* Buttons for Lessons */}
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.button}
