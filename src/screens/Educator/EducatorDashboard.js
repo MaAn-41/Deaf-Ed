@@ -7,9 +7,11 @@ const EducatorDashboard = () => {
   const [educatorName, setEducatorName] = useState('');
   const [educatorData, setEducatorData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
+
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
@@ -33,21 +35,49 @@ const EducatorDashboard = () => {
     retrieveEducatorData();
   }, [email]);
 
-  const handleManageProfile = () => {
-    navigation.navigate('ManageProfileScreen');
-  };
-
   const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Logout',
-        onPress: () => navigation.navigate('WelcomeScreen'), // Navigate to the Welcome screen
+        onPress: () => navigation.navigate('WelcomeScreen'),
       },
     ]);
   };
 
-  // Handle Back Button Press
+  const handleChangePassword = () => {
+    navigation.navigate('ChangePasswordScreen');
+  };
+
+  const handleDeleteProfile = () => {
+    Alert.alert(
+      'Delete Profile',
+      'Are you sure you want to delete your profile? This action cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            try {
+              const response = await fetch(`http://192.168.1.117:5000/delete-educator/${email}`, {
+                method: 'DELETE',
+              });
+              if (response.ok) {
+                Alert.alert('Success', 'Profile deleted successfully.');
+                navigation.navigate('WelcomeScreen');
+              } else {
+                Alert.alert('Error', 'Failed to delete profile.');
+              }
+            } catch (error) {
+              console.error(error);
+              Alert.alert('Error', 'An error occurred while deleting the profile.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -58,7 +88,7 @@ const EducatorDashboard = () => {
             onPress: () => navigation.navigate('WelcomeScreen'),
           },
         ]);
-        return true; // Prevent default back button behavior
+        return true;
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -70,27 +100,37 @@ const EducatorDashboard = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        {/* Top Navigation Bar */}
-        <View style={styles.navBar}>
-          <TouchableOpacity style={styles.navButton} onPress={handleManageProfile}>
-            <Text style={styles.navButtonText}>Manage Profile</Text>
+        {/* Left Drawer */}
+        <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
+            <Text style={styles.drawerButtonText}>Logout</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={handleLogout}>
-            <Text style={styles.navButtonText}>Logout</Text>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleChangePassword}>
+            <Text style={styles.drawerButtonText}>Change Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleDeleteProfile}>
+            <Text style={styles.drawerButtonText}>Delete Profile</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Toggle Drawer Button */}
+        <TouchableOpacity
+          style={styles.drawerToggle}
+          onPress={() => setDrawerOpen((prevState) => !prevState)}
+        >
+          <Text style={styles.drawerToggleText}>{drawerOpen ? 'Close' : 'Menu'}</Text>
+        </TouchableOpacity>
 
         {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
             Welcome to the Dashboard, {educatorName || 'Guest'}!
           </Text>
-          <Text style={styles.emailText}>
-            Email: {educatorData?.email || 'Not Available'}
-          </Text>
+          <Text style={styles.emailText}>Email: {educatorData?.email || 'Not Available'}</Text>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
@@ -105,7 +145,7 @@ const EducatorDashboard = () => {
               onPress={() =>
                 navigation.navigate('ManageStudentScreen', {
                   educatorEmail: email,
-                  educatorUsername:educatorName
+                  educatorUsername: educatorName,
                 })
               }
             >
@@ -133,26 +173,45 @@ const styles = StyleSheet.create({
   gradientBackground: {
     flex: 1,
     padding: 20,
+    position: 'relative',
   },
-  navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#2c6f32',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 20,
+  drawer: {
+    position: 'absolute',
+    top: 0,
+    left: -200,
+    width: 200,
+    height: '100%',
+    backgroundColor: '#333',
+    padding: 20,
+    justifyContent: 'flex-start',
   },
-  navButton: {
-    paddingVertical: 8,
+  drawerOpen: {
+    left: 0,
+  },
+  drawerButton: {
+    paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: '#FFA500', // Orange color
+    backgroundColor: '#FFA500',
     borderRadius: 5,
+    marginBottom: 10,
   },
-  navButtonText: {
+  drawerButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  drawerToggle: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    backgroundColor: '#FFA500',
+    padding: 10,
+    borderRadius: 5,
+    zIndex: 1,
+  },
+  drawerToggleText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   content: {
     flex: 1,
@@ -172,7 +231,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     width: '100%',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   button: {
