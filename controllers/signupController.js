@@ -3,10 +3,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-// In-memory OTP storage
 const otpStore = {};
 
-// Email transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -15,7 +13,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Generate OTP for signup
 exports.generateOtp = async (req, res) => {
   const { email,username } = req.body;
   try {
@@ -50,7 +47,6 @@ exports.generateOtp = async (req, res) => {
   }
 };
 
-// Verify OTP for signup
 exports.verifyOtp = (req, res) => {
   const { email, otp } = req.body;
 
@@ -72,7 +68,6 @@ exports.verifyOtp = (req, res) => {
   res.status(200).json({ message: 'OTP verified successfully' });
 };
 
-// Signup
 exports.signup = async (req, res) => {
   const { username, email, password, userType, age } = req.body;
 

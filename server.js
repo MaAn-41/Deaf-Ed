@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const studentController = require('./controllers/studentController');
 const EducatorController = require('./controllers/educatorController');
+const addStudent=require('./controllers/addStudent')
 
 require('dotenv').config();
 
@@ -48,6 +49,11 @@ app.get('/students/:email', studentController.retrieveStudentData)
 
 //retriving educator data
 app.get('/educators/:email', EducatorController.retrieveEducatortData)
+
+
+
+//teacher student db
+app.post('/add-student', addStudent.addStudent)
 
 // Start Server
 app.listen(process.env.PORT, () => {

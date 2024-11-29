@@ -3,10 +3,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-// In-memory OTP storage
 const otpStore = {};
 
-// Email transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -15,7 +13,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Login
 exports.login = async (req, res) => {
   const { email, password, userType } = req.body;
 
@@ -30,7 +27,6 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // Check if the user type matches the role
     if (userType !== user.userType) {
       return res.status(400).json({ message: `Error: Your role is ${user.userType}` });
     }
@@ -42,7 +38,6 @@ exports.login = async (req, res) => {
 };
 
 
-// Forgot Password
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -71,7 +66,6 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// Verify Reset OTP
 exports.verifyResetOtp = (req, res) => {
   const { email, otp } = req.body;
 
@@ -93,7 +87,6 @@ exports.verifyResetOtp = (req, res) => {
   res.status(200).json({ message: 'OTP verified successfully' });
 };
 
-// Reset Password
 exports.resetPassword = async (req, res) => {
   const { email, newPassword, confirmPassword } = req.body;
 

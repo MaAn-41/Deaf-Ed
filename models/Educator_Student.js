@@ -12,7 +12,7 @@ const educatorStudentSchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    match: /^[A-Z]{1}$/, // Validates that section is a single capital letter
+    match: /^[A-Z]{1}$/, 
   },
 });
 

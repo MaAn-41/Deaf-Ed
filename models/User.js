@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-// Define the User schema
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true }, // Made username unique
+  username: { type: String, unique: true, required: true }, 
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   userType: { type: String, required: true },
@@ -10,6 +9,5 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
 });
 
-// Export the User model
 const User = mongoose.model('User', userSchema);
 module.exports = User;
