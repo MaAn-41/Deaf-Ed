@@ -1,72 +1,89 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const RemoveStudentScreen = ({ route }) => {
-  const { educatorUsername } = route.params; // Receive educatorUsername
-  const [section, setSection] = useState('');
+  const { educatorUsername } = route.params;
+  const [sections, setSections] = useState([]);
   const [students, setStudents] = useState([]);
+  const [selectedSection, setSelectedSection] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loadingSections, setLoadingSections] = useState(false);
+  const [loadingStudents, setLoadingStudents] = useState(false);
 
-  const handleFetchStudents = async () => {
-    if (!/^[A-Z]{1}$/.test(section)) {
-      Alert.alert('Error', 'Section must be a single capital letter.');
-      return;
-    }
+  useEffect(() => {
+    fetchSections();
+  }, []);
 
+  // Fetch sections for this educator
+  const fetchSections = async () => {
+    setLoadingSections(true);
     try {
-      const response = await fetch(`http://10.54.5.170:5000/students-by-section`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ section, educatorUsername }),
-      });
-
+      const response = await fetch(
+        `http://10.54.5.170:5000/sections?educatorUsername=${educatorUsername}`
+      );
       const data = await response.json();
-
       if (response.ok) {
-        setStudents(data.students);
-        if (data.students.length === 0) {
-          Alert.alert('No Students', 'No students found in this section.');
-        }
+        setSections(data.sections.map((section) => ({ label: section, value: section })));
       } else {
-        Alert.alert('Error', data.message || 'Failed to fetch students.');
+        Alert.alert('Error', 'Unable to fetch sections');
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'An error occurred while fetching students.');
+      Alert.alert('Error', 'An error occurred while fetching sections');
+    } finally {
+      setLoadingSections(false);
     }
   };
 
-  const handleRemoveStudent = async () => {
-    if (!selectedStudent) {
-      Alert.alert('Error', 'Please select a student to remove.');
+  // Fetch students in the selected section
+  const fetchStudents = async () => {
+    if (!selectedSection) {
+      Alert.alert('Validation Error', 'Please select a section first.');
       return;
     }
-
+    setLoadingStudents(true);
     try {
-      const response = await fetch('http://10.54.5.170:5000/remove-student', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ studentUsername: selectedStudent, educatorUsername }),
-      });
-
+      const response = await fetch(
+        `http://10.54.5.170:5000/api/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+      );
       const data = await response.json();
-
       if (response.ok) {
-        Alert.alert('Success', 'Student removed successfully!');
-        setStudents(students.filter((student) => student !== selectedStudent));
-        setSelectedStudent(null);
+        setStudents(data.students.map((student) => ({ label: student, value: student })));
       } else {
-        Alert.alert('Error', data.message || 'Failed to remove student.');
+        Alert.alert('Error', 'Unable to fetch students');
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'An error occurred while removing the student.');
+      Alert.alert('Error', 'An error occurred while fetching students');
+    } finally {
+      setLoadingStudents(false);
+    }
+  };
+
+  // Remove the selected student
+  const handleRemoveStudent = async () => {
+    if (!selectedStudent) {
+      Alert.alert('Validation Error', 'Please select a student to remove.');
+      return;
+    }
+    try {
+      const response = await fetch(`http://10.54.5.170:5000/api/remove-student`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ educatorUsername, section: selectedSection, student: selectedStudent }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        Alert.alert('Success', data.message || 'Student removed successfully');
+        setStudents((prev) => prev.filter((s) => s.value !== selectedStudent)); // Update dropdown
+        setSelectedStudent(null); // Reset selected student
+      } else {
+        Alert.alert('Error', data.message || 'Failed to remove student');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'An error occurred while removing the student');
     }
   };
 
@@ -74,39 +91,38 @@ const RemoveStudentScreen = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Remove Student</Text>
 
-      <Text style={styles.label}>Enter Section:</Text>
-      <TextInput
-        style={styles.input}
-        value={section}
-        onChangeText={setSection}
-        placeholder="Enter section (e.g., A)"
+      {/* Section Dropdown */}
+      <DropDownPicker
+        items={sections}
+        open={true}
+        value={selectedSection}
+        setValue={setSelectedSection}
+        placeholder="Select a section"
+        loading={loadingSections}
+        style={styles.dropdown}
       />
-
-      <TouchableOpacity style={styles.button} onPress={handleFetchStudents}>
-        <Text style={styles.buttonText}>Fetch Students</Text>
+      <TouchableOpacity style={styles.findButton} onPress={fetchStudents}>
+        <Text style={styles.buttonText}>Find Students</Text>
       </TouchableOpacity>
 
+      {/* Student Dropdown */}
       {students.length > 0 && (
-        <>
-          <Text style={styles.label}>Select Student:</Text>
-          <DropDownPicker
-            open={dropdownOpen}
-            value={selectedStudent}
-            items={students.map((student) => ({
-              label: student,
-              value: student,
-            }))}
-            setOpen={setDropdownOpen}
-            setValue={setSelectedStudent}
-            setItems={setStudents}
-            placeholder="Select a student"
-            style={styles.dropdown}
-          />
+        <DropDownPicker
+          items={students}
+          open={true}
+          value={selectedStudent}
+          setValue={setSelectedStudent}
+          placeholder="Select a student"
+          loading={loadingStudents}
+          style={styles.dropdown}
+        />
+      )}
 
-          <TouchableOpacity style={styles.button} onPress={handleRemoveStudent}>
-            <Text style={styles.buttonText}>Remove Student</Text>
-          </TouchableOpacity>
-        </>
+      {/* Remove Button */}
+      {selectedStudent && (
+        <TouchableOpacity style={styles.removeButton} onPress={handleRemoveStudent}>
+          <Text style={styles.buttonText}>Remove Student</Text>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -116,42 +132,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 5,
+  dropdown: {
+    marginBottom: 15,
+    zIndex: 10, // Ensure dropdown is rendered on top
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    width: '80%',
+  findButton: {
+    backgroundColor: '#4CAF50',
     padding: 10,
+    borderRadius: 5,
     marginBottom: 20,
   },
-  button: {
-    backgroundColor: '#ff8c42',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginVertical: 10,
+  removeButton: {
+    backgroundColor: '#f44336',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  dropdown: {
-    width: '80%',
-    marginBottom: 20,
+    textAlign: 'center',
   },
 });
 

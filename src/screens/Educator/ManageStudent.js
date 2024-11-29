@@ -9,7 +9,7 @@ const ManageStudentScreen = ({navigation,route }) => {
   };
 
   const handleRemoveStudent = () => {
-    navigation.navigate('RemoveStudentScreen', { educatorEmail, educatorUsername }); 
+    navigation.navigate('RemoveStudentScreen', { educatorUsername }); 
   };
 
   return (

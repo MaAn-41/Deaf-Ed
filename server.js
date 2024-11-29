@@ -5,7 +5,7 @@ const cors = require('cors');
 const studentController = require('./controllers/studentController');
 const EducatorController = require('./controllers/educatorController');
 const addStudent=require('./controllers/addStudent')
-
+const remStudent=require('./controllers/RemoveStudent')
 require('dotenv').config();
 
 const {
@@ -54,6 +54,12 @@ app.get('/educators/:email', EducatorController.retrieveEducatortData)
 
 //teacher student db
 app.post('/add-student', addStudent.addStudent)
+
+
+
+app.get('/sections', remStudent.getSections);
+app.get('/students', remStudent.getStudents);
+app.post('/remove-student', remStudent.removeStudent);
 
 // Start Server
 app.listen(process.env.PORT, () => {
