@@ -3,25 +3,25 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler } from 're
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
-const StudentDashboard = () => {
-  const [studentName, setStudentName] = useState('');
-  const [studentData, setStudentData] = useState(null);
+const EducatorDashboard = () => {
+  const [educatorName, setEducatorName] = useState('');
+  const [educatorData, setEducatorData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
 
   useEffect(() => {
-    const retrieveStudentData = async () => {
+    const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
+        const response = await fetch(`http://192.168.137.157:5000/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {
-          setStudentName(data.name || 'Guest');
-          setStudentData(data);
+          setEducatorName(data.name || 'Guest');
+          setEducatorData(data);
         } else {
-          Alert.alert('Error', 'Student data not found');
+          Alert.alert('Error', 'Educator data not found');
         }
       } catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ const StudentDashboard = () => {
       }
     };
 
-    retrieveStudentData();
+    retrieveEducatorData();
   }, [email]);
 
   const handleManageProfile = () => {
@@ -74,6 +74,7 @@ const StudentDashboard = () => {
 
   return (
     <View style={styles.container}>
+      {/* Apply the new gradient */}
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         {/* Top Navigation Bar */}
         <View style={styles.navBar}>
@@ -88,13 +89,10 @@ const StudentDashboard = () => {
         {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
-            Welcome to the Dashboard, {studentName || 'Guest'}!
+            Welcome to the Dashboard, {educatorName || 'Guest'}!
           </Text>
           <Text style={styles.emailText}>
-            Email: {studentData?.email || 'Not Available'}
-          </Text>
-          <Text style={styles.ageText}>
-            Age: {studentData?.age ? String(studentData.age) : 'Not Available'}
+            Email: {educatorData?.email || 'Not Available'}
           </Text>
 
           <View style={styles.buttonsContainer}>
@@ -102,21 +100,21 @@ const StudentDashboard = () => {
               style={styles.button}
               onPress={() => navigation.navigate('LessonScreen')}
             >
-              <Text style={styles.buttonText}>Lesson</Text>
+              <Text style={styles.buttonText}>Lessons</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('TestScreen')}
+              onPress={() => navigation.navigate('ManageStudentScreen')}
             >
-              <Text style={styles.buttonText}>Test</Text>
+              <Text style={styles.buttonText}>Manage Student</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('ProgressReportScreen')}
+              onPress={() => navigation.navigate('StudentProgressScreen')}
             >
-              <Text style={styles.buttonText}>Progress Report</Text>
+              <Text style={styles.buttonText}>View Student Progress</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -170,11 +168,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 10,
   },
-  ageText: {
-    fontSize: 18,
-    color: '#fff',
-    marginBottom: 40,
-  },
   buttonsContainer: {
     width: '100%',
     justifyContent: 'space-between',
@@ -196,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StudentDashboard;
+export default EducatorDashboard;

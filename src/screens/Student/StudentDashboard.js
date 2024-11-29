@@ -3,25 +3,25 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler } from 're
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
-const EducatorDashboard = () => {
-  const [educatorName, setEducatorName] = useState('');
-  const [educatorData, setEducatorData] = useState(null);
+const StudentDashboard = () => {
+  const [studentName, setStudentName] = useState('');
+  const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
 
   useEffect(() => {
-    const retrieveEducatorData = async () => {
+    const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.1.117:5000/educators/${email}`);
+        const response = await fetch(`http://192.168.137.157:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
-          setEducatorName(data.name || 'Guest');
-          setEducatorData(data);
+          setStudentName(data.name || 'Guest');
+          setStudentData(data);
         } else {
-          Alert.alert('Error', 'Educator data not found');
+          Alert.alert('Error', 'Student data not found');
         }
       } catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ const EducatorDashboard = () => {
       }
     };
 
-    retrieveEducatorData();
+    retrieveStudentData();
   }, [email]);
 
   const handleManageProfile = () => {
@@ -74,7 +74,6 @@ const EducatorDashboard = () => {
 
   return (
     <View style={styles.container}>
-      {/* Apply the new gradient */}
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         {/* Top Navigation Bar */}
         <View style={styles.navBar}>
@@ -89,32 +88,35 @@ const EducatorDashboard = () => {
         {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
-            Welcome to the Dashboard, {educatorName || 'Guest'}!
+            Welcome to the Dashboard, {studentName || 'Guest'}!
           </Text>
           <Text style={styles.emailText}>
-            Email: {educatorData?.email || 'Not Available'}
+            Email: {studentData?.email || 'Not Available'}
+          </Text>
+          <Text style={styles.ageText}>
+            Age: {studentData?.age ? String(studentData.age) : 'Not Available'}
           </Text>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('LessonManagementScreen')}
+              onPress={() => navigation.navigate('LessonScreen')}
             >
-              <Text style={styles.buttonText}>Manage Lessons</Text>
+              <Text style={styles.buttonText}>Lesson</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('TestManagementScreen')}
+              onPress={() => navigation.navigate('TestScreen')}
             >
-              <Text style={styles.buttonText}>Manage Tests</Text>
+              <Text style={styles.buttonText}>Test</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('StudentProgressScreen')}
+              onPress={() => navigation.navigate('ProgressReportScreen')}
             >
-              <Text style={styles.buttonText}>View Student Progress</Text>
+              <Text style={styles.buttonText}>Progress Report</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -168,6 +170,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 10,
   },
+  ageText: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 40,
+  },
   buttonsContainer: {
     width: '100%',
     justifyContent: 'space-between',
@@ -189,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EducatorDashboard;
+export default StudentDashboard;

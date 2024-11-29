@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen'; // Ensure this is correct and consistent
-import StudentDashboard from './src/screens/StudentDashboard';
-import EducatorDashboard from './src/screens/EducatorDashboard';
+import StudentDashboard from './src/screens/Student/StudentDashboard';
+import EducatorDashboard from './src/screens/Educator/EducatorDashboard';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen'; // Import ForgotPasswordScreen
 import LessonScreen from './src/screens/LessonScreenFolder/LessonScreen';
 import EnglishLessonScreen from './src/screens/LessonScreenFolder/EnglishLessonScreen';
@@ -15,7 +15,7 @@ import UrduLessonScreen from './src/screens/LessonScreenFolder/UrduLessonScreen'
 import FoundationalWordsScreen from './src/screens/LessonScreenFolder/FoundationalWordsScreen';
 import TestScreen from './src/screens/TestScreenFolder/TestScreen';
 import ProgressReportScreen from './src/screens/ProgressScreenFolder/ProgressReportScreen';
-
+import ManageStudentScreen from './src/screens/Educator/ManageStudent';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +36,9 @@ export default function App() {
         <Stack.Screen name="FoundationalWordsScreen" component={FoundationalWordsScreen} />
         <Stack.Screen name="TestScreen" component={TestScreen} />
         <Stack.Screen name="ProgressReportScreen" component={ProgressReportScreen} />
+        <Stack.Screen name="ManageStudentScreen" component={ManageStudentScreen} />
+
+        
 
         
 
