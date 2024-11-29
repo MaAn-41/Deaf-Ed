@@ -105,7 +105,11 @@ const EducatorDashboard = () => {
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
         {/* Left Drawer */}
+        {drawerOpen && <View style={styles.overlay} />}
         <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
+          <TouchableOpacity style={styles.drawerButton} onPress={() => setDrawerOpen(false)}>
+            <Text style={styles.drawerButtonText}>Close</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
             <Text style={styles.drawerButtonText}>Logout</Text>
           </TouchableOpacity>
@@ -172,8 +176,16 @@ const styles = StyleSheet.create({
   },
   gradientBackground: {
     flex: 1,
-    padding: 20,
     position: 'relative',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 1,
   },
   drawer: {
     position: 'absolute',
@@ -184,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     padding: 20,
     justifyContent: 'flex-start',
+    zIndex: 2,
   },
   drawerOpen: {
     left: 0,
@@ -207,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFA500',
     padding: 10,
     borderRadius: 5,
-    zIndex: 1,
+    zIndex: 3,
   },
   drawerToggleText: {
     color: '#fff',
@@ -217,6 +230,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 0,
   },
   welcomeText: {
     fontSize: 24,
