@@ -12,6 +12,10 @@ const ManageStudentScreen = ({navigation,route }) => {
     navigation.navigate('RemoveStudentScreen', { educatorUsername }); 
   };
 
+  const handleViewStudent = () => {
+    navigation.navigate('ViewStudentsScreen', { educatorUsername }); 
+  };
+
   return (
     <LinearGradient
       colors={['#1e3c72', '#2a5298']}
@@ -22,6 +26,9 @@ const ManageStudentScreen = ({navigation,route }) => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleRemoveStudent}>
         <Text style={styles.buttonText}>Remove Student</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleViewStudent}>
+        <Text style={styles.buttonText}>View Students</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
