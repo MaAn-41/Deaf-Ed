@@ -17,7 +17,7 @@ import TestScreen from './src/screens/TestScreenFolder/TestScreen';
 import ProgressReportScreen from './src/screens/ProgressScreenFolder/ProgressReportScreen';
 import ManageStudentScreen from './src/screens/Educator/ManageStudent';
 import AddStudentScreen from './src/screens/Educator/AddStudentScreen'
-
+import RemoveStudentScreen from './src/screens/Educator/RemoveStudentScreen';
 
 
 
@@ -42,6 +42,7 @@ export default function App() {
         <Stack.Screen name="ProgressReportScreen" component={ProgressReportScreen} />
         <Stack.Screen name="ManageStudentScreen" component={ManageStudentScreen} />
         <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
+        <Stack.Screen name="RemoveStudentScreen" component={RemoveStudentScreen} />
 
         
         
