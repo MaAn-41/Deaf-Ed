@@ -10,11 +10,10 @@ const EducatorDashboard = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
-
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(`http://192.168.137.157:5000/educators/${email}`);
+        const response = await fetch(`http://10.54.5.170:5000/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -71,7 +70,6 @@ const EducatorDashboard = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
-
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
@@ -106,8 +104,8 @@ const EducatorDashboard = () => {
               style={styles.button}
               onPress={() =>
                 navigation.navigate('ManageStudentScreen', {
-                  email: educatorData?.email,
-                  username: educatorName,
+                  educatorEmail: email,
+                  educatorUsername:educatorName
                 })
               }
             >

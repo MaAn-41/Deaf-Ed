@@ -14,7 +14,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.137.157:5000/students/${email}`);
+        const response = await fetch(`http://10.54.5.170:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {

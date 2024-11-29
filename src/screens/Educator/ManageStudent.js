@@ -2,16 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const ManageStudentScreen = ({ navigation, route }) => {
-  const { email, username } = route.params; // Extract email and username from route params
-
+const ManageStudentScreen = ({navigation,route }) => {
+  const { educatorEmail, educatorUsername } = route.params; 
   const handleAddStudent = () => {
-    navigation.navigate('AddStudentScreen', { email, username }); // Pass email and username to AddStudentScreen
+    navigation.navigate('AddStudentScreen', { educatorEmail, educatorUsername }); 
   };
-  
 
   const handleRemoveStudent = () => {
-    navigation.navigate('RemoveStudentScreen', { email, username }); // Pass email and username to RemoveStudentScreen
+    navigation.navigate('RemoveStudentScreen', { educatorEmail, educatorUsername }); 
   };
 
   return (
@@ -19,7 +17,6 @@ const ManageStudentScreen = ({ navigation, route }) => {
       colors={['#1e3c72', '#2a5298']}
       style={styles.container}
     >
-      <Text style={styles.title}>Manage Students</Text>
       <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
         <Text style={styles.buttonText}>Add Student</Text>
       </TouchableOpacity>
@@ -37,11 +34,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
+  infoContainer: {
     marginBottom: 40,
+    alignItems: 'center',
+  },
+  infoText: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 10,
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: '#ff8c42',
