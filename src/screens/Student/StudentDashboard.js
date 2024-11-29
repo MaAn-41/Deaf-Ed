@@ -45,8 +45,38 @@ const StudentDashboard = () => {
     ]);
   };
 
-  const handleManageProfile = () => {
-    navigation.navigate('ManageProfileScreen');
+  const handleChangePassword = () => {
+    navigation.navigate('ChangePasswordScreen'); // Navigate to the Change Password screen
+  };
+
+  const handleDeleteProfile = () => {
+    Alert.alert(
+      'Delete Profile',
+      'Are you sure you want to delete your profile? This action cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            try {
+              const response = await fetch(`http://192.168.1.117:5000/students/${email}`, {
+                method: 'DELETE',
+              });
+
+              if (response.ok) {
+                Alert.alert('Success', 'Your profile has been deleted.');
+                navigation.navigate('WelcomeScreen'); // Redirect to the Welcome Screen
+              } else {
+                Alert.alert('Error', 'Failed to delete your profile. Please try again.');
+              }
+            } catch (error) {
+              console.error(error);
+              Alert.alert('Error', 'An error occurred while deleting your profile.');
+            }
+          },
+        },
+      ]
+    );
   };
 
   useFocusEffect(
@@ -81,8 +111,11 @@ const StudentDashboard = () => {
           <TouchableOpacity style={styles.drawerButton} onPress={() => setDrawerOpen(false)}>
             <Text style={styles.drawerButtonText}>Close</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={handleManageProfile}>
-            <Text style={styles.drawerButtonText}>Manage Profile</Text>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleChangePassword}>
+            <Text style={styles.drawerButtonText}>Change Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleDeleteProfile}>
+            <Text style={styles.drawerButtonText}>Delete Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
             <Text style={styles.drawerButtonText}>Logout</Text>
