@@ -67,6 +67,10 @@ app.post('/remove-student', remStudent.removeStudent);
 app.delete('/delete-educator/:educatorName', EducatorController.deleteEducator);
 
 
+//delete profiles
+app.delete('/delete-student/:studentName', studentController.deleteStudent);
+
+
 // Start Server
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

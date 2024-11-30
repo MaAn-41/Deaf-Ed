@@ -15,7 +15,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
+        const response = await fetch(`http://192.168.137.157:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -59,13 +59,13 @@ const StudentDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.1.117:5000/students/${email}`, {
+              const response = await fetch(`http://192.168.137.157:5000/delete-student/${studentName}`, {
                 method: 'DELETE',
               });
 
               if (response.ok) {
                 Alert.alert('Success', 'Your profile has been deleted.');
-                navigation.navigate('WelcomeScreen'); // Redirect to the Welcome Screen
+                navigation.navigate('WelcomeScreen'); 
               } else {
                 Alert.alert('Error', 'Failed to delete your profile. Please try again.');
               }
