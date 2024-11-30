@@ -47,6 +47,7 @@ const EducatorDashboard = () => {
 
   const handleChangePassword = () => {
     navigation.navigate('ChangePasswordScreen');
+  
   };
 
   const handleDeleteProfile = () => {
