@@ -15,7 +15,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.137.157:5000/students/${email}`);
+        const response = await fetch(`http://192.168.137.1:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -59,7 +59,7 @@ const StudentDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.137.157:5000/delete-student/${studentName}`, {
+              const response = await fetch(`http://192.168.137.1:5000/delete-student/${studentName}`, {
                 method: 'DELETE',
               });
 

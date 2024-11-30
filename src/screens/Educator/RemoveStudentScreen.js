@@ -22,7 +22,7 @@ const RemoveStudentScreen = ({ route }) => {
     setLoadingSections(true);
     try {
       const response = await fetch(
-        `http://192.168.137.157:5000/sections?educatorUsername=${educatorUsername}`
+        `http://192.168.137.1:5000/sections?educatorUsername=${educatorUsername}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -46,7 +46,7 @@ const RemoveStudentScreen = ({ route }) => {
     setLoadingStudents(true);
     try {
       const response = await fetch(
-        `http://192.168.137.157:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+        `http://192.168.137.1:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -68,7 +68,7 @@ const RemoveStudentScreen = ({ route }) => {
       return;
     }
     try {
-      const response = await fetch(`http://192.168.137.157:5000/remove-student`, {
+      const response = await fetch(`http://192.168.137.1:5000/remove-student`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ educatorUsername, section: selectedSection, student: selectedStudent }),
