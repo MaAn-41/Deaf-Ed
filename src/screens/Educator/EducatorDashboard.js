@@ -15,7 +15,7 @@ const EducatorDashboard = () => {
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(`http://192.168.137.1:5000/educators/${email}`);
+        const response = await fetch(`http://192.168.1.117:5000/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -60,7 +60,7 @@ const EducatorDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.137.1:5000/delete-educator/${educatorName}`, {
+              const response = await fetch(`http://192.168.1.117:5000/delete-educator/${educatorName}`, {
                 method: 'DELETE',
               });
               if (response.ok) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler, TextInput, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
@@ -11,11 +11,14 @@ const StudentDashboard = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.137.1:5000/students/${email}`);
+        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -45,8 +48,36 @@ const StudentDashboard = () => {
     ]);
   };
 
-  const handleChangePassword = () => {
-    navigation.navigate('ChangePasswordScreen'); // Navigate to the Change Password screen
+  const handleChangePassword = async () => {
+    if (!newPassword || !confirmPassword) {
+      Alert.alert('Error', 'Please enter both passwords!');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match!');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://192.168.1.117:5000/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, newPassword, confirmPassword }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'Password reset successful!');
+        setModalVisible(false); // Close the modal
+        navigation.navigate('LoginScreen',{ userType: 'Student' });
+      } else {
+        Alert.alert('Error', data.message || 'Failed to reset password!');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to reset password. Please try again later.');
+    }
   };
 
   const handleDeleteProfile = () => {
@@ -59,13 +90,13 @@ const StudentDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.137.1:5000/delete-student/${studentName}`, {
+              const response = await fetch(`http://192.168.1.117:5000/delete-student/${studentName}`, {
                 method: 'DELETE',
               });
 
               if (response.ok) {
                 Alert.alert('Success', 'Your profile has been deleted.');
-                navigation.navigate('WelcomeScreen'); 
+                navigation.navigate('WelcomeScreen');
               } else {
                 Alert.alert('Error', 'Failed to delete your profile. Please try again.');
               }
@@ -111,9 +142,10 @@ const StudentDashboard = () => {
           <TouchableOpacity style={styles.drawerButton} onPress={() => setDrawerOpen(false)}>
             <Text style={styles.drawerButtonText}>Close</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={handleChangePassword}>
+          <TouchableOpacity style={styles.drawerButton} onPress={() => setModalVisible(true)}>
             <Text style={styles.drawerButtonText}>Change Password</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.drawerButton} onPress={handleDeleteProfile}>
             <Text style={styles.drawerButtonText}>Delete Profile</Text>
           </TouchableOpacity>
@@ -166,6 +198,43 @@ const StudentDashboard = () => {
           </View>
         </View>
       </LinearGradient>
+
+      {/* Change Password Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Change Password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="New Password"
+              secureTextEntry
+              value={newPassword}
+              onChangeText={setNewPassword}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm Password"
+              secureTextEntry
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
+              <Text style={styles.buttonText}>Confirm</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -203,35 +272,29 @@ const styles = StyleSheet.create({
     left: 0,
   },
   drawerButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: '#FFA500',
-    borderRadius: 5,
-    marginBottom: 10,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
   drawerButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
     color: '#fff',
+    fontSize: 16,
   },
   drawerToggle: {
     position: 'absolute',
     top: 20,
     left: 20,
-    backgroundColor: '#FFA500',
-    padding: 10,
-    borderRadius: 5,
     zIndex: 3,
   },
   drawerToggleText: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontSize: 18,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 0,
+    paddingHorizontal: 30,
   },
   welcomeText: {
     fontSize: 24,
@@ -247,26 +310,49 @@ const styles = StyleSheet.create({
   ageText: {
     fontSize: 18,
     color: '#fff',
-    marginBottom: 40,
+    marginBottom: 20,
   },
   buttonsContainer: {
     width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   button: {
     backgroundColor: '#FFA500',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    marginBottom: 15,
+    padding: 15,
     borderRadius: 5,
-    width: '80%',
-    alignItems: 'center',
+    width: '100%',
+    marginBottom: 10,
   },
   buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
     color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: 300,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    height: 45,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingLeft: 10,
+    borderRadius: 5,
   },
 });
 
