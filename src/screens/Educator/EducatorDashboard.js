@@ -72,7 +72,7 @@ const EducatorDashboard = () => {
       if (response.ok) {
         Alert.alert('Success', 'Password reset successful!');
         setModalVisible(false); 
-        navigation.navigate('LoginScreen',{ userType: 'Student' });
+        navigation.navigate('LoginScreen',{ userType: 'Educator' });
       } else {
         Alert.alert('Error', data.message || 'Failed to reset password!');
       }

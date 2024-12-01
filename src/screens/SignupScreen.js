@@ -8,6 +8,7 @@ const SignupScreen = ({ navigation, route }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [fullname, setFullname] = useState('');  // Added fullname field
   const [age, setAge] = useState('');
   const [otp, setOtp] = useState('');
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
@@ -18,7 +19,7 @@ const SignupScreen = ({ navigation, route }) => {
       const response = await fetch('http://192.168.1.117:5000/generate-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email,username }),
+        body: JSON.stringify({ email, username }),
       });
 
       const data = await response.json();
@@ -62,7 +63,7 @@ const SignupScreen = ({ navigation, route }) => {
   };
 
   const handleSignup = async () => {
-    if (!email || !password || !confirmPassword || !username || (userType === 'Student' && !age)) {
+    if (!email || !password || !confirmPassword || !username || !fullname || (userType === 'Student' && !age)) {
       Alert.alert('Error', 'Please fill in all required fields!');
       return;
     }
@@ -83,8 +84,9 @@ const SignupScreen = ({ navigation, route }) => {
           email,
           password,
           username,
+          fullname, // Added fullname field
           userType,
-          age: userType === 'Student' ? age : undefined,
+          age: userType === 'Student' ? age : undefined, // Only include age for students
         }),
       });
 
@@ -110,6 +112,13 @@ const SignupScreen = ({ navigation, route }) => {
 
         {/* Signup Form */}
         <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            placeholderTextColor="#aaa"
+            value={fullname}
+            onChangeText={setFullname}  // Bind fullname field
+          />
           <TextInput
             style={styles.input}
             placeholder="Username"
@@ -155,91 +164,103 @@ const SignupScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
 
+        {/* OTP Modal */}
         <Modal
           visible={isOtpModalVisible}
-          animationType="slide"
-          transparent={true}
           onRequestClose={() => setIsOtpModalVisible(false)}
+          transparent={true}
+          animationType="fade"
         >
-          <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Enter OTP</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter OTP"
-                keyboardType="numeric"
                 placeholderTextColor="#aaa"
+                keyboardType="numeric"
                 value={otp}
                 onChangeText={setOtp}
               />
               <TouchableOpacity onPress={handleOtpVerification} style={styles.button}>
                 <Text style={styles.buttonText}>Verify OTP</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setIsOtpModalVisible(false)}
-                style={[styles.button, { backgroundColor: '#FF5733' }]}
-              >
-                <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </Modal>
 
-        {otpVerified && (
-          <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={handleSignup} style={[styles.button, { marginTop: 20 }]}>
-              <Text style={styles.buttonText}>Signup</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        {/* Signup Button */}
+        <TouchableOpacity onPress={handleSignup} style={styles.button}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+
+        {/* Navigation Link */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('LoginScreen', { userType })}
+          style={styles.loginLink}
+        >
+          <Text style={styles.loginText}>Already have an account? Log In</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  gradient: { flex: 1 },
-  container: { flex: 1, justifyContent: 'center', paddingHorizontal: 20 },
-  title: { fontSize: 28, color: '#fff', fontWeight: 'bold', textAlign: 'center', marginBottom: 30 },
-  inputContainer: { marginBottom: 20, alignItems: 'center' },
-  input: {
-    width: '90%',
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
+  gradient: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  container: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  inputContainer: {
     marginBottom: 20,
-    paddingHorizontal: 15,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    fontSize: 16,
-    elevation: 3,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    color: '#fff',
   },
   button: {
-    backgroundColor: '#ff8c42',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 25,
-    marginVertical: 10,
-    width: '80%',
-    alignItems: 'center',
-    elevation: 6,
+    backgroundColor: '#1e3c72',
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 10,
   },
-  buttonText: { fontSize: 18, fontWeight: '600', color: '#fff' },
-  modalBackground: {
+  buttonText: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 18,
+  },
+  loginLink: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  loginText: {
+    color: '#fff',
+  },
+  modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '85%',
-    padding: 20,
     backgroundColor: '#fff',
-    borderRadius: 15,
-    alignItems: 'center',
-    elevation: 8,
+    padding: 20,
+    borderRadius: 5,
+    width: '80%',
   },
-  modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 15, color: '#333', textAlign: 'center' },
 });
 
 export default SignupScreen;

@@ -69,21 +69,43 @@ exports.verifyOtp = (req, res) => {
 };
 
 exports.signup = async (req, res) => {
-  const { username, email, password, userType, age } = req.body;
+  const { username, email, password, userType, age, fullname } = req.body;
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({ message: 'Email already registered' });
+  }
+
+  const existingUsername = await User.findOne({ username });
+  if (existingUsername) {
+    return res.status(400).json({ message: 'Username already registered' });
+  }
+
+
+
+
+  if (userType === 'Student' && (age < 4 || age > 14 || isNaN(age))) {
+    return res.status(400).json({ message: 'For Students, age must be between 4 and 14' });
+  }
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one special character, and one number.',
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Email already registered' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
       userType,
       age,
+      fullname,
       verified: true,
     });
 
