@@ -20,7 +20,7 @@ const ViewStudentsScreen = ({ route }) => {
     setLoadingSections(true);
     try {
       const response = await fetch(
-        `http://192.168.137.1:5000/sections?educatorUsername=${educatorUsername}`
+        `http://192.168.1.117:5000/sections?educatorUsername=${educatorUsername}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -44,7 +44,7 @@ const ViewStudentsScreen = ({ route }) => {
     setLoadingStudents(true);
     try {
       const response = await fetch(
-        `http://192.168.137.1:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+        `http://192.168.1.117:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
       );
       const data = await response.json();
       if (response.ok) {

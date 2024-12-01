@@ -70,7 +70,7 @@ const StudentDashboard = () => {
 
       if (response.ok) {
         Alert.alert('Success', 'Password reset successful!');
-        setModalVisible(false); // Close the modal
+        setModalVisible(false); 
         navigation.navigate('LoginScreen',{ userType: 'Student' });
       } else {
         Alert.alert('Error', data.message || 'Failed to reset password!');
@@ -199,7 +199,6 @@ const StudentDashboard = () => {
         </View>
       </LinearGradient>
 
-      {/* Change Password Modal */}
       <Modal
         animationType="slide"
         transparent={true}
