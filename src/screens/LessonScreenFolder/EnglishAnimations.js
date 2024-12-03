@@ -1,45 +1,21 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Animated, { Easing, withRepeat, withSpring, useSharedValue, useAnimatedStyle, withDelay } from 'react-native-reanimated';
+import React from 'react';
+import { View, Text, StyleSheet, Video } from 'react-native';
 
-const EnglishAnimations = () => {
-  const bounce = useSharedValue(0);
+const EnglishAnimations = ({ route }) => {
+  const { letter } = route.params;
 
-  useEffect(() => {
-    bounce.value = withRepeat(
-      withSpring(1, { damping: 3, stiffness: 150 }),
-      5, 
-      true
-    );
-  }, []);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: bounce.value }],
-    };
-  });
+  const video1 = `path_to_video_1_for_${letter}`;
+  const video2 = `path_to_video_2_for_${letter}`;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>English Animations</Text>
-      <View style={styles.animationContainer}>
-        <Animated.Text style={[styles.letter, animatedStyle]}>
-          A
-        </Animated.Text>
-        <Animated.Text style={[styles.letter, animatedStyle]}>
-          B
-        </Animated.Text>
-        <Animated.Text style={[styles.letter, animatedStyle]}>
-          C
-        </Animated.Text>
-        <Animated.Text style={[styles.letter, animatedStyle]}>
-          D
-        </Animated.Text>
-        <Animated.Text style={[styles.letter, animatedStyle]}>
-          E
-        </Animated.Text>
-        {/* Add more letters as needed */}
-      </View>
+      <Text style={styles.title}>Animations for Letter {letter}</Text>
+      
+    
+      <Video source={{uri: video1}} style={styles.video} />
+
+     
+      <Video source={{uri: video2}} style={styles.video} />
     </View>
   );
 };
@@ -49,24 +25,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    padding: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
     marginBottom: 20,
   },
-  animationContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  letter: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#1e3c72',
-    margin: 10,
+  video: {
+    width: 300,
+    height: 200,
+    marginBottom: 20,
   },
 });
 
