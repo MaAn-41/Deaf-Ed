@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const EnglishLessonScreen = () => {
+const EnglishLessonScreen = ({ navigation }) => {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   return (
@@ -13,7 +13,11 @@ const EnglishLessonScreen = () => {
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
           {alphabet.map((letter, index) => (
-            <TouchableOpacity key={index} style={styles.button}>
+            <TouchableOpacity
+              key={index}
+              style={styles.button}
+              onPress={() => navigation.navigate('EnglishAnimations', { letter })}
+            >
               <Text style={styles.buttonText}>{letter}</Text>
             </TouchableOpacity>
           ))}
