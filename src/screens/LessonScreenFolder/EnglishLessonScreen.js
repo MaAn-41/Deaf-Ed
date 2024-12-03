@@ -11,7 +11,7 @@ const EnglishLessonScreen = () => {
         <Text style={styles.title}>English Lessons</Text>
         <Text style={styles.subtitle}>Content Coming Soon...</Text>
 
-        <ScrollView horizontal contentContainerStyle={styles.buttonsContainer}>
+        <ScrollView contentContainerStyle={styles.buttonsContainer}>
           {alphabet.map((letter, index) => (
             <TouchableOpacity key={index} style={styles.button}>
               <Text style={styles.buttonText}>{letter}</Text>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   gradientBackground: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
   },
@@ -46,22 +46,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonsContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingBottom: 20,
   },
   button: {
-    width: 60,
+    width: 200,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    margin: 5,
+    marginVertical: 10,
     borderRadius: 10,
     elevation: 3,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1e3c72',
   },
