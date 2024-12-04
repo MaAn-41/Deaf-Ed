@@ -1,21 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet, Video } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Video } from 'expo-av';
 
 const EnglishAnimations = ({ route }) => {
   const { letter } = route.params;
 
-  const video1 = `path_to_video_1_for_${letter}`;
-  const video2 = `path_to_video_2_for_${letter}`;
+  const videoPaths = {
+    A: [
+      require('../assets/alphabets/A_letter_video.mp4'),
+      require('../assets/alphabets/Apple_video.mp4'),
+    ],
+    B: [
+      require('../assets/alphabets/B_letter_video.mp4'),
+      require('../assets/alphabets/Banana_video.mp4'),
+    ],
+    C: [
+      require('../assets/alphabets/C_letter_video.mp4'),
+      require('../assets/alphabets/Cat_video.mp4'),
+    ],
+    D: [
+      require('../assets/alphabets/D_letter_video.mp4'),
+      require('../assets/alphabets/Dog_video.mp4'),
+    ],
+  };
+
+  const videos = videoPaths[letter.toUpperCase()] || [];
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Animations for Letter {letter}</Text>
-      
-    
-      <Video source={{uri: video1}} style={styles.video} />
-
-     
-      <Video source={{uri: video2}} style={styles.video} />
+      {videos.length > 0 ? (
+        videos.map((videoSource, index) => (
+          <Video
+            key={index}
+            source={videoSource}
+            style={styles.video}
+            useNativeControls
+            resizeMode="contain"
+            isLooping
+          />
+        ))
+      ) : (
+        <Text>No videos available for this letter.</Text>
+      )}
     </View>
   );
 };
