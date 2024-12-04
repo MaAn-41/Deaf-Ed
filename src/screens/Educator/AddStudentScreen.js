@@ -13,7 +13,7 @@ const AddStudentScreen = ({ route }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.137.128:5000/add-student', {
+      const response = await fetch('http://192.168.1.117:5000/add-student', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
