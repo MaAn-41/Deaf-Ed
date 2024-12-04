@@ -19,6 +19,7 @@ import ManageStudentScreen from './src/screens/Educator/ManageStudent';
 import AddStudentScreen from './src/screens/Educator/AddStudentScreen'
 import RemoveStudentScreen from './src/screens/Educator/RemoveStudentScreen';
 import ViewStudentsScreen from './src/screens/Educator/ViewStudentsScreen';
+import EnglishAnimations from './src/screens/LessonScreenFolder/EnglishAnimations';
 
 
 
@@ -45,7 +46,9 @@ export default function App() {
         <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
         <Stack.Screen name="RemoveStudentScreen" component={RemoveStudentScreen} />
         <Stack.Screen name="ViewStudentsScreen" component={ViewStudentsScreen} />
+        <Stack.Screen name="EnglishAnimations" component={EnglishAnimations} />
 
+        
         
         
         
