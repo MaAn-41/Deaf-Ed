@@ -16,7 +16,7 @@ const SignupScreen = ({ navigation, route }) => {
 
   const handleGenerateOtp = async () => {
     try {
-      const response = await fetch('http://192.168.1.117:5000/generate-otp', {
+      const response = await fetch('http://192.168.137.128:5000/generate-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username }),
@@ -42,7 +42,7 @@ const SignupScreen = ({ navigation, route }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/verify-otp', {
+      const response = await fetch('http://192.168.137.128:5000/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
@@ -77,7 +77,7 @@ const SignupScreen = ({ navigation, route }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/signup', {
+      const response = await fetch('http://192.168.137.128:5000/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
