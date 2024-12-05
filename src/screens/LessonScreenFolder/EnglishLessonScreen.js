@@ -1,13 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const EnglishLessonScreen = ({ navigation }) => {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
+      <LinearGradient
+        colors={["#FFD59A", "#FFF4D3"]}
+        style={styles.gradientBackground}
+      >
         <Text style={styles.title}>English Lessons</Text>
         <Text style={styles.subtitle}>Content Coming Soon...</Text>
 
@@ -16,7 +25,9 @@ const EnglishLessonScreen = ({ navigation }) => {
             <TouchableOpacity
               key={index}
               style={styles.button}
-              onPress={() => navigation.navigate('EnglishAnimations', { letter })}
+              onPress={() =>
+                navigation.navigate("EnglishAnimations", { letter })
+              }
             >
               <Text style={styles.buttonText}>{letter}</Text>
             </TouchableOpacity>
@@ -30,43 +41,43 @@ const EnglishLessonScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   gradientBackground: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
     padding: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#FF7043",
     marginBottom: 20,
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 20,
   },
   buttonsContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingBottom: 20,
   },
   button: {
     width: 200,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#4FC3F7",
     marginVertical: 10,
-    borderRadius: 10,
-    elevation: 3,
+    borderRadius: 25,
+    elevation: 6,
   },
   buttonText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1e3c72',
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
 
