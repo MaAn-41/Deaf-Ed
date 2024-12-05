@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SignupScreen = ({ navigation, route }) => {
@@ -16,11 +16,12 @@ const SignupScreen = ({ navigation, route }) => {
 
   const handleGenerateOtp = async () => {
     try {
-      const response = await fetch('http://10.54.8.39:5000/generate-otp', {
+      const response = await fetch('http://192.168.1.117:5000/generate-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username }),
       });
+
       const data = await response.json();
       if (response.ok) {
         Alert.alert('Success', 'OTP sent to your email');
@@ -38,12 +39,14 @@ const SignupScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Please enter the OTP');
       return;
     }
+
     try {
-      const response = await fetch('http://10.54.8.39:5000/verify-otp', {
+      const response = await fetch('http://192.168.1.117:5000/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
       });
+
       const data = await response.json();
       if (response.ok) {
         setOtpVerified(true);
@@ -62,16 +65,19 @@ const SignupScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Please fill in all required fields!');
       return;
     }
+
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match!');
       return;
     }
+
     if (!otpVerified) {
       Alert.alert('Error', 'Please verify your email OTP first');
       return;
     }
+
     try {
-      const response = await fetch('http://10.54.8.39:5000/signup', {
+      const response = await fetch('http://192.168.1.117:5000/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -83,6 +89,7 @@ const SignupScreen = ({ navigation, route }) => {
           age: userType === 'Student' ? age : undefined,
         }),
       });
+
       const data = await response.json();
       if (response.ok) {
         Alert.alert('Success', 'Account created successfully!');
@@ -98,137 +105,144 @@ const SignupScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.gradient}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Signup</Text>
+    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.container}>
+      <Text style={styles.title}>Signup</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Full Name"
+        placeholderTextColor="#aaa"
+        value={fullname}
+        onChangeText={setFullname}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#aaa"
+        value={username}
+        onChangeText={setUsername}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor="#aaa"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        placeholderTextColor="#aaa"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        placeholderTextColor="#aaa"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      
+      {userType === 'Student' && (
+        <TextInput
+          style={styles.input}
+          placeholder="Age"
+          placeholderTextColor="#aaa"
+          keyboardType="numeric"
+          value={age}
+          onChangeText={setAge}
+        />
+      )}
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Full Name"
-            placeholderTextColor="#4B4B4B"
-            value={fullname}
-            onChangeText={setFullname}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="#4B4B4B"
-            value={username}
-            onChangeText={setUsername}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="#4B4B4B"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="#4B4B4B"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Confirm Password"
-            placeholderTextColor="#4B4B4B"
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-          {userType === 'Student' && (
+      <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
+        <Text style={styles.buttonText}>Generate OTP</Text>
+      </TouchableOpacity>
+
+      <Modal visible={isOtpModalVisible} onRequestClose={() => setIsOtpModalVisible(false)} transparent={true} animationType="fade">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
             <TextInput
               style={styles.input}
-              placeholder="Age"
-              placeholderTextColor="#4B4B4B"
+              placeholder="Enter OTP"
+              placeholderTextColor="#aaa"
               keyboardType="numeric"
-              value={age}
-              onChangeText={setAge}
+              value={otp}
+              onChangeText={setOtp}
             />
-          )}
-          <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
-            <Text style={styles.buttonText}>Generate OTP</Text>
-          </TouchableOpacity>
-        </View>
-
-        <Modal visible={isOtpModalVisible} onRequestClose={() => setIsOtpModalVisible(false)} transparent={true} animationType="fade">
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter OTP"
-                placeholderTextColor="#4B4B4B"
-                keyboardType="numeric"
-                value={otp}
-                onChangeText={setOtp}
-              />
-              <TouchableOpacity onPress={handleOtpVerification} style={styles.button}>
-                <Text style={styles.buttonText}>Verify OTP</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={handleOtpVerification} style={styles.button}>
+              <Text style={styles.buttonText}>Verify OTP</Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
+        </View>
+      </Modal>
 
-        <TouchableOpacity onPress={handleSignup} style={styles.button}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={handleSignup} style={styles.button}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen', { userType })} style={styles.loginLink}>
-          <Text style={styles.loginText}>Already have an account? Log In</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('LoginScreen', { userType })} style={styles.loginLink}>
+        <Text style={styles.loginText}>Already have an account? Log In</Text>
+      </TouchableOpacity>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  gradient: {
+  container: {
     flex: 1,
     justifyContent: 'center',
-  },
-  container: {
+    alignItems: 'center',
     padding: 20,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     color: '#FF7043',
-    textAlign: 'center',
     marginBottom: 30,
-  },
-  inputContainer: {
-    marginBottom: 20,
+    textAlign: 'center',
   },
   input: {
+    width: '90%',
+    height: 50,
+    borderColor: '#ccc',
     borderWidth: 1,
-    borderColor: '#4B4B4B',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    color: '#4B4B4B',
-    backgroundColor: '#FFF4D3',
+    marginBottom: 20,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    fontSize: 16,
+    elevation: 3,
   },
   button: {
-    backgroundColor: '#4C8BF5', // Blue color for button to match login page
-    padding: 15,
-    borderRadius: 5,
-    marginBottom: 10,
+    backgroundColor: '#4FC3F7',
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+    marginVertical: 10,
+    width: '80%',
+    alignItems: 'center',
+    elevation: 6,
   },
   buttonText: {
-    textAlign: 'center',
-    color: '#fff',
     fontSize: 18,
+    fontWeight: '600',
+    color: '#fff',
   },
   loginLink: {
     marginTop: 10,
     alignItems: 'center',
   },
   loginText: {
-    color: '#FF7043', // Same color as login link
+    fontSize: 16,
+    color: '#4FC3F7',
   },
   modalContainer: {
     flex: 1,

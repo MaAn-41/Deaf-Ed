@@ -18,7 +18,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://10.54.8.39:5000/students/${email}`);
+        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -60,7 +60,7 @@ const StudentDashboard = () => {
     }
 
     try {
-      const response = await fetch('http://10.54.8.39:5000/reset-password', {
+      const response = await fetch('http://192.168.1.117:5000/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
@@ -90,7 +90,7 @@ const StudentDashboard = () => {
           text: 'Delete',
           onPress: async () => {
             try {
-              const response = await fetch(`http://10.54.8.39:5000/delete-student/${studentName}`, {
+              const response = await fetch(`http://192.168.1.117:5000/delete-student/${studentName}`, {
                 method: 'DELETE',
               });
 
