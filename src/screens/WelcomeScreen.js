@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -8,6 +10,11 @@ const WelcomeScreen = ({ navigation }) => {
       colors={['#FFD59A', '#FFF4D3']}
       style={styles.container}
     >
+      <Image
+        source={require('../../assets/logo.png')} 
+        style={styles.logo}
+      />
+
       <Text style={styles.title}>Welcome to DeafED!</Text>
 
       <TouchableOpacity
@@ -30,15 +37,22 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'top',
     alignItems: 'center',
     padding: 20,
+  },
+  logo: {
+    width: 300,
+    height: 300,
+    marginBottom: 0,
   },
   title: {
     fontSize: 36,
     fontWeight: 'bold',
     color: '#FF7043',
-    marginBottom: 40,
+    lineHeight: 44, 
+    marginTop: -15, 
+    marginBottom: 20, 
     textAlign: 'center',
   },
   button: {
