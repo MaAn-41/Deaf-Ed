@@ -47,15 +47,6 @@ export default function App() {
         <Stack.Screen name="ViewStudentsScreen" component={ViewStudentsScreen} />
         {/* <Stack.Screen name="EnglishAnimations" component={EnglishAnimations} /> */}
 
-        
-        
-        
-        
-
-        
-
-
-        
         </Stack.Navigator>
     </NavigationContainer>
   );
