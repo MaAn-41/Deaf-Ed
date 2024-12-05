@@ -22,7 +22,7 @@ const EnglishAnimations = ({ route }) => {
       require('../../../assets/alphabets/A.mp4'),
       require('../../../assets/alphabets/Apple.mp4'),
     ],
-    EncodedVideoChunk: [
+    E: [
       require('../../../assets/alphabets/A.mp4'),
       require('../../../assets/alphabets/Apple.mp4'),
     ],
