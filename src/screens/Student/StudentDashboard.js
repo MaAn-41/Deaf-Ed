@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f44336",
     padding: 10,
     borderRadius: 5,
-    zIndex: 30, // Make sure the toggle is above all content
+    zIndex: 30,
   },
   drawerToggleText: {
     color: "#fff",
@@ -339,19 +339,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 0, // Adjusted to 0 so the content isn't hidden when the drawer is closed
-    zIndex: 1, // Ensure the content remains behind the drawer
+    marginLeft: 0,
+    zIndex: 1,
     transform: [{ translateX: 0 }],
     transition: "transform 0.3s ease-in-out",
   },
   contentShifted: {
-    transform: [{ translateX: 250 }], // This will move content to the right when the drawer opens
+    transform: [{ translateX: 250 }],
   },
   welcomeText: {
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#4CAF50", // Fancy color
+    color: "#4CAF50",
   },
 
   buttonsContainer: {
