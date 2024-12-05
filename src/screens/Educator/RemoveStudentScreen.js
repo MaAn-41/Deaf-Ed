@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { LinearGradient } from "expo-linear-gradient";
 
 const RemoveStudentScreen = ({ route }) => {
   const { educatorUsername } = route.params;
+
   const [sections, setSections] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedSection, setSelectedSection] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [loadingSections, setLoadingSections] = useState(false);
   const [loadingStudents, setLoadingStudents] = useState(false);
-
   const [sectionDropdownOpen, setSectionDropdownOpen] = useState(false);
   const [studentDropdownOpen, setStudentDropdownOpen] = useState(false);
 
@@ -21,7 +22,6 @@ const RemoveStudentScreen = ({ route }) => {
   const fetchSections = async () => {
     setLoadingSections(true);
     try {
-      console.log(educatorUsername);
       const response = await fetch(
         `http://192.168.1.117:5000/sections?educatorUsername=${educatorUsername}`
       );
@@ -97,7 +97,7 @@ const RemoveStudentScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
       <Text style={styles.title}>Remove Student</Text>
 
       <DropDownPicker
@@ -110,6 +110,7 @@ const RemoveStudentScreen = ({ route }) => {
         loading={loadingSections}
         style={styles.dropdown}
       />
+
       {!sectionDropdownOpen && (
         <TouchableOpacity style={styles.findButton} onPress={fetchStudents}>
           <Text style={styles.buttonText}>Find Students</Text>
@@ -137,7 +138,7 @@ const RemoveStudentScreen = ({ route }) => {
           <Text style={styles.buttonText}>Remove Student</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -148,28 +149,38 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 20,
+    color: "#FF7043",
+    marginBottom: 30,
+    textAlign: "center",
   },
   dropdown: {
     marginBottom: 15,
     zIndex: 10,
   },
   findButton: {
-    backgroundColor: "#4CAF50",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#4FC3F7",
+    padding: 15,
+    borderRadius: 25,
     marginBottom: 20,
+    width: "80%",
+    alignItems: "center",
+    elevation: 6,
   },
   removeButton: {
-    backgroundColor: "#f44336",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#F44336",
+    padding: 15,
+    borderRadius: 25,
     marginTop: 20,
+    width: "80%",
+    alignItems: "center",
+    elevation: 6,
   },
   buttonText: {
     color: "#fff",
+    fontWeight: "600",
+    fontSize: 18,
     textAlign: "center",
   },
 });
