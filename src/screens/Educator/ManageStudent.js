@@ -1,32 +1,37 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-const ManageStudentScreen = ({navigation,route }) => {
-  const { educatorEmail, educatorUsername } = route.params; 
+const ManageStudentScreen = ({ navigation, route }) => {
+  const { educatorEmail, educatorUsername } = route.params;
+
   const handleAddStudent = () => {
-    navigation.navigate('AddStudentScreen', { educatorEmail, educatorUsername }); 
+    navigation.navigate("AddStudentScreen", {
+      educatorEmail,
+      educatorUsername,
+    });
   };
 
   const handleRemoveStudent = () => {
-    navigation.navigate('RemoveStudentScreen', { educatorUsername }); 
+    navigation.navigate("RemoveStudentScreen", { educatorUsername });
   };
 
   const handleViewStudent = () => {
-    navigation.navigate('ViewStudentsScreen', { educatorUsername }); 
+    navigation.navigate("ViewStudentsScreen", { educatorUsername });
   };
 
   return (
-    <LinearGradient
-      colors={['#1e3c72', '#2a5298']}
-      style={styles.container}
-    >
+    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+      <Text style={styles.title}>Manage Students</Text>
+
       <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
         <Text style={styles.buttonText}>Add Student</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={handleRemoveStudent}>
         <Text style={styles.buttonText}>Remove Student</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={handleViewStudent}>
         <Text style={styles.buttonText}>View Students</Text>
       </TouchableOpacity>
@@ -37,34 +42,31 @@ const ManageStudentScreen = ({navigation,route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
-  infoContainer: {
-    marginBottom: 40,
-    alignItems: 'center',
-  },
-  infoText: {
-    fontSize: 18,
-    color: '#fff',
-    marginBottom: 10,
-    fontWeight: 'bold',
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#FF7043",
+    marginBottom: 30,
+    textAlign: "center",
   },
   button: {
-    backgroundColor: '#ff8c42',
+    backgroundColor: "#4FC3F7",
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 25,
     marginVertical: 15,
-    width: '80%',
-    alignItems: 'center',
+    width: "80%",
+    alignItems: "center",
     elevation: 6,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
 });
 
