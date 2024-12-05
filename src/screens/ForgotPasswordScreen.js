@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ForgotPasswordScreen = ({ navigation, route }) => {
@@ -8,7 +8,8 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [otpVerified, setOtpVerified] = useState(false); 
+  const [otpVerified, setOtpVerified] = useState(false);
+
   const handleRequestOtp = async () => {
     if (!email) {
       Alert.alert('Error', 'Please enter your email address!');
@@ -23,7 +24,6 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', 'OTP sent to your email!');
       } else {
@@ -48,10 +48,9 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', 'OTP verified!');
-        setOtpVerified(true); 
+        setOtpVerified(true);
       } else {
         Alert.alert('Error', data.message || 'Invalid OTP!');
       }
@@ -79,7 +78,6 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', 'Password reset successful!');
         navigation.navigate('LoginScreen', { userType });
@@ -92,7 +90,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.container}>
+    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.container}>
       {!otpVerified ? (
         <>
           <TextInput
@@ -166,7 +164,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   button: {
-    backgroundColor: '#ff8c42',
+    backgroundColor: '#4FC3F7',
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 25,
