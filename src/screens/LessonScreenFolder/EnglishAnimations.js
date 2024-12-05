@@ -7,21 +7,107 @@ const EnglishAnimations = ({ route }) => {
 
   const videoPaths = {
     A: [
-      require('../assets/alphabets/A_letter_video.mp4'),
-      require('../assets/alphabets/Apple_video.mp4'),
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
     ],
     B: [
-      require('../assets/alphabets/B_letter_video.mp4'),
-      require('../assets/alphabets/Banana_video.mp4'),
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
     ],
     C: [
-      require('../assets/alphabets/C_letter_video.mp4'),
-      require('../assets/alphabets/Cat_video.mp4'),
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
     ],
     D: [
-      require('../assets/alphabets/D_letter_video.mp4'),
-      require('../assets/alphabets/Dog_video.mp4'),
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
     ],
+    EncodedVideoChunk: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    F: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    G: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    H: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+   
+    I: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    J: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    K: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    L: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    M: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    N: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    O: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    Q: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    R: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    S: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    T: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    U: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    V: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    W: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    X: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    Y: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+    Z: [
+      require('../../../assets/alphabets/A.mp4'),
+      require('../../../assets/alphabets/Apple.mp4'),
+    ],
+   
   };
 
   const videos = videoPaths[letter.toUpperCase()] || [];
