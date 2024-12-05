@@ -1,41 +1,44 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const LessonScreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
+      <LinearGradient
+        colors={["#FFD59A", "#FFF4D3"]}
+        style={styles.gradientBackground}
+      >
         <Text style={styles.headerText}>Select a Lesson</Text>
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('EnglishLessonScreen')}
+            onPress={() => navigation.navigate("EnglishLessonScreen")}
           >
             <Text style={styles.buttonText}>English</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('CountingLessonScreen')}
+            onPress={() => navigation.navigate("CountingLessonScreen")}
           >
             <Text style={styles.buttonText}>Counting</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('FoundationalWordsScreen')}
+            onPress={() => navigation.navigate("FoundationalWordsScreen")}
           >
             <Text style={styles.buttonText}>Foundational Words</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('UrduLessonScreen')}
+            onPress={() => navigation.navigate("UrduLessonScreen")}
           >
             <Text style={styles.buttonText}>Urdu</Text>
           </TouchableOpacity>
@@ -48,37 +51,38 @@ const LessonScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   gradientBackground: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#FF7043",
+    textAlign: "center",
     marginBottom: 40,
   },
   buttonsContainer: {
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   button: {
-    backgroundColor: '#FFA500',
+    backgroundColor: "#4FC3F7",
     paddingVertical: 15,
     paddingHorizontal: 30,
     marginBottom: 20,
-    borderRadius: 5,
-    width: '80%',
-    alignItems: 'center',
+    borderRadius: 25,
+    width: "80%",
+    alignItems: "center",
+    elevation: 6,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
 
