@@ -4,20 +4,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation, route }) => {
-  const { userType } = route.params; // Determine if it's Student or Educator
+  const { userType } = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Handle Android back button to navigate to WelcomeScreen
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        navigation.navigate('WelcomeScreen'); // Navigate to WelcomeScreen
-        return true; // Prevent default behavior
+        navigation.navigate('WelcomeScreen');
+        return true;
       };
-
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
       return () => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
       };
@@ -41,7 +38,7 @@ const LoginScreen = ({ navigation, route }) => {
       if (response.ok) {
         Alert.alert('Success', `Welcome, ${userType}!`);
         navigation.navigate(`${userType}Dashboard`, {
-          email: email, // Pass the email variable to the dashboard screen
+          email: email,
         });
       } else {
         Alert.alert('Error', data.message || 'Login failed!');
@@ -52,7 +49,7 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.container}>
+    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.container}>
       <Text style={styles.title}>{userType} Login</Text>
       <TextInput
         style={styles.input}
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#FF7043',
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   button: {
-    backgroundColor: '#ff8c42',
+    backgroundColor: '#4FC3F7',
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 25,
@@ -130,7 +127,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#ff8c42',
+    borderColor: '#4FC3F7',
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 25,
@@ -141,12 +138,12 @@ const styles = StyleSheet.create({
   buttonOutlineText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#ff8c42',
+    color: '#4FC3F7',
   },
   forgotPassword: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#ffffff',
+    color: '#FF7043',
     marginTop: 10,
     textDecorationLine: 'underline',
   },
