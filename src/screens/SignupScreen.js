@@ -3,12 +3,12 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Alert } fro
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SignupScreen = ({ navigation, route }) => {
-  const { userType } = route.params; // Determine if it's Student, Parent, or Educator
+  const { userType } = route.params;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [fullname, setFullname] = useState('');  // Added fullname field
+  const [fullname, setFullname] = useState('');
   const [age, setAge] = useState('');
   const [otp, setOtp] = useState('');
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
@@ -21,12 +21,10 @@ const SignupScreen = ({ navigation, route }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', 'OTP sent to your email');
-        setIsOtpModalVisible(true); // Show OTP verification modal
+        setIsOtpModalVisible(true);
       } else {
         Alert.alert('Error', data.message || 'OTP generation failed');
       }
@@ -40,19 +38,16 @@ const SignupScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Please enter the OTP');
       return;
     }
-
     try {
       const response = await fetch('http://10.54.8.39:5000/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         setOtpVerified(true);
-        setIsOtpModalVisible(false); // Hide OTP verification modal
+        setIsOtpModalVisible(false);
         Alert.alert('Success', 'OTP Verified Successfully');
       } else {
         Alert.alert('Error', data.message || 'OTP verification failed');
@@ -75,7 +70,6 @@ const SignupScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Please verify your email OTP first');
       return;
     }
-
     try {
       const response = await fetch('http://10.54.8.39:5000/signup', {
         method: 'POST',
@@ -84,14 +78,12 @@ const SignupScreen = ({ navigation, route }) => {
           email,
           password,
           username,
-          fullname, // Added fullname field
+          fullname,
           userType,
-          age: userType === 'Student' ? age : undefined, // Only include age for students
+          age: userType === 'Student' ? age : undefined,
         }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Success', 'Account created successfully!');
         navigation.navigate('LoginScreen', { userType });
@@ -106,37 +98,36 @@ const SignupScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradient}>
+    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.gradient}>
       <View style={styles.container}>
         <Text style={styles.title}>Signup</Text>
 
-        {/* Signup Form */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Full Name"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#4B4B4B"
             value={fullname}
-            onChangeText={setFullname}  // Bind fullname field
+            onChangeText={setFullname}
           />
           <TextInput
             style={styles.input}
             placeholder="Username"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#4B4B4B"
             value={username}
             onChangeText={setUsername}
           />
           <TextInput
             style={styles.input}
             placeholder="Email"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#4B4B4B"
             value={email}
             onChangeText={setEmail}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#4B4B4B"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
@@ -144,7 +135,7 @@ const SignupScreen = ({ navigation, route }) => {
           <TextInput
             style={styles.input}
             placeholder="Confirm Password"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#4B4B4B"
             secureTextEntry
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -153,7 +144,7 @@ const SignupScreen = ({ navigation, route }) => {
             <TextInput
               style={styles.input}
               placeholder="Age"
-              placeholderTextColor="#aaa"
+              placeholderTextColor="#4B4B4B"
               keyboardType="numeric"
               value={age}
               onChangeText={setAge}
@@ -164,19 +155,13 @@ const SignupScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
 
-        {/* OTP Modal */}
-        <Modal
-          visible={isOtpModalVisible}
-          onRequestClose={() => setIsOtpModalVisible(false)}
-          transparent={true}
-          animationType="fade"
-        >
+        <Modal visible={isOtpModalVisible} onRequestClose={() => setIsOtpModalVisible(false)} transparent={true} animationType="fade">
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter OTP"
-                placeholderTextColor="#aaa"
+                placeholderTextColor="#4B4B4B"
                 keyboardType="numeric"
                 value={otp}
                 onChangeText={setOtp}
@@ -188,16 +173,11 @@ const SignupScreen = ({ navigation, route }) => {
           </View>
         </Modal>
 
-        {/* Signup Button */}
         <TouchableOpacity onPress={handleSignup} style={styles.button}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
-        {/* Navigation Link */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate('LoginScreen', { userType })}
-          style={styles.loginLink}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen', { userType })} style={styles.loginLink}>
           <Text style={styles.loginText}>Already have an account? Log In</Text>
         </TouchableOpacity>
       </View>
@@ -216,7 +196,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#FF7043',
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -225,14 +205,15 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#4B4B4B',
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    color: '#fff',
+    color: '#4B4B4B',
+    backgroundColor: '#FFF4D3',
   },
   button: {
-    backgroundColor: '#1e3c72',
+    backgroundColor: '#4C8BF5', // Blue color for button to match login page
     padding: 15,
     borderRadius: 5,
     marginBottom: 10,
@@ -247,7 +228,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginText: {
-    color: '#fff',
+    color: '#FF7043', // Same color as login link
   },
   modalContainer: {
     flex: 1,
