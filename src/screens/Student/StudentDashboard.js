@@ -1,108 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler, TextInput, Modal } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  BackHandler,
+  TextInput,
+  Modal,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome"; // Importing icons
 
 const StudentDashboard = () => {
-  const [studentName, setStudentName] = useState('');
+  const [studentName, setStudentName] = useState("");
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const { email } = route.params;
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(`http://192.168.1.117:5000/students/${email}`);
+        const response = await fetch(
+          `http://192.168.1.117:5000/students/${email}`
+        );
         const data = await response.json();
-
         if (response.ok) {
-          setStudentName(data.name || 'Guest');
+          setStudentName(data.name || "Guest");
           setStudentData(data);
         } else {
-          Alert.alert('Error', 'Student data not found');
+          Alert.alert("Error", "Student data not found");
         }
       } catch (error) {
         console.error(error);
-        Alert.alert('Error', 'An error occurred while fetching data');
+        Alert.alert("Error", "An error occurred while fetching data");
       } finally {
         setLoading(false);
       }
     };
-
     retrieveStudentData();
   }, [email]);
 
   const handleLogout = () => {
-    Alert.alert('Logout', 'Are you sure you want to logout?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      { text: "Cancel", style: "cancel" },
       {
-        text: 'Logout',
-        onPress: () => navigation.navigate('WelcomeScreen'),
+        text: "Logout",
+        onPress: () => navigation.navigate("WelcomeScreen"),
       },
     ]);
   };
 
   const handleChangePassword = async () => {
     if (!newPassword || !confirmPassword) {
-      Alert.alert('Error', 'Please enter both passwords!');
+      Alert.alert("Error", "Please enter both passwords!");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match!');
+      Alert.alert("Error", "Passwords do not match!");
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/reset-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://192.168.1.117:5000/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
-        Alert.alert('Success', 'Password reset successful!');
-        setModalVisible(false); 
-        navigation.navigate('LoginScreen',{ userType: 'Student' });
+        Alert.alert("Success", "Password reset successful!");
+        setModalVisible(false);
+        navigation.navigate("LoginScreen", { userType: "Student" });
       } else {
-        Alert.alert('Error', data.message || 'Failed to reset password!');
+        Alert.alert("Error", data.message || "Failed to reset password!");
       }
     } catch (error) {
-      Alert.alert('Error', 'Unable to reset password. Please try again later.');
+      Alert.alert("Error", "Unable to reset password. Please try again later.");
     }
   };
 
   const handleDeleteProfile = () => {
     Alert.alert(
-      'Delete Profile',
-      'Are you sure you want to delete your profile? This action cannot be undone.',
+      "Delete Profile",
+      "Are you sure you want to delete your profile? This action cannot be undone.",
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: "Cancel", style: "cancel" },
         {
-          text: 'Delete',
+          text: "Delete",
           onPress: async () => {
             try {
-              const response = await fetch(`http://192.168.1.117:5000/delete-student/${studentName}`, {
-                method: 'DELETE',
-              });
-
+              const response = await fetch(
+                `http://192.168.1.117:5000/delete-student/${studentName}`,
+                {
+                  method: "DELETE",
+                }
+              );
               if (response.ok) {
-                Alert.alert('Success', 'Your profile has been deleted.');
-                navigation.navigate('WelcomeScreen');
+                Alert.alert("Success", "Your profile has been deleted.");
+                navigation.navigate("WelcomeScreen");
               } else {
-                Alert.alert('Error', 'Failed to delete your profile. Please try again.');
+                Alert.alert(
+                  "Error",
+                  "Failed to delete your profile. Please try again."
+                );
               }
             } catch (error) {
               console.error(error);
-              Alert.alert('Error', 'An error occurred while deleting your profile.');
+              Alert.alert(
+                "Error",
+                "An error occurred while deleting your profile."
+              );
             }
           },
         },
@@ -113,19 +133,20 @@ const StudentDashboard = () => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        Alert.alert('Logout', 'Are you sure you want to logout?', [
-          { text: 'Cancel', style: 'cancel' },
+        Alert.alert("Logout", "Are you sure you want to logout?", [
+          { text: "Cancel", style: "cancel" },
           {
-            text: 'Logout',
-            onPress: () => navigation.navigate('WelcomeScreen'),
+            text: "Logout",
+            onPress: () => navigation.navigate("WelcomeScreen"),
           },
         ]);
         return true;
       };
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, [navigation])
   );
 
@@ -135,18 +156,28 @@ const StudentDashboard = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        {/* Left Drawer */}
+      <LinearGradient
+        colors={["#FFD59A", "#FFF4D3"]}
+        style={styles.gradientBackground}
+      >
         {drawerOpen && <View style={styles.overlay} />}
         <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
-          <TouchableOpacity style={styles.drawerButton} onPress={() => setDrawerOpen(false)}>
-            <Text style={styles.drawerButtonText}>Close</Text>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setDrawerOpen(false)}
+          >
+            <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={() => setModalVisible(true)}>
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={() => setModalVisible(true)}
+          >
             <Text style={styles.drawerButtonText}>Change Password</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.drawerButton} onPress={handleDeleteProfile}>
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={handleDeleteProfile}
+          >
             <Text style={styles.drawerButtonText}>Delete Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
@@ -154,45 +185,42 @@ const StudentDashboard = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Toggle Drawer Button */}
         <TouchableOpacity
           style={styles.drawerToggle}
           onPress={() => setDrawerOpen((prevState) => !prevState)}
         >
-          <Text style={styles.drawerToggleText}>{drawerOpen ? 'Close' : 'Menu'}</Text>
+          <Text style={styles.drawerToggleText}>
+            {drawerOpen ? "Close" : "Menu"}
+          </Text>
         </TouchableOpacity>
 
-        {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
-            Welcome to the Dashboard, {studentName || 'Guest'}!
-          </Text>
-          <Text style={styles.emailText}>
-            Email: {studentData?.email || 'Not Available'}
-          </Text>
-          <Text style={styles.ageText}>
-            Age: {studentData?.age ? String(studentData.age) : 'Not Available'}
+            Welcome {studentName || "Guest"}!
           </Text>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('LessonScreen')}
+              style={[styles.button, styles.lessonButton]}
+              onPress={() => navigation.navigate("LessonScreen")}
             >
+              <Icon name="book" size={20} color="#fff" />
               <Text style={styles.buttonText}>Lesson</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('TestScreen')}
+              style={[styles.button, styles.testButton]}
+              onPress={() => navigation.navigate("TestScreen")}
             >
+              <Icon name="pencil" size={20} color="#fff" />
               <Text style={styles.buttonText}>Test</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('ProgressReportScreen')}
+              style={[styles.button, styles.reportButton]}
+              onPress={() => navigation.navigate("ProgressReportScreen")}
             >
+              <Icon name="bar-chart" size={20} color="#fff" />
               <Text style={styles.buttonText}>Progress Report</Text>
             </TouchableOpacity>
           </View>
@@ -222,11 +250,14 @@ const StudentDashboard = () => {
               value={confirmPassword}
               onChangeText={setConfirmPassword}
             />
-            <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
+            <TouchableOpacity
+              style={[styles.button, styles.modalButton]}
+              onPress={handleChangePassword}
+            >
               <Text style={styles.buttonText}>Confirm</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, styles.modalButton]}
               onPress={() => setModalVisible(false)}
             >
               <Text style={styles.buttonText}>Cancel</Text>
@@ -241,117 +272,138 @@ const StudentDashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   gradientBackground: {
     flex: 1,
-    position: 'relative',
+    position: "relative",
   },
   overlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    zIndex: 10, // To ensure overlay appears above the content
   },
   drawer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    left: -200,
-    width: 200,
-    height: '100%',
-    backgroundColor: '#333',
-    padding: 20,
-    justifyContent: 'flex-start',
-    zIndex: 2,
+    left: 0,
+    width: 250, // Width of the drawer (increased to ensure no overlap)
+    height: "100%",
+    backgroundColor: "#9E9E9E", // Changed to grey
+    paddingTop: 50,
+    zIndex: 20, // Ensure the drawer is above other content
+    transform: [{ translateX: -250 }],
+    transition: "transform 0.3s ease-in-out",
   },
   drawerOpen: {
-    left: 0,
-  },
-  drawerButton: {
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  drawerButtonText: {
-    color: '#fff',
-    fontSize: 16,
+    transform: [{ translateX: 0 }],
   },
   drawerToggle: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 3,
+    position: "absolute",
+    top: 10,
+    left: 10,
+    backgroundColor: "#f44336",
+    padding: 10,
+    borderRadius: 5,
+    zIndex: 30, // Make sure the toggle is above all content
   },
   drawerToggleText: {
-    color: '#fff',
+    color: "#fff",
+    fontSize: 18,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    color: "#fff",
+    fontSize: 20,
+  },
+  closeButtonText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  drawerButton: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderColor: "#fff",
+  },
+  drawerButtonText: {
+    color: "#fff",
     fontSize: 18,
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 0, // Adjusted to 0 so the content isn't hidden when the drawer is closed
+    zIndex: 1, // Ensure the content remains behind the drawer
+    transform: [{ translateX: 0 }],
+    transition: "transform 0.3s ease-in-out",
+  },
+  contentShifted: {
+    transform: [{ translateX: 250 }], // This will move content to the right when the drawer opens
   },
   welcomeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 20,
+    color: "#4CAF50", // Fancy color
   },
-  emailText: {
-    fontSize: 18,
-    color: '#fff',
-    marginBottom: 10,
-  },
-  ageText: {
-    fontSize: 18,
-    color: '#fff',
-    marginBottom: 20,
-  },
+
   buttonsContainer: {
-    width: '100%',
+    width: "80%",
+    alignItems: "stretch",
   },
   button: {
-    backgroundColor: '#FFA500',
+    marginBottom: 15,
     padding: 15,
-    borderRadius: 5,
-    width: '100%',
-    marginBottom: 10,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  lessonButton: {
+    backgroundColor: "#4CAF50",
+  },
+  testButton: {
+    backgroundColor: "#FF9800",
+  },
+  reportButton: {
+    backgroundColor: "#2196F3",
   },
   buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontSize: 18,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
-    width: 300,
-    alignItems: 'center',
+    width: "80%",
+    alignItems: "center",
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   input: {
-    width: '100%',
-    height: 45,
-    borderColor: '#ddd',
+    width: "100%",
+    padding: 10,
+    marginBottom: 10,
     borderWidth: 1,
-    marginBottom: 15,
-    paddingLeft: 10,
+    borderColor: "#ddd",
     borderRadius: 5,
+  },
+  modalButton: {
+    backgroundColor: "#2196F3",
   },
 });
 
