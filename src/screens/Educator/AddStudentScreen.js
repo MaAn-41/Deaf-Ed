@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const AddStudentScreen = ({ route }) => {
-  const { educatorEmail, educatorUsername } = route.params; 
-  const [studentUsername, setStudentUsername] = useState('');
-  const [section, setSection] = useState('');
+  const { educatorEmail, educatorUsername } = route.params;
+  const [studentUsername, setStudentUsername] = useState("");
+  const [section, setSection] = useState("");
 
   const handleAddStudent = async () => {
     if (!/^[A-Z]{1}$/.test(section)) {
-      Alert.alert('Invalid Section', 'Section must be a single capital alphabet.');
+      Alert.alert(
+        "Invalid Section",
+        "Section must be a single capital alphabet."
+      );
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/add-student', {
-        method: 'POST',
+      const response = await fetch("http://192.168.1.117:5000/add-student", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           studentUsername,
@@ -28,78 +39,89 @@ const AddStudentScreen = ({ route }) => {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert('Success', 'Student added successfully!');
-        setStudentUsername(''); 
-        setSection('');
+        Alert.alert("Success", "Student added successfully!");
+        setStudentUsername("");
+        setSection("");
       } else {
-        Alert.alert('Error', data.message || 'Failed to add student.');
+        Alert.alert("Error", data.message || "Failed to add student.");
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'An error occurred while adding the student.');
+      Alert.alert("Error", "An error occurred while adding the student.");
     }
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
       <Text style={styles.title}>Add Student</Text>
-      <Text style={styles.label}>Student Username:</Text>
-      <TextInput
-        style={styles.input}
-        value={studentUsername}
-        onChangeText={setStudentUsername}
-        placeholder="Enter student username"
-      />
-      <Text style={styles.label}>Section (One Capital Letter):</Text>
-      <TextInput
-        style={styles.input}
-        value={section}
-        onChangeText={setSection}
-        placeholder="Enter section (A-Z)"
-        maxLength={1}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
-        <Text style={styles.buttonText}>Add Student</Text>
-      </TouchableOpacity>
-    </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={studentUsername}
+          onChangeText={setStudentUsername}
+          placeholder="Enter student username"
+          placeholderTextColor="#aaa"
+        />
+        <TextInput
+          style={styles.input}
+          value={section}
+          onChangeText={setSection}
+          placeholder="Enter section (A-Z)"
+          placeholderTextColor="#aaa"
+          maxLength={1}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
+          <Text style={styles.buttonText}>Add Student</Text>
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#FF7043",
+    marginBottom: 30,
+    textAlign: "center",
   },
-  label: {
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 5,
+  inputContainer: {
+    width: "100%",
+    alignItems: "center",
   },
   input: {
+    width: "90%",
+    height: 50,
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    width: '80%',
-    padding: 10,
-    marginBottom: 20,
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    fontSize: 16,
+    color: "#000",
+    elevation: 3,
   },
   button: {
-    backgroundColor: '#ff8c42',
+    backgroundColor: "#4FC3F7",
     paddingVertical: 15,
-    paddingHorizontal: 30,
     borderRadius: 25,
+    marginVertical: 10,
+    width: "80%",
+    alignItems: "center",
+    elevation: 6,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#fff",
   },
 });
 
