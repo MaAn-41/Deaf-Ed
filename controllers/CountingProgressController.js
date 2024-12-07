@@ -17,7 +17,6 @@ exports.getCountingProgress = async (req, res) => {
   }
 };
 
-// Update progress
 exports.updateCountingProgress = async (req, res) => {
   const { username, number } = req.body;
 
