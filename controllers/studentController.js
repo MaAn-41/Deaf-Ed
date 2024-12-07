@@ -1,5 +1,4 @@
 const Student = require("../models/User");
-const EducatorStudent = require("../models/Educator_Student");
 const AlphabetsProgress = require("../models/AlphabetsProgress");
 const CountingProgress = require("../models/CountingProgress");
 
@@ -38,10 +37,6 @@ exports.deleteStudent = async (req, res) => {
         .status(404)
         .json({ message: "Student not found in User schema" });
     }
-
-    const educatorStudentDeletion = await EducatorStudent.findOneAndDelete({
-      studentUsername: studentName,
-    });
 
     await AlphabetsProgress.deleteMany({ username: studentName });
     await CountingProgress.deleteMany({ username: studentName });

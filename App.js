@@ -20,6 +20,8 @@ import ProgressReportScreen from "./src/screens/ProgressScreenFolder/ProgressRep
 import Manage from "./src/screens/Educator/Manage";
 import EnglishAnimations from "./src/screens/LessonScreenFolder/EnglishAnimations";
 import CountingAnimations from "./src/screens/LessonScreenFolder/CountingAnimations";
+import SectionScreen from "./src/screens/Educator/SectionScreen";
+import StudentsScreen from "./src/screens/Educator/StudentsScreen";
 
 const Stack = createStackNavigator();
 
@@ -73,7 +75,10 @@ export default function App() {
           name="CountingAnimations"
           component={CountingAnimations}
         />
+
         <Stack.Screen name="Manage" component={Manage} />
+        <Stack.Screen name="SectionScreen" component={SectionScreen} />
+        <Stack.Screen name="StudentsScreen" component={StudentsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

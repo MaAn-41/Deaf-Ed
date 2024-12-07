@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const studentController = require("./controllers/studentController");
 const EducatorController = require("./controllers/educatorController");
-
+const sectionController = require("./controllers/sectionController");
 require("dotenv").config();
 
 const {
@@ -75,6 +75,11 @@ app.post("/countingProgress", updateCountingProgress);
 //updating profiles
 app.put("/students", studentController.updateStudentProfile);
 app.put("/educators", EducatorController.updateEducatorFullName);
+
+//section
+app.get("/sections", sectionController.getSections);
+app.post("/sections", sectionController.createSection);
+app.delete("/sections/:id", sectionController.deleteSection);
 
 // Start Server
 app.listen(process.env.PORT, () => {
