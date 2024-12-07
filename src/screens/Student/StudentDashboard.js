@@ -15,7 +15,9 @@ import {
   useRoute,
   useFocusEffect,
 } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/FontAwesome"; // Importing icons
+import Icon from "react-native-vector-icons/FontAwesome";
+
+import BASE_URL from "../../../config";
 
 const StudentDashboard = () => {
   const [studentName, setStudentName] = useState("");
@@ -32,9 +34,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const retrieveStudentData = async () => {
       try {
-        const response = await fetch(
-          `http://192.168.1.117:5000/students/${email}`
-        );
+        const response = await fetch(`${BASE_URL}/students/${email}`);
         const data = await response.json();
         if (response.ok) {
           setStudentName(data.name || "Guest");
@@ -74,7 +74,7 @@ const StudentDashboard = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.117:5000/reset-password", {
+      const response = await fetch("${BASE_URL}/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
@@ -103,7 +103,7 @@ const StudentDashboard = () => {
           onPress: async () => {
             try {
               const response = await fetch(
-                `http://192.168.1.117:5000/delete-student/${studentName}`,
+                `${BASE_URL}/delete-student/${studentName}`,
                 {
                   method: "DELETE",
                 }

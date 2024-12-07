@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from "../../../config";
 
 const ViewStudentsScreen = ({ route }) => {
   const { educatorUsername } = route.params;
@@ -21,7 +22,7 @@ const ViewStudentsScreen = ({ route }) => {
     setLoadingSections(true);
     try {
       const response = await fetch(
-        `http://192.168.1.117:5000/sections?educatorUsername=${educatorUsername}`
+        `${BASE_URL}/sections?educatorUsername=${educatorUsername}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -47,7 +48,7 @@ const ViewStudentsScreen = ({ route }) => {
     setLoadingStudents(true);
     try {
       const response = await fetch(
-        `http://192.168.1.117:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+        `${BASE_URL}/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
       );
       const data = await response.json();
       if (response.ok) {

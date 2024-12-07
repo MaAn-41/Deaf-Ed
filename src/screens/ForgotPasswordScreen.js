@@ -1,96 +1,108 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet, Modal } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  StyleSheet,
+  Modal,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from "../../config";
 
 const ForgotPasswordScreen = ({ navigation, route }) => {
   const { userType } = route.params;
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
 
   const handleRequestOtp = async () => {
     if (!email) {
-      Alert.alert('Error', 'Please enter your email address!');
+      Alert.alert("Error", "Please enter your email address!");
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`${BASE_URL}/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'OTP sent to your email!');
+        Alert.alert("Success", "OTP sent to your email!");
       } else {
-        Alert.alert('Error', data.message || 'Unable to send OTP!');
+        Alert.alert("Error", data.message || "Unable to send OTP!");
       }
     } catch (error) {
-      Alert.alert('Error', 'Unable to connect to the server. Please try again later.');
+      Alert.alert(
+        "Error",
+        "Unable to connect to the server. Please try again later."
+      );
     }
   };
 
   const handleVerifyOtp = async () => {
     if (!otp) {
-      Alert.alert('Error', 'Please enter the OTP!');
+      Alert.alert("Error", "Please enter the OTP!");
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/verify-reset-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`${BASE_URL}/verify-reset-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'OTP verified!');
+        Alert.alert("Success", "OTP verified!");
         setOtpVerified(true);
       } else {
-        Alert.alert('Error', data.message || 'Invalid OTP!');
+        Alert.alert("Error", data.message || "Invalid OTP!");
       }
     } catch (error) {
-      Alert.alert('Error', 'Unable to verify OTP. Please try again later.');
+      Alert.alert("Error", "Unable to verify OTP. Please try again later.");
     }
   };
 
   const handleResetPassword = async () => {
     if (!newPassword || !confirmPassword) {
-      Alert.alert('Error', 'Please enter both passwords!');
+      Alert.alert("Error", "Please enter both passwords!");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match!');
+      Alert.alert("Error", "Passwords do not match!");
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.1.117:5000/reset-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`${BASE_URL}/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'Password reset successful!');
-        navigation.navigate('LoginScreen', { userType });
+        Alert.alert("Success", "Password reset successful!");
+        navigation.navigate("LoginScreen", { userType });
       } else {
-        Alert.alert('Error', data.message || 'Failed to reset password!');
+        Alert.alert("Error", data.message || "Failed to reset password!");
       }
     } catch (error) {
-      Alert.alert('Error', 'Unable to reset password. Please try again later.');
+      Alert.alert("Error", "Unable to reset password. Please try again later.");
     }
   };
 
   return (
-    <LinearGradient colors={['#FFD59A', '#FFF4D3']} style={styles.container}>
+    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
       {!otpVerified ? (
         <>
           <TextInput
@@ -147,36 +159,36 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   input: {
-    width: '90%',
+    width: "90%",
     height: 50,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 15,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     fontSize: 16,
     elevation: 3,
   },
   button: {
-    backgroundColor: '#4FC3F7',
+    backgroundColor: "#4FC3F7",
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 25,
     marginVertical: 10,
-    width: '80%',
-    alignItems: 'center',
+    width: "80%",
+    alignItems: "center",
     elevation: 6,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
 });
 

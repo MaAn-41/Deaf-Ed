@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from "../../../config";
 
 const AddStudentScreen = ({ route }) => {
   const { educatorEmail, educatorUsername } = route.params;
@@ -24,7 +25,7 @@ const AddStudentScreen = ({ route }) => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.117:5000/add-student", {
+      const response = await fetch(`${BASE_URL}/add-student`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

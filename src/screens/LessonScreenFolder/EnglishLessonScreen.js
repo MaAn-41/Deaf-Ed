@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from "../../../config";
 
 const EnglishLessonScreen = ({ navigation }) => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");

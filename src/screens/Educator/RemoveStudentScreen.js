@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from "../../../config";
 
 const RemoveStudentScreen = ({ route }) => {
   const { educatorUsername } = route.params;
@@ -23,7 +24,7 @@ const RemoveStudentScreen = ({ route }) => {
     setLoadingSections(true);
     try {
       const response = await fetch(
-        `http://192.168.1.117:5000/sections?educatorUsername=${educatorUsername}`
+        `${BASE_URL}/sections?educatorUsername=${educatorUsername}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -49,7 +50,7 @@ const RemoveStudentScreen = ({ route }) => {
     setLoadingStudents(true);
     try {
       const response = await fetch(
-        `http://192.168.1.117:5000/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
+        `${BASE_URL}/students?educatorUsername=${educatorUsername}&section=${selectedSection}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -73,7 +74,7 @@ const RemoveStudentScreen = ({ route }) => {
       return;
     }
     try {
-      const response = await fetch(`http://192.168.1.117:5000/remove-student`, {
+      const response = await fetch(`${BASE_URL}/remove-student`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

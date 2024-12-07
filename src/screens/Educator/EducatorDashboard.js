@@ -16,6 +16,8 @@ import {
   useFocusEffect,
 } from "@react-navigation/native";
 
+import BASE_URL from "../../../config";
+
 const EducatorDashboard = () => {
   const [educatorName, setEducatorName] = useState("");
   const [educatorData, setEducatorData] = useState(null);
@@ -32,9 +34,7 @@ const EducatorDashboard = () => {
   useEffect(() => {
     const retrieveEducatorData = async () => {
       try {
-        const response = await fetch(
-          `http://192.168.1.117:5000/educators/${email}`
-        );
+        const response = await fetch(`${BASE_URL}/educators/${email}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -76,7 +76,7 @@ const EducatorDashboard = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.117:5000/reset-password", {
+      const response = await fetch(`${BASE_URL}/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword, confirmPassword }),
@@ -107,7 +107,7 @@ const EducatorDashboard = () => {
           onPress: async () => {
             try {
               const response = await fetch(
-                `http://192.168.1.117:5000/delete-educator/${educatorName}`,
+                `${BASE_URL}/delete-educator/${educatorName}`,
                 {
                   method: "DELETE",
                 }

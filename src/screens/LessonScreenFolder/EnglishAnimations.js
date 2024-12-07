@@ -12,8 +12,8 @@ const EnglishAnimations = ({ route }) => {
       require("../../../assets/alphabets/Apple.mp4"),
     ],
     B: [
-      require("../../../assets/alphabets/A.mp4"),
-      require("../../../assets/alphabets/Apple.mp4"),
+      require("../../../assets/alphabets/B.mp4"),
+      require("../../../assets/alphabets/Banana.mp4"),
     ],
     C: [
       require("../../../assets/alphabets/A.mp4"),
@@ -93,7 +93,7 @@ const EnglishAnimations = ({ route }) => {
       require("../../../assets/alphabets/Apple.mp4"),
     ],
     W: [
-      require("../../../assets/alphabets/A.mp4"),
+      require("../../../assets/alphabets/W.mp4"),
       require("../../../assets/alphabets/Apple.mp4"),
     ],
     X: [
