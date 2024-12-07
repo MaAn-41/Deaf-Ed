@@ -7,9 +7,12 @@ import {
   StyleSheet,
   Alert,
   Modal,
+  Button,
+  Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../config";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const SignupScreen = ({ navigation, route }) => {
   const { userType } = route.params;
@@ -22,6 +25,8 @@ const SignupScreen = ({ navigation, route }) => {
   const [otp, setOtp] = useState("");
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+  const [dob, setDob] = useState("");
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleGenerateOtp = async () => {
     try {
@@ -69,6 +74,14 @@ const SignupScreen = ({ navigation, route }) => {
     }
   };
 
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+      setDob(formattedDate);
+    }
+  };
+
   const handleSignup = async () => {
     if (
       !email ||
@@ -76,7 +89,7 @@ const SignupScreen = ({ navigation, route }) => {
       !confirmPassword ||
       !username ||
       !fullname ||
-      (userType === "Student" && !age)
+      (userType === "Student" && !dob)
     ) {
       Alert.alert("Error", "Please fill in all required fields!");
       return;
@@ -102,7 +115,7 @@ const SignupScreen = ({ navigation, route }) => {
           username,
           fullname,
           userType,
-          age: userType === "Student" ? age : undefined,
+          dob: userType === "Student" ? dob : undefined,
         }),
       });
 
@@ -174,14 +187,25 @@ const SignupScreen = ({ navigation, route }) => {
       />
 
       {userType === "Student" && (
-        <TextInput
-          style={styles.input}
-          placeholder="Age"
-          placeholderTextColor="#aaa"
-          keyboardType="numeric"
-          value={age}
-          onChangeText={setAge}
-        />
+        <>
+          <Button
+            title="Select Date of Birth"
+            onPress={() => setShowDatePicker(true)}
+          />
+          <Text style={styles.selectedDate}>
+            {dob ? `Selected: ${dob}` : "No date selected"}
+          </Text>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={dob ? new Date(dob) : new Date()}
+              mode="date"
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={handleDateChange}
+              maximumDate={new Date()}
+            />
+          )}
+        </>
       )}
 
       <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
@@ -288,6 +312,11 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     width: "80%",
+  },
+  selectedDate: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#333",
   },
 });
 

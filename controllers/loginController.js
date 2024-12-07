@@ -1,12 +1,12 @@
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const otpStore = {};
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -15,104 +15,120 @@ const transporter = nodemailer.createTransport({
 
 exports.login = async (req, res) => {
   const { email, password, userType } = req.body;
+  const lowerCaseEmail = email.toLowerCase();
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: lowerCaseEmail });
+
     if (!user) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: "Invalid email" });
+    }
+
+    if (!user.verified) {
+      return res.status(400).json({ message: "You are blocked by the admin." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: "Invalid password" });
     }
 
     if (userType !== user.userType) {
-      return res.status(400).json({ message: `Error: Your role is ${user.userType}` });
+      return res
+        .status(400)
+        .json({ message: `Error: Your role is ${user.userType}` });
     }
 
-    res.status(200).json({ message: 'Login successful', user });
+    res.status(200).json({ message: "Login successful", user });
   } catch (err) {
-    res.status(500).json({ message: 'Error during login', error: err.message });
+    res.status(500).json({ message: "Error during login", error: err.message });
   }
 };
 
-
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
+  const lowerCaseEmail = email.toLowerCase();
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: lowerCaseEmail });
     if (!user) {
-      return res.status(400).json({ message: 'Email not found' });
+      return res.status(400).json({ message: "Email not found" });
     }
 
     const otp = crypto.randomInt(100000, 999999).toString();
-    otpStore[email] = {
+    otpStore[lowerCaseEmail] = {
       otp,
       expiration: Date.now() + 10 * 60 * 1000,
     };
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Password Reset OTP',
+      to: lowerCaseEmail,
+      subject: "Password Reset OTP",
       text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
     });
 
-    res.status(200).json({ message: 'OTP sent to your email' });
+    res.status(200).json({ message: "OTP sent to your email" });
   } catch (err) {
-    res.status(500).json({ message: 'Error during OTP generation', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error during OTP generation", error: err.message });
   }
 };
 
 exports.verifyResetOtp = (req, res) => {
   const { email, otp } = req.body;
+  const lowerCaseEmail = email.toLowerCase();
 
-  if (!otpStore[email]) {
-    return res.status(400).json({ message: 'OTP not generated or expired' });
+  if (!otpStore[lowerCaseEmail]) {
+    return res.status(400).json({ message: "OTP not generated or expired" });
   }
 
-  const storedOtp = otpStore[email];
+  const storedOtp = otpStore[lowerCaseEmail];
   if (Date.now() > storedOtp.expiration) {
-    delete otpStore[email];
-    return res.status(400).json({ message: 'OTP has expired' });
+    delete otpStore[lowerCaseEmail];
+    return res.status(400).json({ message: "OTP has expired" });
   }
 
   if (otp !== storedOtp.otp) {
-    return res.status(400).json({ message: 'Invalid OTP' });
+    return res.status(400).json({ message: "Invalid OTP" });
   }
 
-  delete otpStore[email];
-  res.status(200).json({ message: 'OTP verified successfully' });
+  delete otpStore[lowerCaseEmail];
+  res.status(200).json({ message: "OTP verified successfully" });
 };
 
 exports.resetPassword = async (req, res) => {
   const { email, newPassword, confirmPassword } = req.body;
+  const lowerCaseEmail = email.toLowerCase();
 
   if (newPassword !== confirmPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' });
+    return res.status(400).json({ message: "Passwords do not match" });
   }
 
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   if (!passwordRegex.test(newPassword)) {
     return res.status(400).json({
       message:
-        'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one special character, and one number.',
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one special character, and one number.",
     });
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: lowerCaseEmail });
     if (!user) {
-      return res.status(400).json({ message: 'Email not found' });
+      return res.status(400).json({ message: "Email not found" });
     }
 
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
-    res.status(200).json({ message: 'Password reset successful' });
+    res.status(200).json({ message: "Password reset successful" });
   } catch (err) {
-    res.status(500).json({ message: 'Error during password reset', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error during password reset", error: err.message });
   }
 };

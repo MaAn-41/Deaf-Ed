@@ -45,9 +45,10 @@ const LoginScreen = ({ navigation, route }) => {
 
       const data = await response.json();
       if (response.ok) {
+        const lowerCaseEmail = email.toLowerCase();
         Alert.alert("Success", `Welcome, ${userType}!`);
         navigation.navigate(`${userType}Dashboard`, {
-          email: email,
+          email: lowerCaseEmail,
         });
       } else {
         Alert.alert("Error", data.message || "Login failed!");
