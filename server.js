@@ -21,6 +21,7 @@ const {
   verifyResetOtp,
   resetPassword,
 } = require("./controllers/loginController");
+
 const {
   getAlphabetsProgress,
   updateAlphabetsProgress,
@@ -28,6 +29,11 @@ const {
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+const {
+  getCountingProgress,
+  updateCountingProgress,
+} = require("./controllers/CountingProgressController");
 
 // MongoDB Connection
 mongoose
@@ -71,6 +77,9 @@ app.delete("/delete-student/:studentName", studentController.deleteStudent);
 // Alphabet Progress Routes
 app.get("/alphabetsProgress", getAlphabetsProgress);
 app.post("/alphabetsProgress", updateAlphabetsProgress);
+
+app.get("/countingProgress", getCountingProgress);
+app.post("/countingProgress", updateCountingProgress);
 
 // Start Server
 app.listen(process.env.PORT, () => {

@@ -22,6 +22,7 @@ import AddStudentScreen from "./src/screens/Educator/AddStudentScreen";
 import RemoveStudentScreen from "./src/screens/Educator/RemoveStudentScreen";
 import ViewStudentsScreen from "./src/screens/Educator/ViewStudentsScreen";
 import EnglishAnimations from "./src/screens/LessonScreenFolder/EnglishAnimations";
+import CountingAnimations from "./src/screens/LessonScreenFolder/CountingAnimations";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,10 @@ export default function App() {
           component={ViewStudentsScreen}
         />
         <Stack.Screen name="EnglishAnimations" component={EnglishAnimations} />
+        <Stack.Screen
+          name="CountingAnimations"
+          component={CountingAnimations}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,17 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
 
 const CountingLessonScreen = ({ navigation, route }) => {
   const { Username } = route.params;
-  const numbers = Array.from({ length: 11 }, (_, i) => i); // Generates an array [0, 1, 2, ..., 10]
+  const numbers = Array.from({ length: 11 }, (_, i) => i);
+  const [openedNumbers, setOpenedNumbers] = useState([]);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/countingProgress?username=${Username}`
+        );
+        const data = await response.json();
+        setOpenedNumbers(data.openedNumbers || []);
+      } catch (error) {
+        console.error("Error fetching progress:", error);
+      }
+    };
+    fetchProgress();
+  }, []);
+
+  const handleNumberClick = async (number) => {
+    try {
+      if (!openedNumbers.includes(number)) {
+        await fetch(`${BASE_URL}/countingProgress`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: Username, number }),
+        });
+        setOpenedNumbers((prev) => [...prev, number]);
+      }
+      navigation.navigate("CountingAnimations", { number });
+    } catch (error) {
+      Alert.alert("Error", "Failed to update progress.");
+      console.error("Error updating progress:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -26,10 +62,15 @@ const CountingLessonScreen = ({ navigation, route }) => {
           {numbers.map((number, index) => (
             <TouchableOpacity
               key={index}
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate("CountingAnimations", { number })
-              }
+              style={[
+                styles.button,
+                {
+                  backgroundColor: openedNumbers.includes(number)
+                    ? "#B0BEC5"
+                    : "#4FC3F7",
+                },
+              ]}
+              onPress={() => handleNumberClick(number)}
             >
               <Text style={styles.buttonText}>{number}</Text>
             </TouchableOpacity>
@@ -71,7 +112,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4FC3F7",
     marginVertical: 10,
     borderRadius: 25,
     elevation: 6,
