@@ -17,10 +17,7 @@ import UrduLessonScreen from "./src/screens/LessonScreenFolder/UrduLessonScreen"
 import FoundationalWordsScreen from "./src/screens/LessonScreenFolder/FoundationalWordsScreen";
 import TestScreen from "./src/screens/TestScreenFolder/TestScreen";
 import ProgressReportScreen from "./src/screens/ProgressScreenFolder/ProgressReportScreen";
-import ManageStudentScreen from "./src/screens/Educator/ManageStudent";
-import AddStudentScreen from "./src/screens/Educator/AddStudentScreen";
-import RemoveStudentScreen from "./src/screens/Educator/RemoveStudentScreen";
-import ViewStudentsScreen from "./src/screens/Educator/ViewStudentsScreen";
+import Manage from "./src/screens/Educator/Manage";
 import EnglishAnimations from "./src/screens/LessonScreenFolder/EnglishAnimations";
 import CountingAnimations from "./src/screens/LessonScreenFolder/CountingAnimations";
 
@@ -70,24 +67,13 @@ export default function App() {
           name="ProgressReportScreen"
           component={ProgressReportScreen}
         />
-        <Stack.Screen
-          name="ManageStudentScreen"
-          component={ManageStudentScreen}
-        />
-        <Stack.Screen name="AddStudentScreen" component={AddStudentScreen} />
-        <Stack.Screen
-          name="RemoveStudentScreen"
-          component={RemoveStudentScreen}
-        />
-        <Stack.Screen
-          name="ViewStudentsScreen"
-          component={ViewStudentsScreen}
-        />
+
         <Stack.Screen name="EnglishAnimations" component={EnglishAnimations} />
         <Stack.Screen
           name="CountingAnimations"
           component={CountingAnimations}
         />
+        <Stack.Screen name="Manage" component={Manage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

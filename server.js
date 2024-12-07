@@ -4,8 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const studentController = require("./controllers/studentController");
 const EducatorController = require("./controllers/educatorController");
-const addStudent = require("./controllers/addStudent");
-const remStudent = require("./controllers/RemoveStudent");
 
 require("dotenv").config();
 
@@ -60,13 +58,6 @@ app.get("/students/:email", studentController.retrieveStudentData);
 
 //retriving educator data
 app.get("/educators/:email", EducatorController.retrieveEducatortData);
-
-//teacher student db
-app.post("/add-student", addStudent.addStudent);
-
-app.get("/sections", remStudent.getSections);
-app.get("/students", remStudent.getStudents);
-app.post("/remove-student", remStudent.removeStudent);
 
 //delete profiles
 app.delete("/delete-educator/:educatorName", EducatorController.deleteEducator);

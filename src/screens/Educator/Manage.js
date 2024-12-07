@@ -2,38 +2,37 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const ManageStudentScreen = ({ navigation, route }) => {
+const Manage = ({ navigation, route }) => {
   const { educatorEmail, educatorUsername } = route.params;
-
-  const handleAddStudent = () => {
-    navigation.navigate("AddStudentScreen", {
-      educatorEmail,
-      educatorUsername,
-    });
-  };
-
-  const handleRemoveStudent = () => {
-    navigation.navigate("RemoveStudentScreen", { educatorUsername });
-  };
-
-  const handleViewStudent = () => {
-    navigation.navigate("ViewStudentsScreen", { educatorUsername });
-  };
 
   return (
     <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
       <Text style={styles.title}>Manage Students</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
-        <Text style={styles.buttonText}>Add Student</Text>
+      {/* Section Button */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate("SectionScreen", {
+            educatorEmail: educatorEmail,
+            educatorUsername: educatorUsername,
+          })
+        }
+      >
+        <Text style={styles.buttonText}>Section</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleRemoveStudent}>
-        <Text style={styles.buttonText}>Remove Student</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleViewStudent}>
-        <Text style={styles.buttonText}>View Students</Text>
+      {/* Students Button */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate("StudentsScreen", {
+            educatorEmail: educatorEmail,
+            educatorUsername: educatorUsername,
+          })
+        }
+      >
+        <Text style={styles.buttonText}>Students</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -70,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ManageStudentScreen;
+export default Manage;
