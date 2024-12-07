@@ -62,13 +62,43 @@ exports.deleteStudent = async (req, res) => {
       .json({ message: "An error occurred while deleting student" });
   }
 };
-
 exports.updateStudentProfile = async (req, res) => {
   try {
     const { email, fullname, dob } = req.body;
 
     if (!email || !fullname || !dob) {
       return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(fullname)) {
+      return res.status(400).json({
+        message:
+          "Full name must contain alphabets only (no numbers or special characters).",
+      });
+    }
+
+    const currentDate = new Date();
+    const birthDate = new Date(dob);
+
+    if (isNaN(birthDate.getTime())) {
+      return res.status(400).json({ message: "Invalid date of birth format." });
+    }
+
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    if (age < 4 || age > 14) {
+      return res.status(400).json({
+        message:
+          "Age must be between 4 and 14 years based on the date of birth.",
+      });
     }
 
     const updatedStudent = await Student.findOneAndUpdate(

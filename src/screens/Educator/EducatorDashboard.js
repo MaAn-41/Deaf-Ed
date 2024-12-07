@@ -28,6 +28,8 @@ const EducatorDashboard = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
+  const [updatedFullname, setUpdatedFullname] = useState("");
 
   const { email } = route.params;
 
@@ -151,6 +153,38 @@ const EducatorDashboard = () => {
     }, [navigation])
   );
 
+  const handleUpdateFullname = async () => {
+    if (!updatedFullname.trim()) {
+      Alert.alert("Error", "Full name cannot be empty.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/educators`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: educatorData.email,
+          fullname: updatedFullname,
+        }),
+      });
+
+      if (response.ok) {
+        Alert.alert("Success", "Full name updated successfully!");
+        setEducatorData((prevData) => ({
+          ...prevData,
+          fullname: updatedFullname,
+        }));
+        setProfileModalVisible(false);
+      } else {
+        Alert.alert("Error", "Failed to update full name.");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "An error occurred while updating full name.");
+    }
+  };
+
   if (loading) {
     return <Text>Loading...</Text>;
   }
@@ -161,7 +195,6 @@ const EducatorDashboard = () => {
         colors={["#1e3c72", "#2a5298"]}
         style={styles.gradientBackground}
       >
-        {/* Left Drawer */}
         {drawerOpen && <View style={styles.overlay} />}
         <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
           <TouchableOpacity
@@ -173,6 +206,13 @@ const EducatorDashboard = () => {
           <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
             <Text style={styles.drawerButtonText}>Logout</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={() => setProfileModalVisible(true)}
+          >
+            <Text style={styles.drawerButtonText}>My Profile</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={() => setModalVisible(true)}
@@ -187,7 +227,6 @@ const EducatorDashboard = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Toggle Drawer Button */}
         <TouchableOpacity
           style={styles.drawerToggle}
           onPress={() => setDrawerOpen((prevState) => !prevState)}
@@ -197,7 +236,6 @@ const EducatorDashboard = () => {
           </Text>
         </TouchableOpacity>
 
-        {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
             Welcome to the Dashboard, {educatorName || "Guest"}!
@@ -272,6 +310,58 @@ const EducatorDashboard = () => {
             >
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={profileModalVisible}
+        onRequestClose={() => setProfileModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>My Profile</Text>
+
+            <Text style={styles.label}>Username:</Text>
+            <TextInput
+              style={[styles.input, { backgroundColor: "#f0f0f0" }]}
+              editable={false}
+              value={educatorData?.name || ""}
+            />
+
+            <Text style={styles.label}>Email:</Text>
+            <TextInput
+              style={[styles.input, { backgroundColor: "#f0f0f0" }]}
+              editable={false}
+              value={educatorData?.email || ""}
+            />
+
+            <Text style={styles.label}>Full Name:</Text>
+            <TextInput
+              style={styles.input}
+              value={updatedFullname}
+              onChangeText={(text) => {
+                setUpdatedFullname(text);
+              }}
+            />
+
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  handleUpdateFullname();
+                }}
+              >
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setProfileModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>

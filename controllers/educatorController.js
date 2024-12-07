@@ -1,4 +1,4 @@
-const Student = require("../models/User");
+const Educator = require("../models/User");
 const EducatorStudent = require("../models/Educator_Student");
 const AlphabetsProgress = require("../models/AlphabetsProgress");
 const CountingProgress = require("../models/CountingProgress");
@@ -6,16 +6,16 @@ const CountingProgress = require("../models/CountingProgress");
 exports.retrieveEducatortData = async (req, res) => {
   try {
     const { email } = req.params;
-    const student = await Student.findOne({ email });
+    const educator = await Educator.findOne({ email });
 
-    if (!student) {
+    if (!educator) {
       return res.status(404).json({ message: "Educator not found" });
     }
 
     return res.status(200).json({
-      name: student.username,
-      email: student.email,
-      fullname: student.fullname,
+      name: educator.username,
+      email: educator.email,
+      fullname: educator.fullname,
     });
   } catch (error) {
     return res
@@ -28,7 +28,7 @@ exports.deleteEducator = async (req, res) => {
   const { educatorName } = req.params;
 
   try {
-    const userDeletion = await Student.findOneAndDelete({
+    const userDeletion = await Educator.findOneAndDelete({
       username: educatorName,
     });
 
@@ -59,5 +59,35 @@ exports.deleteEducator = async (req, res) => {
     return res
       .status(500)
       .json({ message: "An error occurred while deleting educator" });
+  }
+};
+
+exports.updateEducatorFullName = async (req, res) => {
+  const { email, fullname } = req.body;
+  const fullnameRegex = /^[A-Za-z\s]+$/;
+
+  if (!fullnameRegex.test(fullname)) {
+    return res.status(400).json({
+      message: "Full name must contain only alphabets and spaces",
+    });
+  }
+
+  try {
+    const educator = await Educator.findOne({ email: email });
+
+    if (!educator) {
+      return res.status(404).json({ message: "Educator not found" });
+    }
+
+    educator.fullname = fullname;
+
+    await educator.save();
+
+    return res.status(200).json({ message: "Full name updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "An error occurred while updating the full name" });
   }
 };

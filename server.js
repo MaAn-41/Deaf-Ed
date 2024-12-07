@@ -81,8 +81,9 @@ app.post("/alphabetsProgress", updateAlphabetsProgress);
 app.get("/countingProgress", getCountingProgress);
 app.post("/countingProgress", updateCountingProgress);
 
-//updating studentprofile
+//updating profiles
 app.put("/students", studentController.updateStudentProfile);
+app.put("/educators", EducatorController.updateEducatorFullName);
 
 // Start Server
 app.listen(process.env.PORT, () => {

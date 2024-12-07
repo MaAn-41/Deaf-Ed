@@ -32,7 +32,14 @@ export default function App() {
       <Stack.Navigator
         initialRouteName="WelcomeScreen"
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#FFFFFF",
+            height: 50,
+          },
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerLeft: () => null,
         }}
       >
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
