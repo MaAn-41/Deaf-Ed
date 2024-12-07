@@ -202,7 +202,9 @@ const StudentDashboard = () => {
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={[styles.button, styles.lessonButton]}
-              onPress={() => navigation.navigate("LessonScreen")}
+              onPress={() =>
+                navigation.navigate("LessonScreen", { Username: studentName })
+              }
             >
               <Icon name="book" size={20} color="#fff" />
               <Text style={styles.buttonText}>Lesson</Text>

@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
 
-const CountingLessonScreen = () => {
+const CountingLessonScreen = ({ navigation, route }) => {
+  const { Username } = route.params;
   return (
     <View style={styles.container}>
       <LinearGradient

@@ -1,11 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-const UrduLessonScreen = () => {
+const UrduLessonScreen = (navigation, route) => {
+  const { Username } = route.params;
+
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
+      <LinearGradient
+        colors={["#1e3c72", "#2a5298"]}
+        style={styles.gradientBackground}
+      >
         <Text style={styles.title}>Urdu Lessons</Text>
         <Text style={styles.subtitle}>Content Coming Soon...</Text>
       </LinearGradient>
@@ -16,23 +21,23 @@ const UrduLessonScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   gradientBackground: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
     marginBottom: 20,
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
 });
 

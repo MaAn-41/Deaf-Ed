@@ -9,8 +9,9 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
 
-const EnglishLessonScreen = ({ navigation }) => {
+const EnglishLessonScreen = ({ navigation, route }) => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const { Username } = route.params;
 
   return (
     <View style={styles.container}>

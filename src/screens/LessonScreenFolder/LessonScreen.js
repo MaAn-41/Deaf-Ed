@@ -3,9 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
-const LessonScreen = () => {
-  const navigation = useNavigation();
-
+const LessonScreen = ({ navigation, route }) => {
+  const { Username } = route.params;
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -17,28 +16,36 @@ const LessonScreen = () => {
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("EnglishLessonScreen")}
+            onPress={() =>
+              navigation.navigate("EnglishLessonScreen", { Username })
+            }
           >
             <Text style={styles.buttonText}>English</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("CountingLessonScreen")}
+            onPress={() =>
+              navigation.navigate("CountingLessonScreen", { Username })
+            }
           >
             <Text style={styles.buttonText}>Counting</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("FoundationalWordsScreen")}
+            onPress={() =>
+              navigation.navigate("FoundationalWordsScreen", { Username })
+            }
           >
             <Text style={styles.buttonText}>Foundational Words</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("UrduLessonScreen")}
+            onPress={() =>
+              navigation.navigate("UrduLessonScreen", { Username })
+            }
           >
             <Text style={styles.buttonText}>Urdu</Text>
           </TouchableOpacity>

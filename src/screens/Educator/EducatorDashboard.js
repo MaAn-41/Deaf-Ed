@@ -209,7 +209,9 @@ const EducatorDashboard = () => {
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("LessonScreen")}
+              onPress={() =>
+                navigation.navigate("LessonScreen", { Username: educatorName })
+              }
             >
               <Text style={styles.buttonText}>Lessons</Text>
             </TouchableOpacity>
