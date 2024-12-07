@@ -21,7 +21,10 @@ const {
   verifyResetOtp,
   resetPassword,
 } = require("./controllers/loginController");
-
+const {
+  getAlphabetsProgress,
+  updateAlphabetsProgress,
+} = require("./controllers/AlphabetProgressController");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -64,6 +67,10 @@ app.delete("/delete-educator/:educatorName", EducatorController.deleteEducator);
 
 //delete profiles
 app.delete("/delete-student/:studentName", studentController.deleteStudent);
+
+// Alphabet Progress Routes
+app.get("/alphabetsProgress", getAlphabetsProgress);
+app.post("/alphabetsProgress", updateAlphabetsProgress);
 
 // Start Server
 app.listen(process.env.PORT, () => {
