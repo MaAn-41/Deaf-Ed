@@ -18,6 +18,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import BASE_URL from "../../../config";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const StudentDashboard = () => {
   const [studentName, setStudentName] = useState("");
@@ -30,6 +31,24 @@ const StudentDashboard = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
+  const [editFullname, setEditFullname] = useState("");
+  const [editDob, setEditDob] = useState("");
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+      setEditDob(formattedDate);
+    }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "";
+    const formattedDate = new Date(date).toISOString().split("T")[0];
+    return formattedDate;
+  };
 
   useEffect(() => {
     const retrieveStudentData = async () => {
@@ -174,6 +193,18 @@ const StudentDashboard = () => {
           >
             <Text style={styles.drawerButtonText}>Change Password</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={() => {
+              setEditFullname(studentData?.fullname || "");
+              setEditDob(studentData?.dob || "");
+              setProfileModalVisible(true);
+            }}
+          >
+            <Text style={styles.drawerButtonText}>My Profile</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={handleDeleteProfile}
@@ -267,6 +298,91 @@ const StudentDashboard = () => {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={profileModalVisible}
+        onRequestClose={() => setProfileModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>My Profile</Text>
+
+            <Text style={styles.label}>Full Name:</Text>
+            <TextInput
+              style={styles.input}
+              value={editFullname}
+              onChangeText={setEditFullname}
+              placeholder="Enter your full name"
+            />
+
+            <Text style={styles.label}>Date of Birth:</Text>
+            <TouchableOpacity
+              onPress={() => setShowDatePicker(true)}
+              style={styles.input}
+            >
+              <Text style={{ color: editDob ? "#000" : "#aaa" }}>
+                {editDob ? formatDate(editDob) : "Select your date of birth"}
+              </Text>
+            </TouchableOpacity>
+
+            {showDatePicker && (
+              <DateTimePicker
+                value={editDob ? new Date(editDob) : new Date()}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
+
+            <Text style={styles.label}>Username:</Text>
+            <Text style={styles.staticText}>{studentData?.name}</Text>
+
+            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.staticText}>{studentData?.email}</Text>
+
+            <TouchableOpacity
+              style={[styles.button, styles.modalButton]}
+              onPress={async () => {
+                try {
+                  const response = await fetch(`${BASE_URL}/students`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      email: studentData.email,
+                      fullname: editFullname,
+                      dob: editDob,
+                    }),
+                  });
+                  const data = await response.json();
+                  if (response.ok) {
+                    Alert.alert("Success", "Profile updated successfully!");
+                    setStudentData((prevData) => ({
+                      ...prevData,
+                      fullname: editFullname,
+                      dob: editDob,
+                    }));
+                    setProfileModalVisible(false);
+                  } else {
+                    Alert.alert("Error", data.message || "Update failed.");
+                  }
+                } catch (error) {
+                  Alert.alert("Error", "Failed to update profile.");
+                }
+              }}
+            >
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, styles.modalButton]}
+              onPress={() => setProfileModalVisible(false)}
+            >
+              <Text style={styles.buttonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -287,17 +403,17 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.3)",
-    zIndex: 10, // To ensure overlay appears above the content
+    zIndex: 10,
   },
   drawer: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: 250, // Width of the drawer (increased to ensure no overlap)
+    width: 250,
     height: "100%",
-    backgroundColor: "#9E9E9E", // Changed to grey
+    backgroundColor: "#9E9E9E",
     paddingTop: 50,
-    zIndex: 20, // Ensure the drawer is above other content
+    zIndex: 20,
     transform: [{ translateX: -250 }],
     transition: "transform 0.3s ease-in-out",
   },
@@ -406,6 +522,18 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     backgroundColor: "#2196F3",
+  },
+  label: {
+    alignSelf: "flex-start",
+    marginBottom: 5,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  staticText: {
+    alignSelf: "flex-start",
+    marginBottom: 15,
+    fontSize: 16,
+    color: "#333",
   },
 });
 

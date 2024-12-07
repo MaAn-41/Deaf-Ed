@@ -15,7 +15,7 @@ exports.retrieveEducatortData = async (req, res) => {
     return res.status(200).json({
       name: student.username,
       email: student.email,
-      age: student.age,
+      fullname: student.fullname,
     });
   } catch (error) {
     return res

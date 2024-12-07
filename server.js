@@ -81,6 +81,9 @@ app.post("/alphabetsProgress", updateAlphabetsProgress);
 app.get("/countingProgress", getCountingProgress);
 app.post("/countingProgress", updateCountingProgress);
 
+//updating studentprofile
+app.put("/students", studentController.updateStudentProfile);
+
 // Start Server
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

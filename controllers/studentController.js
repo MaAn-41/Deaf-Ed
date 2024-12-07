@@ -15,7 +15,8 @@ exports.retrieveStudentData = async (req, res) => {
     return res.status(200).json({
       name: student.username,
       email: student.email,
-      age: student.age,
+      dob: student.dob,
+      fullname: student.fullname,
     });
   } catch (error) {
     return res
@@ -59,5 +60,33 @@ exports.deleteStudent = async (req, res) => {
     return res
       .status(500)
       .json({ message: "An error occurred while deleting student" });
+  }
+};
+
+exports.updateStudentProfile = async (req, res) => {
+  try {
+    const { email, fullname, dob } = req.body;
+
+    if (!email || !fullname || !dob) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const updatedStudent = await Student.findOneAndUpdate(
+      { email },
+      { fullname, dob },
+      { new: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully.",
+      student: updatedStudent,
+    });
+  } catch (error) {
+    console.error("Error updating student profile:", error);
+    res.status(500).json({ message: "Server error. Please try again later." });
   }
 };
