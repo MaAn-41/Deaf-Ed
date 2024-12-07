@@ -217,11 +217,16 @@ const StudentDashboard = () => {
         </View>
 
         <TouchableOpacity
-          style={styles.drawerToggle}
+          style={[
+            styles.drawerToggle,
+            drawerOpen && { backgroundColor: "transparent" },
+          ]}
           onPress={() => setDrawerOpen((prevState) => !prevState)}
         >
-          <Text style={styles.drawerToggleText}>
-            {drawerOpen ? "Close" : "Menu"}
+          <Text
+            style={[styles.drawerToggleText, drawerOpen && { display: "none" }]}
+          >
+            {drawerOpen ? null : "Menu"}
           </Text>
         </TouchableOpacity>
 

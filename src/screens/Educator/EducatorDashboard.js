@@ -15,7 +15,7 @@ import {
   useRoute,
   useFocusEffect,
 } from "@react-navigation/native";
-
+import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import BASE_URL from "../../../config";
 
 const EducatorDashboard = () => {
@@ -192,19 +192,16 @@ const EducatorDashboard = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#1e3c72", "#2a5298"]}
+        colors={["#FFD59A", "#FFF4D3"]}
         style={styles.gradientBackground}
       >
         {drawerOpen && <View style={styles.overlay} />}
         <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
           <TouchableOpacity
-            style={styles.drawerButton}
+            style={styles.closeButton}
             onPress={() => setDrawerOpen(false)}
           >
-            <Text style={styles.drawerButtonText}>Close</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
-            <Text style={styles.drawerButtonText}>Logout</Text>
+            <Ionicons name="close" size={30} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.drawerButton}
@@ -212,18 +209,21 @@ const EducatorDashboard = () => {
           >
             <Text style={styles.drawerButtonText}>My Profile</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={() => setModalVisible(true)}
           >
             <Text style={styles.drawerButtonText}>Change Password</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.drawerButton}
             onPress={handleDeleteProfile}
           >
             <Text style={styles.drawerButtonText}>Delete Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
+            <Text style={styles.drawerButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
 
@@ -238,24 +238,27 @@ const EducatorDashboard = () => {
 
         <View style={styles.content}>
           <Text style={styles.welcomeText}>
-            Welcome to the Dashboard, {educatorName || "Guest"}!
-          </Text>
-          <Text style={styles.emailText}>
-            Email: {educatorData?.email || "Not Available"}
+            Welcome {educatorName || "Guest"}!
           </Text>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button1, styles.lessonButton]}
               onPress={() =>
                 navigation.navigate("LessonScreen", { Username: educatorName })
               }
             >
+              <Ionicons
+                name="book"
+                size={24}
+                color="white"
+                style={styles.icon}
+              />
               <Text style={styles.buttonText}>Lessons</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button1, styles.ManageStudentButton]}
               onPress={() =>
                 navigation.navigate("ManageStudentScreen", {
                   educatorEmail: email,
@@ -263,13 +266,25 @@ const EducatorDashboard = () => {
                 })
               }
             >
+              <Ionicons
+                name="person"
+                size={24}
+                color="white"
+                style={styles.icon}
+              />
               <Text style={styles.buttonText}>Manage Student</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button1, styles.reportButton]}
               onPress={() => navigation.navigate("StudentProgressScreen")}
             >
+              <Ionicons
+                name="bar-chart"
+                size={24}
+                color="white"
+                style={styles.icon}
+              />
               <Text style={styles.buttonText}>View Student Progress</Text>
             </TouchableOpacity>
           </View>
@@ -370,6 +385,15 @@ const EducatorDashboard = () => {
 };
 
 const styles = StyleSheet.create({
+  lessonButton: {
+    backgroundColor: "#4CAF50",
+  },
+  ManageStudentButton: {
+    backgroundColor: "#FF9800",
+  },
+  reportButton: {
+    backgroundColor: "#2196F3",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -415,11 +439,12 @@ const styles = StyleSheet.create({
     top: 40,
     left: 10,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "red",
     borderRadius: 5,
   },
   drawerToggleText: {
     fontSize: 18,
+    color: "white",
   },
   content: {
     flex: 1,
@@ -429,9 +454,10 @@ const styles = StyleSheet.create({
     marginTop: 100,
   },
   welcomeText: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 150,
+    color: "#4CAF50",
   },
   emailText: {
     fontSize: 16,
@@ -443,13 +469,24 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#2196F3",
     paddingVertical: 15,
-    marginBottom: 10,
+    marginBottom: 8,
     borderRadius: 5,
+  },
+  button1: {
+    backgroundColor: "#2196F3",
+    paddingVertical: 15,
+    marginBottom: 25,
+    borderRadius: 5,
+    alignItems: "center",
+    bottom: 130,
   },
   buttonText: {
     color: "#fff",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 20,
+  },
+  icon: {
+    marginLeft: 10,
   },
   modalContainer: {
     flex: 1,
@@ -474,6 +511,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
+  },
+  closeButton: {
+    left: 140,
   },
 });
 
