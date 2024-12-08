@@ -1,6 +1,5 @@
 const Section = require("../models/Section");
-
-// Get all sections for a specific educator
+const EducatorStudent = require("../models/Educator_Student");
 exports.getSections = async (req, res) => {
   try {
     const { educatorEmail } = req.query;
@@ -11,19 +10,16 @@ exports.getSections = async (req, res) => {
   }
 };
 
-// Create a new section
 exports.createSection = async (req, res) => {
   try {
     const { educatorEmail, educatorUsername, section } = req.body;
 
-    // Ensure section is a single capital letter
     if (!/^[A-Z]$/.test(section)) {
       return res
         .status(400)
         .json({ error: "Section must be a single capital letter" });
     }
 
-    // Check if the section already exists for the given educator
     const existingSection = await Section.findOne({
       educatorEmail,
       educatorUsername,
@@ -36,7 +32,6 @@ exports.createSection = async (req, res) => {
         .json({ error: `Section ${section} already exists for this educator` });
     }
 
-    // Create the new section if no existing section is found
     const newSection = new Section({
       educatorEmail,
       educatorUsername,
@@ -50,13 +45,33 @@ exports.createSection = async (req, res) => {
   }
 };
 
-// Delete a section
 exports.deleteSection = async (req, res) => {
   try {
     const { id } = req.params;
-    await Section.findByIdAndDelete(id);
-    res.status(200).json({ message: "Section deleted successfully" });
+    const { educatorEmail, section } = req.body;
+
+    const deletedSection = await Section.findOneAndDelete({
+      section: section,
+      educatorEmail: educatorEmail,
+    });
+
+    if (!deletedSection) {
+      return res
+        .status(404)
+        .json({ error: "Section not found or unauthorized" });
+    }
+
+    await EducatorStudent.deleteMany({
+      educatorEmail: educatorEmail,
+      section: section,
+    });
+
+    res
+      .status(200)
+      .json({ message: "Section and related students deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete section" });
+    res
+      .status(500)
+      .json({ error: "Failed to delete section and related students" });
   }
 };

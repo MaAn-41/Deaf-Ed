@@ -5,6 +5,8 @@ const cors = require("cors");
 const studentController = require("./controllers/studentController");
 const EducatorController = require("./controllers/educatorController");
 const sectionController = require("./controllers/sectionController");
+const educatorStudentController = require("./controllers/educatorStudentController");
+
 require("dotenv").config();
 
 const {
@@ -80,6 +82,11 @@ app.put("/educators", EducatorController.updateEducatorFullName);
 app.get("/sections", sectionController.getSections);
 app.post("/sections", sectionController.createSection);
 app.delete("/sections/:id", sectionController.deleteSection);
+
+//educatorstudents
+app.get("/educatorstudents", educatorStudentController.getStudentsBySection);
+app.post("/educatorstudents", educatorStudentController.addStudent);
+app.delete("/educatorstudents/:id", educatorStudentController.deleteStudent);
 
 // Start Server
 app.listen(process.env.PORT, () => {

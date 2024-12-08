@@ -12,12 +12,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
 
 const SectionScreen = ({ route }) => {
-  const { educatorEmail, educatorUsername } = route.params;
+  const { educatorEmail, educatorUsername } = route.params; // educatorEmail passed from the previous screen
 
   const [sections, setSections] = useState([]);
-  const [newSection, setNewSection] = useState("");
+  const [sectionName, setSectionName] = useState("");
 
-  // Fetch sections from the backend
   useEffect(() => {
     fetchSections();
   }, []);
@@ -34,20 +33,9 @@ const SectionScreen = ({ route }) => {
     }
   };
 
-  const createSection = async () => {
-    // Validate section input: must be a single capital letter
-    if (!newSection.match(/^[A-Z]$/)) {
-      Alert.alert("Error", "Section must be a single capital letter");
-      return;
-    }
-
-    // Check if section already exists for this educator
-    const sectionExists = sections.some(
-      (section) => section.section === newSection
-    );
-    if (sectionExists) {
-      Alert.alert("Error", `Section ${newSection} already exists`);
-      setNewSection(""); // Clear the input
+  const addSection = async () => {
+    if (!sectionName.trim()) {
+      Alert.alert("Error", "Please enter a section name");
       return;
     }
 
@@ -58,61 +46,77 @@ const SectionScreen = ({ route }) => {
         body: JSON.stringify({
           educatorEmail,
           educatorUsername,
-          section: newSection,
+          section: sectionName,
         }),
       });
 
-      const data = await response.json();
-      setSections([...sections, data]);
-      setNewSection(""); // Reset the input
+      if (!response.ok) {
+        const errorData = await response.json();
+        Alert.alert("Error", errorData.error || "Failed to add section");
+        return;
+      }
+
+      const newSection = await response.json();
+      setSections([...sections, newSection]);
+      setSectionName("");
     } catch (error) {
-      Alert.alert("Error", "Failed to create section");
+      Alert.alert("Error", "Failed to add section");
     }
   };
 
-  const deleteSection = async (id) => {
+  const deleteSection = async (id, section) => {
     try {
-      await fetch(`${BASE_URL}/sections/${id}`, {
+      const response = await fetch(`${BASE_URL}/sections/${id}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ educatorEmail, section }),
       });
 
-      setSections(sections.filter((section) => section._id !== id));
+      if (!response.ok) {
+        const errorData = await response.json();
+        Alert.alert("Error", errorData.error || "Failed to delete section");
+        return;
+      }
+
+      setSections(sections.filter((s) => s._id !== id));
+      Alert.alert("Success", "Section deleted successfully");
     } catch (error) {
       Alert.alert("Error", "Failed to delete section");
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderSection = ({ item }) => (
     <View style={styles.sectionItem}>
       <Text style={styles.sectionText}>{item.section}</Text>
-      <TouchableOpacity onPress={() => deleteSection(item._id)}>
-        <Text style={styles.deleteButton}>Delete</Text>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => deleteSection(item._id, item.section)}
+      >
+        <Text style={styles.deleteButtonText}>Delete</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
     <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
-      <Text style={styles.title}>Sections</Text>
+      <Text style={styles.title}>Manage Sections</Text>
 
-      {/* Input for new section */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Enter section (A-Z)"
-          value={newSection}
-          onChangeText={setNewSection}
+          placeholder="Enter Section Name"
+          value={sectionName}
+          onChangeText={setSectionName}
         />
-        <TouchableOpacity style={styles.addButton} onPress={createSection}>
+        <TouchableOpacity style={styles.addButton} onPress={addSection}>
           <Text style={styles.addButtonText}>Add</Text>
         </TouchableOpacity>
       </View>
 
-      {/* List of sections */}
       <FlatList
         data={sections}
         keyExtractor={(item) => item._id}
-        renderItem={renderItem}
+        renderItem={renderSection}
       />
     </LinearGradient>
   );
@@ -164,7 +168,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   deleteButton: {
-    color: "#FF7043",
+    backgroundColor: "#FF7043",
+    padding: 8,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "#fff",
     fontWeight: "bold",
   },
 });
