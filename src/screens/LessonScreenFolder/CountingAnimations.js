@@ -7,17 +7,17 @@ const CountingAnimations = ({ route }) => {
   const { number } = route.params;
 
   const videoPaths = {
-    0: [require("../../../assets/alphabets/A.mp4")],
-    1: [require("../../../assets/alphabets/A.mp4")],
-    2: [require("../../../assets/alphabets/A.mp4")],
-    3: [require("../../../assets/alphabets/A.mp4")],
-    4: [require("../../../assets/alphabets/A.mp4")],
-    5: [require("../../../assets/alphabets/A.mp4")],
-    6: [require("../../../assets/alphabets/A.mp4")],
-    7: [require("../../../assets/alphabets/A.mp4")],
-    8: [require("../../../assets/alphabets/A.mp4")],
-    9: [require("../../../assets/alphabets/A.mp4")],
-    10: [require("../../../assets/alphabets/A.mp4")],
+    0: [require("../../../assets/couting/0.mp4")],
+    1: [require("../../../assets/couting/1.mp4")],
+    2: [require("../../../assets/couting/2.mp4")],
+    3: [require("../../../assets/couting/3.mp4")],
+    4: [require("../../../assets/couting/4.mp4")],
+    5: [require("../../../assets/couting/5.mp4")],
+    6: [require("../../../assets/couting/6.mp4")],
+    7: [require("../../../assets/couting/7.mp4")],
+    8: [require("../../../assets/couting/7.mp4")],
+    9: [require("../../../assets/couting/7.mp4")],
+    10: [require("../../../assets/couting/10.mp4")],
   };
 
   const videos = videoPaths[number] || [];

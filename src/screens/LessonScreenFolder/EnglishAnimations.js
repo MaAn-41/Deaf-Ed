@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Video } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Importing icon library
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const EnglishAnimations = ({ route }) => {
   const { letter } = route.params;
 
-  // Video paths and associated words
   const videoPaths = {
     A: [
       { source: require("../../../assets/alphabets/A.mp4"), word: "Apple" },
