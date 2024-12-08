@@ -187,12 +187,6 @@ const StudentDashboard = () => {
           >
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.drawerButtonText}>Change Password</Text>
-          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.drawerButton}
@@ -203,6 +197,13 @@ const StudentDashboard = () => {
             }}
           >
             <Text style={styles.drawerButtonText}>My Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.drawerButton}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.drawerButtonText}>Change Password</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

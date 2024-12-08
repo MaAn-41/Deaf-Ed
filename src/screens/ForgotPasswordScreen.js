@@ -18,6 +18,9 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
   const handleRequestOtp = async () => {
     if (!email) {
@@ -131,22 +134,43 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
         </>
       ) : (
         <>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter new password"
-            placeholderTextColor="#aaa"
-            value={newPassword}
-            onChangeText={setNewPassword}
-            secureTextEntry
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Confirm new password"
-            placeholderTextColor="#aaa"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-          />
+          <View style={{ width: "90%", position: "relative" }}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter new password"
+              placeholderTextColor="#aaa"
+              value={newPassword}
+              onChangeText={setNewPassword}
+              secureTextEntry={!isPasswordVisible} // Toggle visibility
+              textContentType="newPassword"
+            />
+            <TouchableOpacity
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              style={styles.eyeIcon}
+            >
+              <Text>{isPasswordVisible ? "Hide" : "Show"}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ width: "90%", position: "relative", marginTop: 20 }}>
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm new password"
+              placeholderTextColor="#aaa"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!isConfirmPasswordVisible} // Toggle visibility
+            />
+            <TouchableOpacity
+              onPress={() =>
+                setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+              }
+              style={styles.eyeIcon}
+            >
+              <Text>{isConfirmPasswordVisible ? "Hide" : "Show"}</Text>
+            </TouchableOpacity>
+          </View>
+
           <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
             <Text style={styles.buttonText}>Reset Password</Text>
           </TouchableOpacity>
@@ -163,6 +187,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
+  eyeIcon: {
+    position: "absolute",
+    right: 40,
+    top: 10,
+    padding: 10,
+  },
+
   input: {
     width: "90%",
     height: 50,

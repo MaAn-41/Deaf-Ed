@@ -91,7 +91,8 @@ exports.signup = async (req, res) => {
   const usernameRegex = /^[A-Za-z][A-Za-z0-9]*$/;
   if (!usernameRegex.test(username)) {
     return res.status(400).json({
-      message: "Username must be alphanumeric and start with an alphabet.",
+      message:
+        "Username must be alphanumeric with no spcaing and start with an alphabet.",
     });
   }
 
