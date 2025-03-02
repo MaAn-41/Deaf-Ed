@@ -75,8 +75,8 @@ exports.updateStudentProfile = async (req, res) => {
       return res.status(400).json({ message: "Invalid date of birth format." });
     }
 
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
-    const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+    age = currentDate.getFullYear() - birthDate.getFullYear();
+    monthDiff = currentDate.getMonth() - birthDate.getMonth();
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())

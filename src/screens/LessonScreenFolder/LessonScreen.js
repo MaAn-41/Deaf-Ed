@@ -34,18 +34,18 @@ const LessonScreen = ({ navigation, route }) => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() =>
-              navigation.navigate("FoundationalWordsScreen", { Username })
-            }
+            // onPress={() =>
+            //   navigation.navigate("FoundationalWordsScreen", { Username })
+            // }
           >
             <Text style={styles.buttonText}>Foundational Words</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() =>
-              navigation.navigate("UrduLessonScreen", { Username })
-            }
+            // onPress={() =>
+            //   navigation.navigate("UrduLessonScreen", { Username })
+            // }
           >
             <Text style={styles.buttonText}>Urdu</Text>
           </TouchableOpacity>

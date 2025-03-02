@@ -13,11 +13,21 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const emailRegex = /^[^\s@]+@(gmail\.com|cfd\.nu\.edu\.pk)$/;
+
 exports.generateOtp = async (req, res) => {
   const { email, username } = req.body;
 
   try {
     const lowerCaseEmail = email.toLowerCase();
+
+    // Validate email format and domain
+    if (!emailRegex.test(lowerCaseEmail)) {
+      return res.status(400).json({
+        message: "Email must be a valid @gmail.com or @cfd.nu.edu.pk address",
+      });
+    }
+
     console.log(lowerCaseEmail);
     const isuserNameExists = await User.findOne({ username });
     const existingUser = await User.findOne({ email: lowerCaseEmail });
@@ -27,14 +37,14 @@ exports.generateOtp = async (req, res) => {
     }
 
     if (isuserNameExists) {
-      return res.status(400).json({ message: "Username Already Exist" });
+      return res.status(400).json({ message: "Username already exists" });
     }
 
     const otp = crypto.randomInt(100000, 999999).toString();
-
+    console.log(otp);
     otpStore[lowerCaseEmail] = {
       otp,
-      expiration: Date.now() + 10 * 60 * 1000,
+      expiration: Date.now() + 10 * 60 * 1000, // OTP expires in 10 minutes
     };
 
     await transporter.sendMail({
