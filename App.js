@@ -15,13 +15,18 @@ import EnglishLessonScreen from "./src/screens/LessonScreenFolder/EnglishLessonS
 import CountingLessonScreen from "./src/screens/LessonScreenFolder/CountingLessonScreen";
 import UrduLessonScreen from "./src/screens/LessonScreenFolder/UrduLessonScreen";
 import FoundationalWordsScreen from "./src/screens/LessonScreenFolder/FoundationalWordsScreen";
-import TestScreen from "./src/screens/TestScreenFolder/TestScreen";
 import ProgressReportScreen from "./src/screens/ProgressScreenFolder/ProgressReportScreen";
 import Manage from "./src/screens/Educator/Manage";
 import EnglishAnimations from "./src/screens/LessonScreenFolder/EnglishAnimations";
 import CountingAnimations from "./src/screens/LessonScreenFolder/CountingAnimations";
 import SectionScreen from "./src/screens/Educator/SectionScreen";
 import StudentsScreen from "./src/screens/Educator/StudentsScreen";
+
+import TestScreen from "./src/screens/TestScreenFolder/TestScreen";
+import EnglishTestScreen from "./src/screens/TestScreenFolder/EnglishTestScreen";
+import FreeFallEnglishScreen from "./src/screens/TestScreenFolder/FreeFallEnglishScreen";
+import AlphabetTestScreen from "./src/screens/TestScreenFolder/AlphabetTestScreen";
+import LetterPracticeScreen from "./src/screens/TestScreenFolder/LetterPracticeScreen";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +84,19 @@ export default function App() {
         <Stack.Screen name="Manage" component={Manage} />
         <Stack.Screen name="SectionScreen" component={SectionScreen} />
         <Stack.Screen name="StudentsScreen" component={StudentsScreen} />
+        <Stack.Screen name="EnglishTest" component={EnglishTestScreen} />
+        <Stack.Screen
+          name="FreeFallEnglish"
+          component={FreeFallEnglishScreen}
+        />
+        <Stack.Screen
+          name="AlphabetTestScreen"
+          component={AlphabetTestScreen}
+        />
+        <Stack.Screen
+          name="LetterPracticeScreen"
+          component={LetterPracticeScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

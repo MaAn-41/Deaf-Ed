@@ -249,7 +249,9 @@ const StudentDashboard = () => {
 
             <TouchableOpacity
               style={[styles.button, styles.testButton]}
-              onPress={() => navigation.navigate("TestScreen")}
+              onPress={() =>
+                navigation.navigate("TestScreen", { Username: studentName })
+              }
             >
               <Icon name="pencil" size={20} color="#fff" />
               <Text style={styles.buttonText}>Test</Text>
@@ -257,7 +259,11 @@ const StudentDashboard = () => {
 
             <TouchableOpacity
               style={[styles.button, styles.reportButton]}
-              onPress={() => navigation.navigate("ProgressReportScreen")}
+              onPress={() =>
+                navigation.navigate("ProgressReportScreen", {
+                  Username: studentName,
+                })
+              }
             >
               <Icon name="bar-chart" size={20} color="#fff" />
               <Text style={styles.buttonText}>Progress Report</Text>

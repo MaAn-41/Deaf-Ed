@@ -1,14 +1,25 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const TestScreen = () => {
+const TestScreen = ({ navigation, route }) => {
+  const { Username } = route.params;
+
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1e3c72', '#2a5298']} style={styles.gradientBackground}>
-        <Text style={styles.title}>Test Module</Text>
-        <Text style={styles.subtitle}>Coming Soon...</Text>
-      </LinearGradient>
+      <Text style={styles.header}>Select a Category</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("EnglishTest", { Username })}
+      >
+        <Text style={styles.buttonText}>English</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Urdu</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Counting</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -16,23 +27,27 @@ const TestScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF4D3",
   },
-  gradientBackground: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FF7043",
     marginBottom: 20,
   },
-  subtitle: {
+  button: {
+    backgroundColor: "#4FC3F7",
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: "white",
     fontSize: 18,
-    color: '#fff',
+    fontWeight: "bold",
   },
 });
 
