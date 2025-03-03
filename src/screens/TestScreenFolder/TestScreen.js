@@ -20,7 +20,10 @@ const TestScreen = ({ navigation, route }) => {
       >
         <Text style={styles.buttonText}>Urdu</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("NumberTestScreen", { Username })}
+      >
         <Text style={styles.buttonText}>Counting</Text>
       </TouchableOpacity>
     </View>

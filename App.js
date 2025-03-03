@@ -33,6 +33,11 @@ import FreeFallUrduScreen from "./src/screens/TestScreenFolder/urduTest/FreeFall
 import HurfPracticeScreen from "./src/screens/TestScreenFolder/urduTest/HurfPracticeScreen";
 import UrduTestScreen from "./src/screens/TestScreenFolder/urduTest/UrduTestScreen";
 
+import CoutingTestScreen from "./src/screens/TestScreenFolder/coutintTest/CoutingTestScreen";
+import FreeFallCountingScreen from "./src/screens/TestScreenFolder/coutintTest/FreeFallCountingScreen";
+import NumberPracticeScreen from "./src/screens/TestScreenFolder/coutintTest/NumberPracticeScreen";
+import NumberTestScreen from "./src/screens/TestScreenFolder/coutintTest/NumberTestScreen";
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -113,6 +118,17 @@ export default function App() {
           component={HurfPracticeScreen}
         />
         <Stack.Screen name="UrduTestScreen" component={UrduTestScreen} />
+
+        <Stack.Screen name="CoutingTestScreen" component={CoutingTestScreen} />
+        <Stack.Screen
+          name="FreeFallCountingScreen"
+          component={FreeFallCountingScreen}
+        />
+        <Stack.Screen
+          name="NumberPracticeScreen"
+          component={NumberPracticeScreen}
+        />
+        <Stack.Screen name="NumberTestScreen" component={NumberTestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
