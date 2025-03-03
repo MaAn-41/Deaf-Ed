@@ -23,10 +23,15 @@ import SectionScreen from "./src/screens/Educator/SectionScreen";
 import StudentsScreen from "./src/screens/Educator/StudentsScreen";
 
 import TestScreen from "./src/screens/TestScreenFolder/TestScreen";
-import EnglishTestScreen from "./src/screens/TestScreenFolder/EnglishTestScreen";
-import FreeFallEnglishScreen from "./src/screens/TestScreenFolder/FreeFallEnglishScreen";
-import AlphabetTestScreen from "./src/screens/TestScreenFolder/AlphabetTestScreen";
-import LetterPracticeScreen from "./src/screens/TestScreenFolder/LetterPracticeScreen";
+import EnglishTestScreen from "./src/screens/TestScreenFolder/englishTest/EnglishTestScreen";
+import FreeFallEnglishScreen from "./src/screens/TestScreenFolder/englishTest/FreeFallEnglishScreen";
+import AlphabetTestScreen from "./src/screens/TestScreenFolder/englishTest/AlphabetTestScreen";
+import LetterPracticeScreen from "./src/screens/TestScreenFolder/englishTest/LetterPracticeScreen";
+
+import AlifbeTestScreen from "./src/screens/TestScreenFolder/urduTest/AlifbeTestScreen";
+import FreeFallUrduScreen from "./src/screens/TestScreenFolder/urduTest/FreeFallUrduScreen";
+import HurfPracticeScreen from "./src/screens/TestScreenFolder/urduTest/HurfPracticeScreen";
+import UrduTestScreen from "./src/screens/TestScreenFolder/urduTest/UrduTestScreen";
 
 const Stack = createStackNavigator();
 
@@ -97,6 +102,17 @@ export default function App() {
           name="LetterPracticeScreen"
           component={LetterPracticeScreen}
         />
+
+        <Stack.Screen name="AlifbeTestScreen" component={AlifbeTestScreen} />
+        <Stack.Screen
+          name="FreeFallUrduScreen"
+          component={FreeFallUrduScreen}
+        />
+        <Stack.Screen
+          name="HurfPracticeScreen"
+          component={HurfPracticeScreen}
+        />
+        <Stack.Screen name="UrduTestScreen" component={UrduTestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

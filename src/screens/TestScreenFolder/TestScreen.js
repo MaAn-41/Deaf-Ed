@@ -14,7 +14,10 @@ const TestScreen = ({ navigation, route }) => {
       >
         <Text style={styles.buttonText}>English</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("UrduTestScreen", { Username })}
+      >
         <Text style={styles.buttonText}>Urdu</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
