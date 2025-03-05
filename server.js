@@ -12,7 +12,11 @@ require("dotenv").config();
 const {
   saveEnglishTestResult,
 } = require("./controllers/englishResultController");
+const { getEnglishResults } = require("./controllers/englishResultController");
+
 const { saveUrduTestResult } = require("./controllers/urduResultController");
+const { getUrduResults } = require("./controllers/urduResultController");
+
 const {
   saveCountingTestResult,
 } = require("./controllers/countingResultController");
@@ -98,7 +102,11 @@ app.delete("/educatorstudents/:id", educatorStudentController.deleteStudent);
 
 //results
 app.post("/save_english_test_result", saveEnglishTestResult);
+app.get("/get_english_results", getEnglishResults);
+
 app.post("/save-urdu-test", saveUrduTestResult);
+app.get("/get_urdu_results", getUrduResults);
+
 app.post("/save-counting-test", saveCountingTestResult);
 
 // Start Server

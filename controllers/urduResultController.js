@@ -35,4 +35,18 @@ const saveUrduTestResult = async (req, res) => {
   }
 };
 
-module.exports = { saveUrduTestResult };
+const getUrduResults = async (req, res) => {
+  try {
+    const { username } = req.query;
+    if (!username) {
+      return res.status(400).json({ error: "Username is required" });
+    }
+
+    const results = await UrduResult.find({ username });
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch English results" });
+  }
+};
+
+module.exports = { saveUrduTestResult, getUrduResults };
