@@ -8,7 +8,7 @@ const FreeFallEnglishScreen = () => {
 
   useEffect(() => {
     const fetchGesture = () => {
-      fetch("http://192.168.1.117:5001/recognized_gesture")
+      fetch("http://192.168.1.117:5001/recognized_gesture-english")
         .then((res) => res.json())
         .then((data) => {
           setGesture(data.gesture);
@@ -26,7 +26,7 @@ const FreeFallEnglishScreen = () => {
       <Text style={styles.header}>Free Fall Gesture Recognition</Text>
       <View style={styles.videoContainer}>
         <WebView
-          source={{ uri: "http://192.168.1.117:5001/video_feed" }}
+          source={{ uri: "http://192.168.1.117:5001/video_feed-english" }}
           style={styles.webview}
         />
       </View>

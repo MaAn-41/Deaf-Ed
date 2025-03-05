@@ -4,7 +4,7 @@ import { useRoute } from "@react-navigation/native";
 
 const HurfPracticeScreen = () => {
   const route = useRoute();
-  const { label } = route.params;
+  const { label, Username } = route.params;
   const [result, setResult] = useState(null);
   const [isTesting, setIsTesting] = useState(false);
 
@@ -17,9 +17,7 @@ const HurfPracticeScreen = () => {
         "http://192.168.1.117:5001/test_gesture-urdu",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ label }),
         }
       );
@@ -30,6 +28,20 @@ const HurfPracticeScreen = () => {
 
       const data = await response.json();
       setResult(data);
+
+      // Save the test result in MongoDB
+      await fetch("http://192.168.1.117:5000/save-urdu-test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: Username,
+          letter: label,
+          recognized: data.recognized,
+          status: data.status,
+          accuracy: data.accuracy,
+          timestamp: new Date().toISOString(),
+        }),
+      });
     } catch (error) {
       setResult({ error: "Error connecting to server" });
       console.error("Request Error:", error);

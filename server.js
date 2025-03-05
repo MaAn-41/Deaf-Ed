@@ -10,6 +10,14 @@ const educatorStudentController = require("./controllers/educatorStudentControll
 require("dotenv").config();
 
 const {
+  saveEnglishTestResult,
+} = require("./controllers/englishResultController");
+const { saveUrduTestResult } = require("./controllers/urduResultController");
+const {
+  saveCountingTestResult,
+} = require("./controllers/countingResultController");
+
+const {
   generateOtp,
   verifyOtp,
   signup,
@@ -87,6 +95,11 @@ app.delete("/sections/:id", sectionController.deleteSection);
 app.get("/educatorstudents", educatorStudentController.getStudentsBySection);
 app.post("/educatorstudents", educatorStudentController.addStudent);
 app.delete("/educatorstudents/:id", educatorStudentController.deleteStudent);
+
+//results
+app.post("/save_english_test_result", saveEnglishTestResult);
+app.post("/save-urdu-test", saveUrduTestResult);
+app.post("/save-counting-test", saveCountingTestResult);
 
 // Start Server
 app.listen(process.env.PORT, () => {

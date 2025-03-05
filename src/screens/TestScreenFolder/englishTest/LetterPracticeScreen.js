@@ -4,10 +4,7 @@ import { useRoute } from "@react-navigation/native";
 
 const LetterPracticeScreen = () => {
   const route = useRoute();
-  const Username = route.params;
-  console.log(Username);
-
-  const { letter } = route.params;
+  const { Username, letter } = route.params;
 
   const [result, setResult] = useState(null);
   const [isTesting, setIsTesting] = useState(false);
@@ -28,6 +25,19 @@ const LetterPracticeScreen = () => {
 
       const data = await response.json();
       setResult(data);
+
+      await fetch("http://192.168.1.117:5000/save_english_test_result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: Username,
+          letter: letter,
+          recognized: data.recognized,
+          status: data.status,
+          accuracy: data.accuracy,
+          timestamp: new Date().toISOString(),
+        }),
+      });
     } catch (error) {
       setResult({ error: "Error connecting to server" });
     } finally {
@@ -58,25 +68,11 @@ const LetterPracticeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
+  container: { flex: 1, backgroundColor: "#fff" },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#FF7043",
-    marginBottom: 20,
-  },
-  timerText: {
-    fontSize: 24,
-    color: "#4FC3F7",
     marginBottom: 20,
   },
   button: {
@@ -89,21 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     elevation: 6,
   },
-  backButton: {
-    width: 200,
-    height: 50,
-    backgroundColor: "#FF7043",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
-    borderRadius: 25,
-    elevation: 6,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
-  },
+  buttonText: { fontSize: 20, fontWeight: "bold", color: "#fff" },
 });
 
 export default LetterPracticeScreen;

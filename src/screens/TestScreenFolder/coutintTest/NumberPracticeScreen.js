@@ -4,7 +4,7 @@ import { useRoute } from "@react-navigation/native";
 
 const NumberPracticeScreen = () => {
   const route = useRoute();
-  const { number } = route.params;
+  const { number, Username } = route.params;
 
   const [result, setResult] = useState(null);
   const [isTesting, setIsTesting] = useState(false);
@@ -23,10 +23,28 @@ const NumberPracticeScreen = () => {
         }
       );
 
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
+
       const data = await response.json();
       setResult(data);
+
+      await fetch("http://192.168.1.117:5000/save-counting-test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: Username,
+          number,
+          recognized: data.recognized,
+          accuracy: data.accuracy,
+          status: data.status,
+          timestamp: new Date().toISOString(),
+        }),
+      });
     } catch (error) {
       setResult({ error: "Error connecting to server" });
+      console.error("Request Error:", error);
     } finally {
       setIsTesting(false);
     }
