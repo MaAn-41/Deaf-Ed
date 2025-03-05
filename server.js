@@ -20,6 +20,9 @@ const { getUrduResults } = require("./controllers/urduResultController");
 const {
   saveCountingTestResult,
 } = require("./controllers/countingResultController");
+const {
+  getCountingResults,
+} = require("./controllers/countingResultController");
 
 const {
   generateOtp,
@@ -108,6 +111,7 @@ app.post("/save-urdu-test", saveUrduTestResult);
 app.get("/get_urdu_results", getUrduResults);
 
 app.post("/save-counting-test", saveCountingTestResult);
+app.get("/get_counting_results", getCountingResults);
 
 // Start Server
 app.listen(process.env.PORT, () => {

@@ -34,5 +34,18 @@ const saveCountingTestResult = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+const getCountingResults = async (req, res) => {
+  try {
+    const { username } = req.query;
+    if (!username) {
+      return res.status(400).json({ error: "Username is required" });
+    }
 
-module.exports = { saveCountingTestResult };
+    const results = await CountingResult.find({ username });
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch English results" });
+  }
+};
+
+module.exports = { saveCountingTestResult, getCountingResults };
