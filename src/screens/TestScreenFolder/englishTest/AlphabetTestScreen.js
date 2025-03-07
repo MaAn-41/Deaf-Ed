@@ -16,7 +16,7 @@ const AlphabetTestScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Select an Alphabet</Text>
@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   button: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#4FC3F7",
+    width: 200,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    margin: 8,
-    borderRadius: 40,
+    marginVertical: 10,
+    borderRadius: 25,
     elevation: 6,
+    backgroundColor: "#4FC3F7",
   },
   buttonText: {
     fontSize: 24,

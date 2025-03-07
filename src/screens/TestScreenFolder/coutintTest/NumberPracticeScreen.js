@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import BASE_URL2 from "../../../../config2";
+import BASE_URL from "../../../../config";
 
 const NumberPracticeScreen = () => {
   const route = useRoute();
@@ -14,14 +16,11 @@ const NumberPracticeScreen = () => {
     setResult(null);
 
     try {
-      const response = await fetch(
-        "http://10.54.15.76:5001/test_gesture-math",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ number }),
-        }
-      );
+      const response = await fetch(`${BASE_URL2}/test_gesture-math`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ number }),
+      });
 
       if (!response.ok) {
         throw new Error(`Server responded with status ${response.status}`);
@@ -30,7 +29,7 @@ const NumberPracticeScreen = () => {
       const data = await response.json();
       setResult(data);
 
-      await fetch("http://10.54.15.76:5000/save-counting-test", {
+      await fetch(`${BASE_URL}/save-counting-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

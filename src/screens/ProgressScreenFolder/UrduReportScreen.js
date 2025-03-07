@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-
+import BASE_URL from "../../../config";
 const UrduReportScreen = ({ route }) => {
   const { Username } = route.params || {};
   const [results, setResults] = useState([]);
@@ -10,7 +10,7 @@ const UrduReportScreen = ({ route }) => {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `http://10.54.15.76:5000/get_urdu_results?username=${Username}`
+          `${BASE_URL}/get_urdu_results?username=${Username}`
         );
         const data = await response.json();
         setResults(data);
@@ -26,7 +26,7 @@ const UrduReportScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>English Report</Text>
+      <Text style={styles.title}>Urdu Report</Text>
       <Text style={styles.subtitle}>Welcome, {Username}</Text>
 
       {loading ? (

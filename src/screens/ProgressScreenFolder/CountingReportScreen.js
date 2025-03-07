@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import BASE_URL from "../../../config";
 
 const CountingReportScreen = ({ route }) => {
   const { Username } = route.params || {};
@@ -10,7 +11,7 @@ const CountingReportScreen = ({ route }) => {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `http://10.54.15.76:5000/get_counting_results?username=${Username}`
+          `${BASE_URL}/get_counting_results?username=${Username}`
         );
         const data = await response.json();
         setResults(data);
@@ -26,7 +27,7 @@ const CountingReportScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>English Report</Text>
+      <Text style={styles.title}>Couting Report</Text>
       <Text style={styles.subtitle}>Welcome, {Username}</Text>
 
       {loading ? (

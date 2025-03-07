@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const EnglishTestScreen = ({ route, navigation }) => {
   const { Username } = route.params;
@@ -9,10 +10,10 @@ const EnglishTestScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
-        <Text style={styles.title}>English Lessons</Text>
+        <Text style={styles.title}>English Test</Text>
         <Text style={styles.subtitle}>Select an option</Text>
 
         <TouchableOpacity
@@ -21,6 +22,12 @@ const EnglishTestScreen = ({ route, navigation }) => {
             navigation.navigate("AlphabetTestScreen", { Username })
           }
         >
+          <Icon
+            name="clipboard-text"
+            size={28}
+            color="#fff"
+            style={styles.icon}
+          />
           <Text style={styles.buttonText}>Alphabets</Text>
         </TouchableOpacity>
 
@@ -28,6 +35,12 @@ const EnglishTestScreen = ({ route, navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("FreeFallEnglish")}
         >
+          <Icon
+            name="format-list-bulleted"
+            size={28}
+            color="#fff"
+            style={styles.icon}
+          />
           <Text style={styles.buttonText}>Free Fall</Text>
         </TouchableOpacity>
       </LinearGradient>
@@ -58,17 +71,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    width: 200,
-    height: 50,
-    backgroundColor: "#4FC3F7",
-    justifyContent: "center",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    width: 280,
+    height: 70,
+    backgroundColor: "#FF7043",
     marginVertical: 10,
-    borderRadius: 25,
-    elevation: 6,
+    borderRadius: 35,
+    elevation: 8,
+  },
+  icon: {
+    marginRight: 10,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#fff",
   },

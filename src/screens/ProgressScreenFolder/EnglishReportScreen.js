@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-
+import BASE_URL from "../../../config";
 const EnglishReportScreen = ({ route }) => {
   const { Username } = route.params || {};
   const [results, setResults] = useState([]);
@@ -10,7 +10,7 @@ const EnglishReportScreen = ({ route }) => {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `http://10.54.15.76:5000/get_english_results?username=${Username}`
+          `${BASE_URL}/get_english_results?username=${Username}`
         );
         const data = await response.json();
         setResults(data);

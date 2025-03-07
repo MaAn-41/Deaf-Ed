@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import BASE_URL2 from "../../../../config2";
+import BASE_URL from "../../../../config";
 
 const FreeFallUrduScreen = () => {
   const [gesture, setGesture] = useState(null);
@@ -8,7 +10,7 @@ const FreeFallUrduScreen = () => {
 
   useEffect(() => {
     const fetchGesture = () => {
-      fetch("http://10.54.15.76:5001/recognized_gesture-urdu")
+      fetch(`${BASE_URL2}/recognized_gesture-urdu`)
         .then((res) => res.json())
         .then((data) => {
           setGesture(data.gesture);
@@ -26,7 +28,7 @@ const FreeFallUrduScreen = () => {
       <Text style={styles.header}>Free Fall Gesture Recognition</Text>
       <View style={styles.videoContainer}>
         <WebView
-          source={{ uri: "http://10.54.15.76:5001/video_feed-urdu" }}
+          source={{ uri: `${BASE_URL2}/video_feed-urdu` }}
           style={styles.webview}
         />
       </View>
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFF4D3",
+    backgroundColor: "#FFFFFF",
   },
   header: {
     fontSize: 24,

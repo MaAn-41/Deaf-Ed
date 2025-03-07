@@ -55,7 +55,7 @@ const AlifBeTestScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Alif Be Test</Text>
@@ -100,17 +100,17 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   button: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#4FC3F7",
+    width: 200,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    margin: 8,
-    borderRadius: 50,
+    marginVertical: 10,
+    borderRadius: 25,
     elevation: 6,
+    backgroundColor: "#4FC3F7",
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#fff",
   },

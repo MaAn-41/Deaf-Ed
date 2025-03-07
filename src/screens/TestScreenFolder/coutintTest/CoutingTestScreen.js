@@ -9,14 +9,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const numbers = Array.from({ length: 11 }, (_, i) => i); // Generates numbers 0 to 10
+const numbers = Array.from({ length: 11 }, (_, i) => i);
 
 const CountingTestScreen = ({ route, navigation }) => {
   const { Username } = route.params;
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Select a Number</Text>
@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   button: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#4FC3F7",
+    width: 200,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    margin: 8,
-    borderRadius: 40,
+    marginVertical: 10,
+    borderRadius: 25,
     elevation: 6,
+    backgroundColor: "#4FC3F7",
   },
   buttonText: {
     fontSize: 24,

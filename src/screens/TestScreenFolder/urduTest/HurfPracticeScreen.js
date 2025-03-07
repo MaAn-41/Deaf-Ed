@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import BASE_URL from "../../../../config";
+import BASE_URL2 from "../../../../config2";
 
 const HurfPracticeScreen = () => {
   const route = useRoute();
@@ -13,14 +15,11 @@ const HurfPracticeScreen = () => {
     setResult(null);
 
     try {
-      const response = await fetch(
-        "http://10.54.15.76:5001/test_gesture-urdu",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ label }),
-        }
-      );
+      const response = await fetch(`${BASE_URL2}/test_gesture-urdu`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ label }),
+      });
 
       if (!response.ok) {
         throw new Error(`Server responded with status ${response.status}`);
@@ -30,7 +29,7 @@ const HurfPracticeScreen = () => {
       setResult(data);
 
       // Save the test result in MongoDB
-      await fetch("http://10.54.15.76:5000/save-urdu-test", {
+      await fetch(`${BASE_URL}/save-urdu-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -76,7 +75,7 @@ const HurfPracticeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF4D3",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
