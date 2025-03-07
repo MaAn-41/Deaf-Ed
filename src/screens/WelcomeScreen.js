@@ -1,75 +1,91 @@
 import React from "react";
-
-import { Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-
-import { LinearGradient } from "expo-linear-gradient";
+import { Text, TouchableOpacity, StyleSheet, Image, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+    <View style={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.logo} />
 
-      <Text style={styles.title}>Welcome to DeafED!</Text>
+      <Text style={styles.title}>
+        Deaf<Text style={styles.titleED}>ED</Text>
+      </Text>
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#4FC3F7" }]}
-        onPress={() =>
-          navigation.navigate("LoginScreen", { userType: "Student" })
-        }
-      >
-        <Text style={styles.buttonText}>Start Learning</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate("LoginScreen", { userType: "Student" })
+          }
+        >
+          <Ionicons name="school-outline" size={30} color="#FFFFFF" />
+          <Text style={styles.cardText}>Start Learning</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#8BC34A" }]}
-        onPress={() =>
-          navigation.navigate("LoginScreen", { userType: "Educator" })
-        }
-      >
-        <Text style={styles.buttonText}>Educator Login</Text>
-      </TouchableOpacity>
-    </LinearGradient>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate("LoginScreen", { userType: "Educator" })
+          }
+        >
+          <Ionicons name="person-outline" size={30} color="#FFFFFF" />
+          <Text style={styles.cardText}>Educator Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "top",
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
     padding: 20,
+    marginTop: 20,
   },
   logo: {
-    width: 300,
-    height: 300,
-    marginBottom: 0,
+    width: 250,
+    height: 250,
+    marginBottom: 20,
+    marginTop: 10,
   },
   title: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#FF7043",
-    lineHeight: 44,
-    marginTop: -15,
-    marginBottom: 20,
+    color: "#2196F3",
     textAlign: "center",
+    marginBottom: 40,
   },
-  button: {
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    marginVertical: 15,
-    width: "80%",
+  titleED: {
+    color: "#000000",
+  },
+  buttonContainer: {
+    width: "100%",
     alignItems: "center",
+    marginTop: 10,
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#2196F3",
+    borderRadius: 15,
+    padding: 20,
+    marginVertical: 10,
+    width: "90%",
+    elevation: 5,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 8,
   },
-  buttonText: {
+  cardText: {
     fontSize: 20,
     fontWeight: "600",
     color: "#FFFFFF",
+    marginLeft: 10,
+    textAlign: "center",
+    flex: 1,
   },
 });
 

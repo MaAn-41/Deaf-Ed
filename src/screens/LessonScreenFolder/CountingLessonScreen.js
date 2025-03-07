@@ -52,7 +52,7 @@ const CountingLessonScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Counting Lessons</Text>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 18,
-    color: "#fff",
+    color: "#000",
     marginBottom: 20,
   },
   buttonsContainer: {

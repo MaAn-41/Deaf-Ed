@@ -10,7 +10,7 @@ const CountingReportScreen = ({ route }) => {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.117:5000/get_counting_results?username=${Username}`
+          `http://10.54.15.76:5000/get_counting_results?username=${Username}`
         );
         const data = await response.json();
         setResults(data);

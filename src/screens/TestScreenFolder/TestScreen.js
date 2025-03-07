@@ -9,19 +9,19 @@ const TestScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Select a Category</Text>
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, styles.englishButton]}
         onPress={() => navigation.navigate("EnglishTest", { Username })}
       >
         <Text style={styles.buttonText}>English</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, styles.urduButton]}
         onPress={() => navigation.navigate("UrduTestScreen", { Username })}
       >
         <Text style={styles.buttonText}>Urdu</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, styles.countingButton]}
         onPress={() => navigation.navigate("NumberTestScreen", { Username })}
       >
         <Text style={styles.buttonText}>Counting</Text>
@@ -44,16 +44,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "#4FC3F7",
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 10,
     marginVertical: 10,
   },
+  englishButton: {
+    backgroundColor: "#FF7043",
+  },
+  urduButton: {
+    backgroundColor: "#4CAF50",
+  },
+  countingButton: {
+    backgroundColor: "#2196F3",
+  },
   buttonText: {
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

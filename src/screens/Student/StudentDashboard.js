@@ -176,7 +176,7 @@ const StudentDashboard = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         {drawerOpen && <View style={styles.overlay} />}
@@ -232,9 +232,11 @@ const StudentDashboard = () => {
         </TouchableOpacity>
 
         <View style={styles.content}>
-          <Text style={styles.welcomeText}>
-            Welcome {studentName || "Guest"}!
-          </Text>
+          <View style={styles.welcomeCard}>
+            <Text style={styles.welcomeText}>
+              Welcome {studentName || "Guest"}!
+            </Text>
+          </View>
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
@@ -477,11 +479,25 @@ const styles = StyleSheet.create({
   contentShifted: {
     transform: [{ translateX: 250 }],
   },
+  welcomeCard: {
+    backgroundColor: "#E3F2FD", // Soft light blue
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    alignItems: "center",
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#90CAF9", // Slight border for a defined look
+  },
+
   welcomeText: {
     fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20,
-    color: "#4CAF50",
+    color: "#1565C0", // Dark blue for contrast
   },
 
   buttonsContainer: {

@@ -192,7 +192,7 @@ const EducatorDashboard = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         {drawerOpen && <View style={styles.overlay} />}

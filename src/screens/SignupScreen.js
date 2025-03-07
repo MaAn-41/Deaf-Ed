@@ -138,11 +138,9 @@ const SignupScreen = ({ navigation, route }) => {
       );
     }
   };
-
   return (
-    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Signup</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Full Name"
@@ -150,7 +148,6 @@ const SignupScreen = ({ navigation, route }) => {
         value={fullname}
         onChangeText={setFullname}
       />
-
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -158,7 +155,6 @@ const SignupScreen = ({ navigation, route }) => {
         value={username}
         onChangeText={setUsername}
       />
-
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -167,7 +163,6 @@ const SignupScreen = ({ navigation, route }) => {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -176,7 +171,6 @@ const SignupScreen = ({ navigation, route }) => {
         value={password}
         onChangeText={setPassword}
       />
-
       <TextInput
         style={styles.input}
         placeholder="Confirm Password"
@@ -185,37 +179,35 @@ const SignupScreen = ({ navigation, route }) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
-
       {userType === "Student" && (
         <>
-          <Button
-            title="Select Date of Birth"
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => setShowDatePicker(true)}
-          />
+          >
+            <Text style={styles.buttonText}>Select Date of Birth</Text>
+          </TouchableOpacity>
           <Text style={styles.selectedDate}>
             {dob ? `Selected: ${dob}` : "No date selected"}
           </Text>
-
           {showDatePicker && (
             <DateTimePicker
               value={dob ? new Date(dob) : new Date()}
               mode="date"
-              display={Platform.OS === "ios" ? "spinner" : "default"}
+              display="default"
               onChange={handleDateChange}
               maximumDate={new Date()}
             />
           )}
         </>
       )}
-
       <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
         <Text style={styles.buttonText}>Generate OTP</Text>
       </TouchableOpacity>
-
       <Modal
         visible={isOtpModalVisible}
         onRequestClose={() => setIsOtpModalVisible(false)}
-        transparent={true}
+        transparent
         animationType="fade"
       >
         <View style={styles.modalContainer}>
@@ -237,69 +229,71 @@ const SignupScreen = ({ navigation, route }) => {
           </View>
         </View>
       </Modal>
-
       <TouchableOpacity onPress={handleSignup} style={styles.button}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-
       <TouchableOpacity
         onPress={() => navigation.navigate("LoginScreen", { userType })}
-        style={styles.loginLink}
       >
-        <Text style={styles.loginText}>Already have an account? Log In</Text>
+        <Text style={styles.forgotPassword}>
+          Already have an account? Log In
+        </Text>
       </TouchableOpacity>
-    </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
     padding: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#FF7043",
-    marginBottom: 30,
+    color: "#2196F3",
     textAlign: "center",
+    marginBottom: 20,
   },
   input: {
     width: "90%",
     height: 50,
     borderColor: "#ccc",
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
     backgroundColor: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     elevation: 3,
   },
   button: {
-    backgroundColor: "#4FC3F7",
+    backgroundColor: "#2196F3",
     paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 25,
+    borderRadius: 15,
     marginVertical: 10,
-    width: "80%",
+    width: "90%",
     alignItems: "center",
-    elevation: 6,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
-    color: "#fff",
+    color: "#FFFFFF",
   },
-  loginLink: {
-    marginTop: 10,
-    alignItems: "center",
-  },
-  loginText: {
+  forgotPassword: {
     fontSize: 16,
-    color: "#4FC3F7",
+    fontWeight: "500",
+    color: "#FF7043",
+    marginTop: 10,
+    textDecorationLine: "underline",
   },
   modalContainer: {
     flex: 1,
@@ -310,8 +304,9 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "#fff",
     padding: 20,
-    borderRadius: 5,
+    borderRadius: 10,
     width: "80%",
+    alignItems: "center",
   },
   selectedDate: {
     marginTop: 10,

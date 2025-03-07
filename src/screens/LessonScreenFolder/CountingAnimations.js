@@ -25,21 +25,22 @@ const CountingAnimations = ({ route }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Animations for Number {number}</Text>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {videos.length > 0 ? (
             videos.map((videoSource, index) => (
-              <Video
-                key={index}
-                source={videoSource}
-                style={styles.video}
-                useNativeControls
-                resizeMode="contain"
-                isLooping
-              />
+              <View key={index} style={styles.videoWrapper}>
+                <Video
+                  source={videoSource}
+                  style={styles.video}
+                  useNativeControls
+                  resizeMode="contain"
+                  isLooping
+                />
+              </View>
             ))
           ) : (
             <Text style={styles.noVideoText}>
@@ -72,12 +73,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 20,
   },
+  videoWrapper: {
+    borderWidth: 8,
+    borderColor: "#007BFF", // Blue border
+    borderRadius: 10,
+    overflow: "hidden",
+  },
   video: {
     width: 300,
     height: 200,
-    marginBottom: 20,
     borderRadius: 10,
-    overflow: "hidden",
   },
   noVideoText: {
     fontSize: 18,

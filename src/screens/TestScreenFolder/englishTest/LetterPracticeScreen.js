@@ -15,7 +15,7 @@ const LetterPracticeScreen = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.117:5001/test_gesture-english",
+        "http://10.54.15.76:5001/test_gesture-english",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -26,7 +26,7 @@ const LetterPracticeScreen = () => {
       const data = await response.json();
       setResult(data);
 
-      await fetch("http://192.168.1.117:5000/save_english_test_result", {
+      await fetch("http://10.54.15.76:5000/save_english_test_result", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

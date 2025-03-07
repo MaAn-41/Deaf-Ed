@@ -105,9 +105,11 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+    <LinearGradient colors={["#FFFFFF", "#E3F2FD"]} style={styles.container}>
       {!otpVerified ? (
         <>
+          <Text style={styles.title}>Reset Password</Text>
+
           <TextInput
             style={styles.input}
             placeholder="Enter your email"
@@ -134,32 +136,36 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
         </>
       ) : (
         <>
-          <View style={{ width: "90%", position: "relative" }}>
+          <Text style={styles.title}>Set New Password</Text>
+
+          <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Enter new password"
               placeholderTextColor="#aaa"
               value={newPassword}
               onChangeText={setNewPassword}
-              secureTextEntry={!isPasswordVisible} // Toggle visibility
+              secureTextEntry={!isPasswordVisible}
               textContentType="newPassword"
             />
             <TouchableOpacity
               onPress={() => setIsPasswordVisible(!isPasswordVisible)}
               style={styles.eyeIcon}
             >
-              <Text>{isPasswordVisible ? "Hide" : "Show"}</Text>
+              <Text style={styles.eyeText}>
+                {isPasswordVisible ? "Hide" : "Show"}
+              </Text>
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: "90%", position: "relative", marginTop: 20 }}>
+          <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Confirm new password"
               placeholderTextColor="#aaa"
               value={confirmPassword}
               onChangeText={setConfirmPassword}
-              secureTextEntry={!isConfirmPasswordVisible} // Toggle visibility
+              secureTextEntry={!isConfirmPasswordVisible}
             />
             <TouchableOpacity
               onPress={() =>
@@ -167,7 +173,9 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
               }
               style={styles.eyeIcon}
             >
-              <Text>{isConfirmPasswordVisible ? "Hide" : "Show"}</Text>
+              <Text style={styles.eyeText}>
+                {isConfirmPasswordVisible ? "Hide" : "Show"}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -179,7 +187,6 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
     </LinearGradient>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -187,39 +194,57 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  eyeIcon: {
-    position: "absolute",
-    right: 40,
-    top: 10,
-    padding: 10,
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#2196F3",
+    textAlign: "center",
+    marginBottom: 20,
   },
-
-  input: {
+  inputContainer: {
     width: "90%",
-    height: 50,
+    position: "relative",
+    marginBottom: 15,
+  },
+  input: {
+    width: "100%",
+    height: 55,
     borderColor: "#ccc",
     borderWidth: 1,
-    marginBottom: 20,
     paddingHorizontal: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     elevation: 3,
+    marginTop: 20,
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: 15,
+    top: 18,
+  },
+  eyeText: {
+    fontSize: 14,
+    color: "#2196F3",
   },
   button: {
-    backgroundColor: "#4FC3F7",
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 25,
-    marginVertical: 10,
-    width: "80%",
+    width: "90%",
+    height: 55,
+    backgroundColor: "#2196F3",
+    borderRadius: 12,
+    justifyContent: "center",
     alignItems: "center",
-    elevation: 6,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    marginTop: 30,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
-    color: "#fff",
+    color: "#FFFFFF",
   },
 });
 

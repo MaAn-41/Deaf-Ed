@@ -8,7 +8,6 @@ import {
   Alert,
   BackHandler,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import BASE_URL from "../../config";
 
@@ -62,7 +61,7 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>{userType} Login</Text>
       <TextInput
         style={styles.input}
@@ -96,69 +95,72 @@ const LoginScreen = ({ navigation, route }) => {
       >
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
-    </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
     padding: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#FF7043",
-    marginBottom: 30,
+    color: "#2196F3",
     textAlign: "center",
+    marginBottom: 20,
   },
   input: {
     width: "90%",
     height: 50,
     borderColor: "#ccc",
     borderWidth: 1,
-    marginBottom: 20,
+    marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
     backgroundColor: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     elevation: 3,
   },
   button: {
-    backgroundColor: "#4FC3F7",
+    backgroundColor: "#2196F3",
     paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 25,
+    borderRadius: 15,
     marginVertical: 10,
-    width: "80%",
+    width: "90%",
     alignItems: "center",
-    elevation: 6,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
-    color: "#fff",
+    color: "#FFFFFF",
   },
   buttonOutline: {
     backgroundColor: "transparent",
     borderWidth: 2,
-    borderColor: "#4FC3F7",
+    borderColor: "#2196F3",
     paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 25,
+    borderRadius: 15,
     marginVertical: 10,
-    width: "80%",
+    width: "90%",
     alignItems: "center",
   },
   buttonOutlineText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
-    color: "#4FC3F7",
+    color: "#2196F3",
   },
   forgotPassword: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "500",
     color: "#FF7043",
     marginTop: 10,

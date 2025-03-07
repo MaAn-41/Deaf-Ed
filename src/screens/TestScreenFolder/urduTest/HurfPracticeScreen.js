@@ -14,7 +14,7 @@ const HurfPracticeScreen = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.117:5001/test_gesture-urdu",
+        "http://10.54.15.76:5001/test_gesture-urdu",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ const HurfPracticeScreen = () => {
       setResult(data);
 
       // Save the test result in MongoDB
-      await fetch("http://192.168.1.117:5000/save-urdu-test", {
+      await fetch("http://10.54.15.76:5000/save-urdu-test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

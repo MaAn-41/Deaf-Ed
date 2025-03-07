@@ -98,7 +98,7 @@ const SectionScreen = ({ route }) => {
   );
 
   return (
-    <LinearGradient colors={["#FFD59A", "#FFF4D3"]} style={styles.container}>
+    <LinearGradient colors={["#FFFFFF", "#FFFFFF"]} style={styles.container}>
       <Text style={styles.title}>Manage Sections</Text>
 
       <View style={styles.inputContainer}>

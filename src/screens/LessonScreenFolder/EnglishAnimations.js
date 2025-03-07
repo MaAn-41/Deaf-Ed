@@ -162,7 +162,7 @@ const EnglishAnimations = ({ route }) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#FFD59A", "#FFF4D3"]}
+        colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
         <Text style={styles.title}>Animations for Letter {letter}</Text>
@@ -173,29 +173,37 @@ const EnglishAnimations = ({ route }) => {
               const { name, color } = iconMap[word] || {
                 name: "circle",
                 color: "#000",
-              }; // Default icon
+              };
+
               return (
-                <View key={index} style={styles.itemContainer}>
-                  {/* Display the word and its associated icon */}
-                  {index === 1 && ( // Show icon only for the video associated with the word
-                    <View style={styles.wordContainer}>
-                      <Icon
-                        name={name}
-                        size={40}
-                        color={color}
-                        style={styles.icon}
-                      />
-                      <Text style={styles.itemText}>{word}</Text>
-                    </View>
-                  )}
-                  {/* Display the video below */}
-                  <Video
-                    source={source}
-                    style={styles.video}
-                    useNativeControls
-                    resizeMode="contain"
-                    isLooping
-                  />
+                <View
+                  key={index}
+                  style={[
+                    styles.itemContainer,
+                    index === 1 && styles.secondVideo,
+                  ]}
+                >
+                  <View style={styles.videoWrapper}>
+                    <Video
+                      source={source}
+                      style={styles.video}
+                      useNativeControls
+                      resizeMode="contain"
+                      isLooping
+                    />
+
+                    {index === 1 && (
+                      <View style={styles.overlay}>
+                        <Icon
+                          name={name}
+                          size={40}
+                          color={color}
+                          style={styles.icon}
+                        />
+                        <Text style={styles.itemText}>{word}</Text>
+                      </View>
+                    )}
+                  </View>
                 </View>
               );
             })
@@ -209,7 +217,6 @@ const EnglishAnimations = ({ route }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -234,24 +241,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  wordContainer: {
-    alignItems: "center", // Align icon and text in the center vertically
-    marginBottom: 10,
+  secondVideo: {
+    marginTop: 60, // Moves the second video lower
   },
-  icon: {
-    marginBottom: 5, // Add space between the icon and word
-  },
-  itemText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#FF7043",
+  videoWrapper: {
+    borderWidth: 8,
+    borderColor: "#007BFF",
+    borderRadius: 10,
+    overflow: "hidden",
+    position: "relative",
   },
   video: {
     width: 300,
     height: 200,
-    marginBottom: 20,
+  },
+  overlay: {
+    position: "absolute",
+    left: 10,
+    top: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    padding: 5,
     borderRadius: 10,
-    overflow: "hidden",
+    zIndex: 1,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  itemText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#FF7043",
   },
   noVideoText: {
     fontSize: 18,
@@ -261,5 +282,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
 export default EnglishAnimations;

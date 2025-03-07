@@ -15,7 +15,7 @@ const NumberPracticeScreen = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.1.117:5001/test_gesture-math",
+        "http://10.54.15.76:5001/test_gesture-math",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ const NumberPracticeScreen = () => {
       const data = await response.json();
       setResult(data);
 
-      await fetch("http://192.168.1.117:5000/save-counting-test", {
+      await fetch("http://10.54.15.76:5000/save-counting-test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
