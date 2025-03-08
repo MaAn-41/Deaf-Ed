@@ -10,57 +10,36 @@ import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import BASE_URL from "../../../config";
 
-const UrduLessonScreen = ({ navigation, route }) => {
-  const urduAlphabet = [
-    "ا",
-    "ب",
-    "پ",
-    "ت",
-    "ٹ",
-    "ث",
-    "ج",
-    "چ",
-    "ح",
-    "خ",
-    "د",
-    "ڈ",
-    "ذ",
-    "ر",
-    "ڑ",
-    "ز",
-    "ژ",
-    "س",
-    "ش",
-    "ص",
-    "ض",
-    "ط",
-    "ظ",
-    "ع",
-    "غ",
-    "ف",
-    "ق",
-    "ک",
-    "گ",
-    "ل",
-    "م",
-    "ن",
-    "ں",
-    "و",
-    "ہ",
-    "ء",
-    "ی",
-    "ے",
+const RelationScreen = ({ navigation, route }) => {
+  const relationWords = [
+    { en: "Family", ur: "خاندان" },
+    { en: "Father", ur: "والد" },
+    { en: "Mother", ur: "والدہ" },
+    { en: "Aunt", ur: "چچی / خالہ" },
+    { en: "Uncle", ur: "چچا / ماموں" },
+    { en: "Boy", ur: "لڑکا" },
+    { en: "Girl", ur: "لڑکی" },
+    { en: "Sister", ur: "بہن" },
+    { en: "Brother", ur: "بھائی" },
+    { en: "Daughter", ur: "بیٹی" },
+    { en: "Son", ur: "بیٹا" },
+    { en: "Friend", ur: "دوست" },
+    { en: "Grandfather", ur: "دادا / نانا" },
+    { en: "Grandmother", ur: "دادی / نانی" },
+    { en: "Parents", ur: "والدین" },
+    { en: "Siblings", ur: "بہن بھائی" },
   ];
+
   const { Username } = route.params;
-  const [openedLetters, setOpenedLetters] = useState([]);
+  const [openedWords, setOpenedWords] = useState([]);
 
   useEffect(() => {
     const fetchProgress = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/urduAlphabetsProgress?username=${Username}`
+          `${BASE_URL}/relationProgress?username=${Username}`
         );
-        setOpenedLetters(response.data.openedLetters || []);
+        setOpenedWords(response.data.openedWords || []);
       } catch (error) {
         console.error("Error fetching progress:", error);
       }
@@ -69,14 +48,14 @@ const UrduLessonScreen = ({ navigation, route }) => {
     fetchProgress();
   }, []);
 
-  const handleLetterClick = async (letter) => {
+  const handleWordClick = async (word) => {
     try {
-      await axios.post(`${BASE_URL}/urduAlphabetsProgress`, {
+      await axios.post(`${BASE_URL}/relationProgress`, {
         username: Username,
-        letter,
+        word,
       });
-      setOpenedLetters((prev) => [...prev, letter]);
-      navigation.navigate("UrduAnimations", { letter });
+      setOpenedWords((prev) => [...prev, word]);
+      navigation.navigate("RelationAnimations", { word });
     } catch (error) {
       console.error("Error updating progress:", error);
     }
@@ -88,22 +67,24 @@ const UrduLessonScreen = ({ navigation, route }) => {
         colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
-        <Text style={styles.title}>اردو اسباق</Text>
+        <Text style={styles.title}>رشتہ دار</Text>
         <Text style={styles.subtitle}>سیکھنے کے لیے منتخب کریں</Text>
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
-          {urduAlphabet.map((letter, index) => (
+          {relationWords.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={[
                 styles.button,
-                openedLetters.includes(letter)
+                openedWords.includes(item.en)
                   ? styles.buttonOpened
                   : styles.buttonDefault,
               ]}
-              onPress={() => handleLetterClick(letter)}
+              onPress={() => handleWordClick(item.en)}
             >
-              <Text style={styles.buttonText}>{letter}</Text>
+              <Text style={styles.buttonText}>
+                {item.en} / {item.ur}
+              </Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -160,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UrduLessonScreen;
+export default RelationScreen;

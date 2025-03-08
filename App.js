@@ -9,6 +9,8 @@ import LoginScreen from "./src/screens/LoginScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 import StudentDashboard from "./src/screens/Student/StudentDashboard";
 import EducatorDashboard from "./src/screens/Educator/EducatorDashboard";
+import EducatorProgressScreen from "./src/screens/Educator/EducatorProgressScreen";
+
 import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
 import LessonScreen from "./src/screens/LessonScreenFolder/LessonScreen";
 import EnglishLessonScreen from "./src/screens/LessonScreenFolder/EnglishLessonScreen";
@@ -27,6 +29,9 @@ import EnglishTestScreen from "./src/screens/TestScreenFolder/englishTest/Englis
 import FreeFallEnglishScreen from "./src/screens/TestScreenFolder/englishTest/FreeFallEnglishScreen";
 import AlphabetTestScreen from "./src/screens/TestScreenFolder/englishTest/AlphabetTestScreen";
 import LetterPracticeScreen from "./src/screens/TestScreenFolder/englishTest/LetterPracticeScreen";
+import Wordscreen from "./src/screens/LessonScreenFolder/Wordscreen";
+import FoodScreen from "./src/screens/LessonScreenFolder/FoodScreen";
+import RelationScreen from "./src/screens/LessonScreenFolder/RelationScreen";
 
 import AlifbeTestScreen from "./src/screens/TestScreenFolder/urduTest/AlifbeTestScreen";
 import FreeFallUrduScreen from "./src/screens/TestScreenFolder/urduTest/FreeFallUrduScreen";
@@ -41,7 +46,6 @@ import NumberTestScreen from "./src/screens/TestScreenFolder/coutintTest/NumberT
 import CountingReportScreen from "./src/screens/ProgressScreenFolder/CountingReportScreen";
 import EnglishReportScreen from "./src/screens/ProgressScreenFolder/EnglishReportScreen";
 import UrduReportScreen from "./src/screens/ProgressScreenFolder/UrduReportScreen";
-
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -142,6 +146,14 @@ export default function App() {
           name="EnglishReportScreen"
           component={EnglishReportScreen}
         />
+        <Stack.Screen name="Wordscreen" component={Wordscreen} />
+        <Stack.Screen name="FoodScreen" component={FoodScreen} />
+        <Stack.Screen name="RelationScreen" component={RelationScreen} />
+        <Stack.Screen
+          name="EducatorProgressScreen"
+          component={EducatorProgressScreen}
+        />
+
         <Stack.Screen name="UrduReportScreen" component={UrduReportScreen} />
       </Stack.Navigator>
     </NavigationContainer>

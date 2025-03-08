@@ -41,6 +41,20 @@ const {
   getAlphabetsProgress,
   updateAlphabetsProgress,
 } = require("./controllers/AlphabetProgressController");
+
+const {
+  getFoodProgress,
+  updateFoodProgress,
+} = require("./controllers/FoodProgressController");
+const {
+  getRelationProgress,
+  updateRelationProgress,
+} = require("./controllers/RelationProgressController");
+
+const {
+  getUrduAlphabetsProgress,
+  updateUrduAlphabetsProgress,
+} = require("./controllers/UrduAlphabetsProgressController");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -86,8 +100,17 @@ app.delete("/delete-student/:studentName", studentController.deleteStudent);
 app.get("/alphabetsProgress", getAlphabetsProgress);
 app.post("/alphabetsProgress", updateAlphabetsProgress);
 
+app.get("/urduAlphabetsProgress", getUrduAlphabetsProgress);
+app.post("/urduAlphabetsProgress", updateUrduAlphabetsProgress);
+
 app.get("/countingProgress", getCountingProgress);
 app.post("/countingProgress", updateCountingProgress);
+
+app.get("/foodProgress", getFoodProgress);
+app.post("/foodProgress", updateFoodProgress);
+
+app.get("/relationProgress", getRelationProgress);
+app.post("/relationProgress", updateRelationProgress);
 
 //updating profiles
 app.put("/students", studentController.updateStudentProfile);

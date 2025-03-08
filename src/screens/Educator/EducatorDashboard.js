@@ -277,7 +277,12 @@ const EducatorDashboard = () => {
 
             <TouchableOpacity
               style={[styles.button1, styles.reportButton]}
-              // onPress={() => navigation.navigate("StudentProgressScreen")}
+              onPress={() =>
+                navigation.navigate("EducatorProgressScreen", {
+                  educatorEmail: email,
+                  educatorUsername: educatorName,
+                })
+              }
             >
               <Ionicons
                 name="bar-chart"

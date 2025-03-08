@@ -38,13 +38,21 @@ const LessonScreen = ({ navigation, route }) => {
           </TouchableOpacity>
 
           {/* Urdu Button */}
-          <TouchableOpacity style={[styles.button, styles.urduButton]}>
+          <TouchableOpacity
+            style={[styles.button, styles.urduButton]}
+            onPress={() =>
+              navigation.navigate("UrduLessonScreen", { Username })
+            }
+          >
             <Icon name="article" size={24} color="#fff" style={styles.icon} />
             <Text style={styles.buttonText}>Urdu</Text>
           </TouchableOpacity>
 
           {/* Foundational Words Button */}
-          <TouchableOpacity style={[styles.button, styles.wordsButton]}>
+          <TouchableOpacity
+            style={[styles.button, styles.wordsButton]}
+            onPress={() => navigation.navigate("Wordscreen", { Username })}
+          >
             <Icon
               name="spellcheck"
               size={24}

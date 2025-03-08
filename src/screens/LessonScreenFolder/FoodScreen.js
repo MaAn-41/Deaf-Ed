@@ -10,57 +10,35 @@ import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import BASE_URL from "../../../config";
 
-const UrduLessonScreen = ({ navigation, route }) => {
-  const urduAlphabet = [
-    "ا",
-    "ب",
-    "پ",
-    "ت",
-    "ٹ",
-    "ث",
-    "ج",
-    "چ",
-    "ح",
-    "خ",
-    "د",
-    "ڈ",
-    "ذ",
-    "ر",
-    "ڑ",
-    "ز",
-    "ژ",
-    "س",
-    "ش",
-    "ص",
-    "ض",
-    "ط",
-    "ظ",
-    "ع",
-    "غ",
-    "ف",
-    "ق",
-    "ک",
-    "گ",
-    "ل",
-    "م",
-    "ن",
-    "ں",
-    "و",
-    "ہ",
-    "ء",
-    "ی",
-    "ے",
+const FoodScreen = ({ navigation, route }) => {
+  const foodItems = [
+    { english: "Breakfast", urdu: "ناشتہ" },
+    { english: "Dinner", urdu: "رات کا کھانا" },
+    { english: "Lunch", urdu: "دوپہر کا کھانا" },
+    { english: "Paratha", urdu: "پراٹھا" },
+    { english: "Omelette", urdu: "آملیٹ" },
+    { english: "Rice", urdu: "چاول" },
+    { english: "Roti", urdu: "روٹی" },
+    { english: "Sandwich", urdu: "سینڈوچ" },
+    { english: "Bread", urdu: "ڈبل روٹی" },
+    { english: "Sugar", urdu: "چینی" },
+    { english: "Butter", urdu: "مکھن" },
+    { english: "Candy", urdu: "میٹھی گولیاں" },
+    { english: "Chips", urdu: "چپس" },
+    { english: "Cookies", urdu: "بسکٹ" },
+    { english: "Egg", urdu: "انڈہ" },
+    { english: "Water", urdu: "پانی" },
   ];
-  const { Username } = route.params;
-  const [openedLetters, setOpenedLetters] = useState([]);
 
+  const { Username } = route.params;
+  const [openedWords, setOpenedWords] = useState([]);
   useEffect(() => {
     const fetchProgress = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/urduAlphabetsProgress?username=${Username}`
+          `${BASE_URL}/foodProgress?username=${Username}`
         );
-        setOpenedLetters(response.data.openedLetters || []);
+        setOpenedWords(response.data.openedWords || []);
       } catch (error) {
         console.error("Error fetching progress:", error);
       }
@@ -69,14 +47,14 @@ const UrduLessonScreen = ({ navigation, route }) => {
     fetchProgress();
   }, []);
 
-  const handleLetterClick = async (letter) => {
+  const handleWordClick = async (word) => {
     try {
-      await axios.post(`${BASE_URL}/urduAlphabetsProgress`, {
+      await axios.post(`${BASE_URL}/foodProgress`, {
         username: Username,
-        letter,
+        word,
       });
-      setOpenedLetters((prev) => [...prev, letter]);
-      navigation.navigate("UrduAnimations", { letter });
+      setOpenedWords((prev) => [...prev, word]);
+      navigation.navigate("FoodAnimations", { word });
     } catch (error) {
       console.error("Error updating progress:", error);
     }
@@ -88,22 +66,24 @@ const UrduLessonScreen = ({ navigation, route }) => {
         colors={["#FFFFFF", "#FFFFFF"]}
         style={styles.gradientBackground}
       >
-        <Text style={styles.title}>اردو اسباق</Text>
+        <Text style={styles.title}>کھانے کی اشیاء</Text>
         <Text style={styles.subtitle}>سیکھنے کے لیے منتخب کریں</Text>
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
-          {urduAlphabet.map((letter, index) => (
+          {foodItems.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={[
                 styles.button,
-                openedLetters.includes(letter)
+                openedWords.includes(item.english)
                   ? styles.buttonOpened
                   : styles.buttonDefault,
               ]}
-              onPress={() => handleLetterClick(letter)}
+              onPress={() => handleWordClick(item.english)}
             >
-              <Text style={styles.buttonText}>{letter}</Text>
+              <Text style={styles.buttonText}>
+                {item.english} / {item.urdu}
+              </Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -154,10 +134,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#BDBDBD",
   },
   buttonText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
+    textAlign: "center",
   },
 });
 
-export default UrduLessonScreen;
+export default FoodScreen;
