@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
 import BASE_URL from "../../../../config";
 import BASE_URL2 from "../../../../config2";
@@ -50,34 +56,46 @@ const HurfPracticeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Test Gesture for: {label}</Text>
+    <ImageBackground
+      source={require("../../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Test Gesture for: {label}</Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={startTest}
-        disabled={isTesting}
-      >
-        <Text style={styles.buttonText}>
-          {isTesting ? "Testing..." : "Start Test"}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={startTest}
+          disabled={isTesting}
+        >
+          <Text style={styles.buttonText}>
+            {isTesting ? "Testing..." : "Start Test"}
+          </Text>
+        </TouchableOpacity>
 
-      {result && (
-        <Text style={styles.result}>
-          {result.status}: {result.recognized} ({result.accuracy}%)
-        </Text>
-      )}
-    </View>
+        {result && (
+          <Text style={styles.result}>
+            {result.status}: {result.recognized} ({result.accuracy}%)
+          </Text>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     padding: 20,
   },
   title: {
@@ -85,6 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FF7043",
     marginBottom: 20,
+    textAlign: "center",
   },
   button: {
     width: 200,
@@ -106,6 +125,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontWeight: "bold",
     color: "#FF7043",
+    textAlign: "center",
   },
 });
 

@@ -5,20 +5,22 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 
 const numbers = Array.from({ length: 11 }, (_, i) => i);
 
-const CountingTestScreen = ({ route, navigation }) => {
+const CountingTestScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { Username } = route.params;
+
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../../assets/a.webp")} // Background image added
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>Select a Number</Text>
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
@@ -37,18 +39,21 @@ const CountingTestScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Light overlay for readability
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
@@ -61,9 +66,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     alignItems: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
     paddingBottom: 20,
   },
   button: {

@@ -1,48 +1,66 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet, Image, View } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  View,
+  ImageBackground,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Image source={require("../../assets/logo.png")} style={styles.logo} />
+    <ImageBackground
+      source={require("../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Image source={require("../../assets/logo.png")} style={styles.logo} />
 
-      <Text style={styles.title}>
-        Deaf<Text style={styles.titleED}>ED</Text>
-      </Text>
+        <Text style={styles.title}>
+          Deaf<Text style={styles.titleED}>ED</Text>
+        </Text>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() =>
-            navigation.navigate("LoginScreen", { userType: "Student" })
-          }
-        >
-          <Ionicons name="school-outline" size={30} color="#FFFFFF" />
-          <Text style={styles.cardText}>Start Learning</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate("LoginScreen", { userType: "Student" })
+            }
+          >
+            <Ionicons name="school-outline" size={30} color="#FFFFFF" />
+            <Text style={styles.cardText}>Start Learning</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() =>
-            navigation.navigate("LoginScreen", { userType: "Educator" })
-          }
-        >
-          <Ionicons name="person-outline" size={30} color="#FFFFFF" />
-          <Text style={styles.cardText}>Educator Login</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate("LoginScreen", { userType: "Educator" })
+            }
+          >
+            <Ionicons name="person-outline" size={30} color="#FFFFFF" />
+            <Text style={styles.cardText}>Educator Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     padding: 20,
-    marginTop: 20,
   },
   logo: {
     width: 250,

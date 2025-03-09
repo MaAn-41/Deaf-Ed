@@ -1,18 +1,25 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const EnglishTestScreen = ({ route, navigation }) => {
+const EnglishTestScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { Username } = route.params;
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../../assets/a.webp")} // Change to your image file
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlay}>
         <Text style={styles.title}>English Test</Text>
         <Text style={styles.subtitle}>Select an option</Text>
 
@@ -23,7 +30,7 @@ const EnglishTestScreen = ({ route, navigation }) => {
           }
         >
           <Icon
-            name="clipboard-text"
+            name="alphabetical"
             size={28}
             color="#fff"
             style={styles.icon}
@@ -35,35 +42,32 @@ const EnglishTestScreen = ({ route, navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("FreeFallEnglish")}
         >
-          <Icon
-            name="format-list-bulleted"
-            size={28}
-            color="#fff"
-            style={styles.icon}
-          />
+          <Icon name="gesture-tap" size={28} color="#fff" style={styles.icon} />
           <Text style={styles.buttonText}>Free Fall</Text>
         </TouchableOpacity>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
-  gradientBackground: {
+  overlay: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#FF7043",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
@@ -80,6 +84,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 35,
     elevation: 8,
+    paddingHorizontal: 10,
   },
   icon: {
     marginRight: 10,

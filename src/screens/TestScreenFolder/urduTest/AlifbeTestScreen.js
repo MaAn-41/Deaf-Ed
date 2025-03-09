@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -53,47 +54,61 @@ const AlifBeTestScreen = ({ route }) => {
   const { Username } = route.params;
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require("../../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
       <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
+        colors={["rgba(255,255,255,0.6)", "rgba(255,255,255,0.6)"]}
+        style={styles.overlay}
       >
-        <Text style={styles.title}>Alif Be Test</Text>
+        <View style={styles.container}>
+          <Text style={styles.title}>Alif Be Test</Text>
 
-        <ScrollView contentContainerStyle={styles.buttonsContainer}>
-          {romanUrduLabels.map((label, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate("HurfPracticeScreen", { label, Username })
-              }
-            >
-              <Text style={styles.buttonText}>{label}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+          <ScrollView contentContainerStyle={styles.buttonsContainer}>
+            {romanUrduLabels.map((label, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.button}
+                onPress={() =>
+                  navigation.navigate("HurfPracticeScreen", { label, Username })
+                }
+              >
+                <Text style={styles.buttonText}>{label}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       </LinearGradient>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
-  gradientBackground: {
+  overlay: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#FF7043",
     marginBottom: 20,
+    textAlign: "center",
   },
   buttonsContainer: {
     alignItems: "center",

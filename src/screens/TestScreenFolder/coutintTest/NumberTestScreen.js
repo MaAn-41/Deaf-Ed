@@ -1,18 +1,23 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const NumberTestScreen = ({ route, navigation }) => {
   const { Username } = route.params;
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../../assets/a.webp")} // Background image added
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>Counting Test</Text>
         <Text style={styles.subtitle}>Select an option</Text>
 
@@ -41,18 +46,21 @@ const NumberTestScreen = ({ route, navigation }) => {
           />
           <Text style={styles.buttonText}>Free Fall</Text>
         </TouchableOpacity>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,

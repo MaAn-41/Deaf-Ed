@@ -1,6 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,11 +14,11 @@ const WordScreen = ({ route }) => {
   const { Username } = route.params; // Catch Username
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>Word Categories</Text>
 
         <View style={styles.buttonsContainer}>
@@ -43,21 +48,22 @@ const WordScreen = ({ route }) => {
             <Text style={styles.buttonText}>Relations</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Light overlay for readability
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
   },
   title: {
     fontSize: 28,

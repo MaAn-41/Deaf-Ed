@@ -10,6 +10,8 @@ import {
   Button,
   Platform,
 } from "react-native";
+import { ImageBackground } from "react-native";
+
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../config";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -139,116 +141,128 @@ const SignupScreen = ({ navigation, route }) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Signup</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Full Name"
-        placeholderTextColor="#aaa"
-        value={fullname}
-        onChangeText={setFullname}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        placeholderTextColor="#aaa"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#aaa"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#aaa"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        placeholderTextColor="#aaa"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-      {userType === "Student" && (
-        <>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Text style={styles.buttonText}>Select Date of Birth</Text>
-          </TouchableOpacity>
-          <Text style={styles.selectedDate}>
-            {dob ? `Selected: ${dob}` : "No date selected"}
-          </Text>
-          {showDatePicker && (
-            <DateTimePicker
-              value={dob ? new Date(dob) : new Date()}
-              mode="date"
-              display="default"
-              onChange={handleDateChange}
-              maximumDate={new Date()}
-            />
-          )}
-        </>
-      )}
-      <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
-        <Text style={styles.buttonText}>Generate OTP</Text>
-      </TouchableOpacity>
-      <Modal
-        visible={isOtpModalVisible}
-        onRequestClose={() => setIsOtpModalVisible(false)}
-        transparent
-        animationType="fade"
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter OTP"
-              placeholderTextColor="#aaa"
-              keyboardType="numeric"
-              value={otp}
-              onChangeText={setOtp}
-            />
+    <ImageBackground
+      source={require("../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Signup</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Full Name"
+          placeholderTextColor="#aaa"
+          value={fullname}
+          onChangeText={setFullname}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          placeholderTextColor="#aaa"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#aaa"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#aaa"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password"
+          placeholderTextColor="#aaa"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        {userType === "Student" && (
+          <>
             <TouchableOpacity
-              onPress={handleOtpVerification}
               style={styles.button}
+              onPress={() => setShowDatePicker(true)}
             >
-              <Text style={styles.buttonText}>Verify OTP</Text>
+              <Text style={styles.buttonText}>Select Date of Birth</Text>
             </TouchableOpacity>
+            <Text style={styles.selectedDate}>
+              {dob ? `Selected: ${dob}` : "No date selected"}
+            </Text>
+            {showDatePicker && (
+              <DateTimePicker
+                value={dob ? new Date(dob) : new Date()}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+                maximumDate={new Date()}
+              />
+            )}
+          </>
+        )}
+        <TouchableOpacity onPress={handleGenerateOtp} style={styles.button}>
+          <Text style={styles.buttonText}>Generate OTP</Text>
+        </TouchableOpacity>
+        <Modal
+          visible={isOtpModalVisible}
+          onRequestClose={() => setIsOtpModalVisible(false)}
+          transparent
+          animationType="fade"
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter OTP"
+                placeholderTextColor="#aaa"
+                keyboardType="numeric"
+                value={otp}
+                onChangeText={setOtp}
+              />
+              <TouchableOpacity
+                onPress={handleOtpVerification}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Verify OTP</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
-      <TouchableOpacity onPress={handleSignup} style={styles.button}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("LoginScreen", { userType })}
-      >
-        <Text style={styles.forgotPassword}>
-          Already have an account? Log In
-        </Text>
-      </TouchableOpacity>
-    </View>
+        </Modal>
+        <TouchableOpacity onPress={handleSignup} style={styles.button}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("LoginScreen", { userType })}
+        >
+          <Text style={styles.forgotPassword}>
+            Already have an account? Log In
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     padding: 20,
   },
   title: {

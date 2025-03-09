@@ -8,6 +8,7 @@ import {
   BackHandler,
   Modal,
   TextInput,
+  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -15,7 +16,7 @@ import {
   useRoute,
   useFocusEffect,
 } from "@react-navigation/native";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import BASE_URL from "../../../config";
 
 const EducatorDashboard = () => {
@@ -190,202 +191,212 @@ const EducatorDashboard = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
-        {drawerOpen && <View style={styles.overlay} />}
-        <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setDrawerOpen(false)}
-          >
-            <Ionicons name="close" size={30} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => setProfileModalVisible(true)}
-          >
-            <Text style={styles.drawerButtonText}>My Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.drawerButtonText}>Change Password</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={handleDeleteProfile}
-          >
-            <Text style={styles.drawerButtonText}>Delete Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
-            <Text style={styles.drawerButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          style={styles.drawerToggle}
-          onPress={() => setDrawerOpen((prevState) => !prevState)}
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+          style={styles.gradientBackground}
         >
-          <Text style={styles.drawerToggleText}>
-            {drawerOpen ? "Close" : "Menu"}
-          </Text>
-        </TouchableOpacity>
-
-        <View style={styles.content}>
-          <Text style={styles.welcomeText}>
-            Welcome {educatorName || "Guest"}!
-          </Text>
-
-          <View style={styles.buttonsContainer}>
+          {drawerOpen && <View style={styles.overlay} />}
+          <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
             <TouchableOpacity
-              style={[styles.button1, styles.lessonButton]}
-              onPress={() =>
-                navigation.navigate("LessonScreen", { Username: educatorName })
-              }
+              style={styles.closeButton}
+              onPress={() => setDrawerOpen(false)}
             >
-              <Ionicons
-                name="book"
-                size={24}
-                color="white"
-                style={styles.icon}
-              />
-              <Text style={styles.buttonText}>Lessons</Text>
+              <Ionicons name="close" size={30} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.drawerButton}
+              onPress={() => setProfileModalVisible(true)}
+            >
+              <Text style={styles.drawerButtonText}>My Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.drawerButton}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.drawerButtonText}>Change Password</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button1, styles.ManageStudentButton]}
-              onPress={() =>
-                navigation.navigate("Manage", {
-                  educatorEmail: email,
-                  educatorUsername: educatorName,
-                })
-              }
+              style={styles.drawerButton}
+              onPress={handleDeleteProfile}
             >
-              <Ionicons
-                name="person"
-                size={24}
-                color="white"
-                style={styles.icon}
-              />
-              <Text style={styles.buttonText}>Manage</Text>
+              <Text style={styles.drawerButtonText}>Delete Profile</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
-              style={[styles.button1, styles.reportButton]}
-              onPress={() =>
-                navigation.navigate("EducatorProgressScreen", {
-                  educatorEmail: email,
-                  educatorUsername: educatorName,
-                })
-              }
+              style={styles.drawerButton}
+              onPress={handleLogout}
             >
-              <Ionicons
-                name="bar-chart"
-                size={24}
-                color="white"
-                style={styles.icon}
-              />
-              <Text style={styles.buttonText}>View Student Progress</Text>
+              <Text style={styles.drawerButtonText}>Logout</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </LinearGradient>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Change Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="New Password"
-              secureTextEntry
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleChangePassword}
-            >
-              <Text style={styles.buttonText}>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={profileModalVisible}
-        onRequestClose={() => setProfileModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>My Profile</Text>
 
-            <Text style={styles.label}>Username:</Text>
-            <TextInput
-              style={[styles.input, { backgroundColor: "#f0f0f0" }]}
-              editable={false}
-              value={educatorData?.name || ""}
-            />
+          <TouchableOpacity
+            style={styles.drawerToggle}
+            onPress={() => setDrawerOpen((prevState) => !prevState)}
+          >
+            <Text style={styles.drawerToggleText}>
+              {drawerOpen ? "Close" : "Menu"}
+            </Text>
+          </TouchableOpacity>
 
-            <Text style={styles.label}>Email:</Text>
-            <TextInput
-              style={[styles.input, { backgroundColor: "#f0f0f0" }]}
-              editable={false}
-              value={educatorData?.email || ""}
-            />
+          <View style={styles.content}>
+            <Text style={styles.welcomeText}>
+              Welcome {educatorName || "Guest"}!
+            </Text>
 
-            <Text style={styles.label}>Full Name:</Text>
-            <TextInput
-              style={styles.input}
-              value={updatedFullname}
-              onChangeText={(text) => {
-                setUpdatedFullname(text);
-              }}
-            />
-
-            <View style={styles.modalButtonContainer}>
+            <View style={styles.buttonsContainer}>
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  handleUpdateFullname();
-                }}
+                style={[styles.button1, styles.lessonButton]}
+                onPress={() =>
+                  navigation.navigate("LessonScreen", {
+                    Username: educatorName,
+                  })
+                }
               >
-                <Text style={styles.buttonText}>Save</Text>
+                <Ionicons
+                  name="book"
+                  size={24}
+                  color="white"
+                  style={styles.icon}
+                />
+                <Text style={styles.buttonText}>Lessons</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => setProfileModalVisible(false)}
+                style={[styles.button1, styles.ManageStudentButton]}
+                onPress={() =>
+                  navigation.navigate("Manage", {
+                    educatorEmail: email,
+                    educatorUsername: educatorName,
+                  })
+                }
               >
-                <Text style={styles.buttonText}>Close</Text>
+                <Ionicons
+                  name="person"
+                  size={24}
+                  color="white"
+                  style={styles.icon}
+                />
+                <Text style={styles.buttonText}>Manage</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button1, styles.reportButton]}
+                onPress={() =>
+                  navigation.navigate("EducatorProgressScreen", {
+                    educatorEmail: email,
+                    educatorUsername: educatorName,
+                  })
+                }
+              >
+                <Ionicons
+                  name="bar-chart"
+                  size={24}
+                  color="white"
+                  style={styles.icon}
+                />
+                <Text style={styles.buttonText}>View Student Progress</Text>
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </LinearGradient>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Change Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="New Password"
+                secureTextEntry
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleChangePassword}
+              >
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={profileModalVisible}
+          onRequestClose={() => setProfileModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>My Profile</Text>
+
+              <Text style={styles.label}>Username:</Text>
+              <TextInput
+                style={[styles.input, { backgroundColor: "#f0f0f0" }]}
+                editable={false}
+                value={educatorData?.name || ""}
+              />
+
+              <Text style={styles.label}>Email:</Text>
+              <TextInput
+                style={[styles.input, { backgroundColor: "#f0f0f0" }]}
+                editable={false}
+                value={educatorData?.email || ""}
+              />
+
+              <Text style={styles.label}>Full Name:</Text>
+              <TextInput
+                style={styles.input}
+                value={updatedFullname}
+                onChangeText={(text) => {
+                  setUpdatedFullname(text);
+                }}
+              />
+
+              <View style={styles.modalButtonContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    handleUpdateFullname();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setProfileModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -401,7 +412,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent", // Make the container transparent to see the background
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   gradientBackground: {
     flex: 1,
@@ -463,10 +480,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 150,
     color: "#4CAF50",
-  },
-  emailText: {
-    fontSize: 16,
-    marginBottom: 30,
   },
   buttonsContainer: {
     width: "80%",

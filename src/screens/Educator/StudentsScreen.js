@@ -7,6 +7,7 @@ import {
   FlatList,
   StyleSheet,
   Alert,
+  ImageBackground,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { LinearGradient } from "expo-linear-gradient";
@@ -103,46 +104,60 @@ const StudentsScreen = ({ route }) => {
   );
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#FFFFFF"]} style={styles.container}>
-      <Text style={styles.title}>Manage Students</Text>
-
-      <Picker
-        selectedValue={selectedSection}
-        onValueChange={(value) => setSelectedSection(value)}
-        style={styles.picker}
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <LinearGradient
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+        style={styles.container}
       >
-        <Picker.Item label="Select Section" value="" />
-        {sections.map((section) => (
-          <Picker.Item
-            key={section._id}
-            label={`Section ${section.section}`}
-            value={section.section}
+        <Text style={styles.title}>Manage Students</Text>
+
+        <Picker
+          selectedValue={selectedSection}
+          onValueChange={(value) => setSelectedSection(value)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Select Section" value="" />
+          {sections.map((section) => (
+            <Picker.Item
+              key={section._id}
+              label={`Section ${section.section}`}
+              value={section.section}
+            />
+          ))}
+        </Picker>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Student Username"
+            value={studentUsername}
+            onChangeText={setStudentUsername}
           />
-        ))}
-      </Picker>
+          <TouchableOpacity style={styles.addButton} onPress={addStudent}>
+            <Text style={styles.addButtonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Student Username"
-          value={studentUsername}
-          onChangeText={setStudentUsername}
+        <FlatList
+          data={students}
+          keyExtractor={(item) => item._id}
+          renderItem={renderStudent}
         />
-        <TouchableOpacity style={styles.addButton} onPress={addStudent}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-
-      <FlatList
-        data={students}
-        keyExtractor={(item) => item._id}
-        renderItem={renderStudent}
-      />
-    </LinearGradient>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -184,11 +199,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   studentItem: {
+    backgroundColor: "#FFEECC", // Light background for visibility
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 5,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+    alignItems: "center",
   },
   studentText: {
     fontSize: 18,

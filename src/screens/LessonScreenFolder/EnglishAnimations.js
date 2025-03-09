@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import { Video } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -160,71 +166,80 @@ const EnglishAnimations = ({ route }) => {
     Zoo: { name: "paw", color: "#FF5722" }, // Orange for Zoo
   };
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
-        <Text style={styles.title}>Animations for Letter {letter}</Text>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {videos.length > 0 ? (
-            videos.map((video, index) => {
-              const { source, word } = video;
-              const { name, color } = iconMap[word] || {
-                name: "circle",
-                color: "#000",
-              };
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlay1}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Animations for Letter {letter}</Text>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {videos.length > 0 ? (
+              videos.map((video, index) => {
+                const { source, word } = video;
+                const { name, color } = iconMap[word] || {
+                  name: "circle",
+                  color: "#000",
+                };
 
-              return (
-                <View
-                  key={index}
-                  style={[
-                    styles.itemContainer,
-                    index === 1 && styles.secondVideo,
-                  ]}
-                >
-                  <View style={styles.videoWrapper}>
-                    <Video
-                      source={source}
-                      style={styles.video}
-                      useNativeControls
-                      resizeMode="contain"
-                      isLooping
-                    />
+                return (
+                  <View
+                    key={index}
+                    style={[
+                      styles.itemContainer,
+                      index === 1 && styles.secondVideo,
+                    ]}
+                  >
+                    <View style={styles.videoWrapper}>
+                      <Video
+                        source={source}
+                        style={styles.video}
+                        useNativeControls
+                        resizeMode="contain"
+                        isLooping
+                      />
 
-                    {index === 1 && (
-                      <View style={styles.overlay}>
-                        <Icon
-                          name={name}
-                          size={40}
-                          color={color}
-                          style={styles.icon}
-                        />
-                        <Text style={styles.itemText}>{word}</Text>
-                      </View>
-                    )}
+                      {index === 1 && (
+                        <View style={styles.overlay}>
+                          <Icon
+                            name={name}
+                            size={40}
+                            color={color}
+                            style={styles.icon}
+                          />
+                          <Text style={styles.itemText}>{word}</Text>
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
-              );
-            })
-          ) : (
-            <Text style={styles.noVideoText}>
-              No videos available for this letter.
-            </Text>
-          )}
-        </ScrollView>
-      </LinearGradient>
-    </View>
+                );
+              })
+            ) : (
+              <Text style={styles.noVideoText}>
+                No videos available for this letter.
+              </Text>
+            )}
+          </ScrollView>
+        </View>
+      </View>
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  gradientBackground: {
-    flex: 1,
-    padding: 20,
     alignItems: "center",
+    padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  overlay1: {
+    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    alignItems: "center",
+    width: "100%",
   },
   title: {
     fontSize: 28,

@@ -9,7 +9,7 @@ const FreeFallCountingScreen = () => {
 
   useEffect(() => {
     const fetchGesture = () => {
-      fetch(`${BASE_URL2}:5001/recognized_gesture_math`)
+      fetch(`${BASE_URL2}/recognized_gesture_math`)
         .then((res) => res.json())
         .then((data) => {
           setGesture(data.gesture);
@@ -27,7 +27,7 @@ const FreeFallCountingScreen = () => {
       <Text style={styles.header}>Math Counting Gesture Recognition</Text>
       <View style={styles.videoContainer}>
         <WebView
-          source={{ uri: `${BASE_URL2}:5001/video_feed_math` }}
+          source={{ uri: `${BASE_URL2}/video_feed_math` }}
           style={styles.webview}
         />
       </View>

@@ -7,6 +7,7 @@ import {
   FlatList,
   StyleSheet,
   Alert,
+  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
@@ -98,31 +99,45 @@ const SectionScreen = ({ route }) => {
   );
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#FFFFFF"]} style={styles.container}>
-      <Text style={styles.title}>Manage Sections</Text>
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <LinearGradient
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+        style={styles.container}
+      >
+        <Text style={styles.title}>Manage Sections</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Section Name"
-          value={sectionName}
-          onChangeText={setSectionName}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Section Name"
+            value={sectionName}
+            onChangeText={setSectionName}
+          />
+          <TouchableOpacity style={styles.addButton} onPress={addSection}>
+            <Text style={styles.addButtonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+          data={sections}
+          keyExtractor={(item) => item._id}
+          renderItem={renderSection}
         />
-        <TouchableOpacity style={styles.addButton} onPress={addSection}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
-
-      <FlatList
-        data={sections}
-        keyExtractor={(item) => item._id}
-        renderItem={renderSection}
-      />
-    </LinearGradient>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -158,11 +173,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   sectionItem: {
+    backgroundColor: "#FFEECC", // Light background for visibility
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 5,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+    alignItems: "center",
   },
   sectionText: {
     fontSize: 18,

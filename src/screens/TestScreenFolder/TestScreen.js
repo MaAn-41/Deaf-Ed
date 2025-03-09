@@ -1,58 +1,81 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const TestScreen = ({ navigation, route }) => {
   const { Username } = route.params;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Select a Category</Text>
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Text style={styles.header}>Select a Category</Text>
 
-      <TouchableOpacity
-        style={[styles.button, styles.englishButton]}
-        onPress={() => navigation.navigate("EnglishTest", { Username })}
-      >
-        <FontAwesome5 name="book" size={20} color="white" style={styles.icon} />
-        <Text style={styles.buttonText}>English</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.englishButton]}
+          onPress={() => navigation.navigate("EnglishTest", { Username })}
+        >
+          <FontAwesome5
+            name="book"
+            size={20}
+            color="white"
+            style={styles.icon}
+          />
+          <Text style={styles.buttonText}>English</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.button, styles.urduButton]}
-        onPress={() => navigation.navigate("UrduTestScreen", { Username })}
-      >
-        <FontAwesome5
-          name="language"
-          size={20}
-          color="white"
-          style={styles.icon}
-        />
-        <Text style={styles.buttonText}>Urdu</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.urduButton]}
+          onPress={() => navigation.navigate("UrduTestScreen", { Username })}
+        >
+          <FontAwesome5
+            name="language"
+            size={20}
+            color="white"
+            style={styles.icon}
+          />
+          <Text style={styles.buttonText}>Urdu</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.button, styles.countingButton]}
-        onPress={() => navigation.navigate("NumberTestScreen", { Username })}
-      >
-        <FontAwesome5
-          name="calculator"
-          size={20}
-          color="white"
-          style={styles.icon}
-        />
-        <Text style={styles.buttonText}>Counting</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={[styles.button, styles.countingButton]}
+          onPress={() => navigation.navigate("NumberTestScreen", { Username })}
+        >
+          <FontAwesome5
+            name="calculator"
+            size={20}
+            color="white"
+            style={styles.icon}
+          />
+          <Text style={styles.buttonText}>Counting</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    padding: 20,
   },
   header: {
     fontSize: 26,

@@ -20,6 +20,9 @@ import FoundationalWordsScreen from "./src/screens/LessonScreenFolder/Foundation
 import ProgressReportScreen from "./src/screens/ProgressScreenFolder/ProgressReportScreen";
 import Manage from "./src/screens/Educator/Manage";
 import EnglishAnimations from "./src/screens/LessonScreenFolder/EnglishAnimations";
+import UrduAnimations from "./src/screens/LessonScreenFolder/UrduAnimations";
+import FoodAnimations from "./src/screens/LessonScreenFolder/FoodAnimations";
+import RelationAnimations from "./src/screens/LessonScreenFolder/RelationAnimations";
 import CountingAnimations from "./src/screens/LessonScreenFolder/CountingAnimations";
 import SectionScreen from "./src/screens/Educator/SectionScreen";
 import StudentsScreen from "./src/screens/Educator/StudentsScreen";
@@ -92,13 +95,11 @@ export default function App() {
           name="ProgressReportScreen"
           component={ProgressReportScreen}
         />
-
         <Stack.Screen name="EnglishAnimations" component={EnglishAnimations} />
         <Stack.Screen
           name="CountingAnimations"
           component={CountingAnimations}
         />
-
         <Stack.Screen name="Manage" component={Manage} />
         <Stack.Screen name="SectionScreen" component={SectionScreen} />
         <Stack.Screen name="StudentsScreen" component={StudentsScreen} />
@@ -115,7 +116,6 @@ export default function App() {
           name="LetterPracticeScreen"
           component={LetterPracticeScreen}
         />
-
         <Stack.Screen name="AlifbeTestScreen" component={AlifbeTestScreen} />
         <Stack.Screen
           name="FreeFallUrduScreen"
@@ -126,7 +126,6 @@ export default function App() {
           component={HurfPracticeScreen}
         />
         <Stack.Screen name="UrduTestScreen" component={UrduTestScreen} />
-
         <Stack.Screen name="CoutingTestScreen" component={CoutingTestScreen} />
         <Stack.Screen
           name="FreeFallCountingScreen"
@@ -137,7 +136,6 @@ export default function App() {
           component={NumberPracticeScreen}
         />
         <Stack.Screen name="NumberTestScreen" component={NumberTestScreen} />
-
         <Stack.Screen
           name="CountingReportScreen"
           component={CountingReportScreen}
@@ -153,8 +151,13 @@ export default function App() {
           name="EducatorProgressScreen"
           component={EducatorProgressScreen}
         />
-
         <Stack.Screen name="UrduReportScreen" component={UrduReportScreen} />
+        <Stack.Screen name="UrduAnimations" component={UrduAnimations} />
+        <Stack.Screen
+          name="RelationAnimations"
+          component={RelationAnimations}
+        />
+        <Stack.Screen name="FoodAnimations" component={FoodAnimations} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  ImageBackground,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
 
 const CountingLessonScreen = ({ navigation, route }) => {
@@ -50,47 +50,54 @@ const CountingLessonScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
-        <Text style={styles.title}>Counting Lessons</Text>
-        <Text style={styles.subtitle}>Select a number to learn:</Text>
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlay}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Counting Lessons</Text>
+          <Text style={styles.subtitle}>Select a number to learn:</Text>
 
-        <ScrollView contentContainerStyle={styles.buttonsContainer}>
-          {numbers.map((number, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.button,
-                {
-                  backgroundColor: openedNumbers.includes(number)
-                    ? "#B0BEC5"
-                    : "#4FC3F7",
-                },
-              ]}
-              onPress={() => handleNumberClick(number)}
-            >
-              <Text style={styles.buttonText}>{number}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </LinearGradient>
-    </View>
+          <ScrollView contentContainerStyle={styles.buttonsContainer}>
+            {numbers.map((number, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: openedNumbers.includes(number)
+                      ? "#B0BEC5"
+                      : "#4FC3F7",
+                  },
+                ]}
+                onPress={() => handleNumberClick(number)}
+              >
+                <Text style={styles.buttonText}>{number}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
-    justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  overlay: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Slightly transparent white overlay for readability
+    alignItems: "center",
   },
   title: {
     fontSize: 32,

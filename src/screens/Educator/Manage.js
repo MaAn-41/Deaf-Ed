@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -7,41 +13,55 @@ const Manage = ({ navigation, route }) => {
   const { educatorEmail, educatorUsername } = route.params;
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#FFFFFF"]} style={styles.container}>
-      <Text style={styles.title}>Manage Students</Text>
-
-      {/* Section Button */}
-      <TouchableOpacity
-        style={[styles.button, styles.sectionButton]}
-        onPress={() =>
-          navigation.navigate("SectionScreen", {
-            educatorEmail: educatorEmail,
-            educatorUsername: educatorUsername,
-          })
-        }
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <LinearGradient
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+        style={styles.container}
       >
-        <Icon name="view-list" size={24} color="#fff" style={styles.icon} />
-        <Text style={styles.buttonText}>Section</Text>
-      </TouchableOpacity>
+        <Text style={styles.title}>Manage Students</Text>
 
-      {/* Students Button */}
-      <TouchableOpacity
-        style={[styles.button, styles.studentsButton]}
-        onPress={() =>
-          navigation.navigate("StudentsScreen", {
-            educatorEmail: educatorEmail,
-            educatorUsername: educatorUsername,
-          })
-        }
-      >
-        <Icon name="group" size={24} color="#fff" style={styles.icon} />
-        <Text style={styles.buttonText}>Students</Text>
-      </TouchableOpacity>
-    </LinearGradient>
+        {/* Section Button */}
+        <TouchableOpacity
+          style={[styles.button, styles.sectionButton]}
+          onPress={() =>
+            navigation.navigate("SectionScreen", {
+              educatorEmail: educatorEmail,
+              educatorUsername: educatorUsername,
+            })
+          }
+        >
+          <Icon name="view-list" size={24} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Section</Text>
+        </TouchableOpacity>
+
+        {/* Students Button */}
+        <TouchableOpacity
+          style={[styles.button, styles.studentsButton]}
+          onPress={() =>
+            navigation.navigate("StudentsScreen", {
+              educatorEmail: educatorEmail,
+              educatorUsername: educatorUsername,
+            })
+          }
+        >
+          <Icon name="group" size={24} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Students</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
     justifyContent: "center",

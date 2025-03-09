@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-
 import {
   View,
   Text,
@@ -8,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../../config";
@@ -87,89 +87,97 @@ const EducatorProgressScreen = ({ route }) => {
   };
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#FFFFFF"]} style={styles.container}>
-      <Text style={styles.title}>Student Progress Report</Text>
-
-      {/* Select Section */}
-      <Picker
-        selectedValue={selectedSection}
-        onValueChange={(value) => setSelectedSection(value)}
-        style={styles.picker}
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <LinearGradient
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+        style={styles.container}
       >
-        <Picker.Item label="Select Section" value="" />
-        {sections.map((section) => (
-          <Picker.Item
-            key={section._id}
-            label={`Section ${section.section}`}
-            value={section.section}
-          />
-        ))}
-      </Picker>
+        <Text style={styles.title}>Student Progress Report</Text>
 
-      {/* Select Student */}
-      <Picker
-        selectedValue={selectedStudent}
-        onValueChange={(value) => setSelectedStudent(value)}
-        style={styles.picker}
-        enabled={students.length > 0}
-      >
-        <Picker.Item label="Select Student" value="" />
-        {students.map((student) => (
-          <Picker.Item
-            key={student._id}
-            label={student.studentUsername}
-            value={student.studentUsername}
-          />
-        ))}
-      </Picker>
+        {/* Select Section */}
+        <Picker
+          selectedValue={selectedSection}
+          onValueChange={(value) => setSelectedSection(value)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Select Section" value="" />
+          {sections.map((section) => (
+            <Picker.Item
+              key={section._id}
+              label={`Section ${section.section}`}
+              value={section.section}
+            />
+          ))}
+        </Picker>
 
-      {/* Select Subject */}
-      <Picker
-        selectedValue={selectedSubject}
-        onValueChange={(value) => setSelectedSubject(value)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Subject" value="" />
-        <Picker.Item label="English" value="English" />
-        <Picker.Item label="Urdu" value="Urdu" />
-        <Picker.Item label="Counting" value="Counting" />
-      </Picker>
+        {/* Select Student */}
+        <Picker
+          selectedValue={selectedStudent}
+          onValueChange={(value) => setSelectedStudent(value)}
+          style={styles.picker}
+          enabled={students.length > 0}
+        >
+          <Picker.Item label="Select Student" value="" />
+          {students.map((student) => (
+            <Picker.Item
+              key={student._id}
+              label={student.studentUsername}
+              value={student.studentUsername}
+            />
+          ))}
+        </Picker>
 
-      {/* View Progress Button */}
-      <TouchableOpacity style={styles.button} onPress={fetchReport}>
-        <Text style={styles.buttonText}>View Progress</Text>
-      </TouchableOpacity>
+        {/* Select Subject */}
+        <Picker
+          selectedValue={selectedSubject}
+          onValueChange={(value) => setSelectedSubject(value)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Select Subject" value="" />
+          <Picker.Item label="English" value="English" />
+          <Picker.Item label="Urdu" value="Urdu" />
+          <Picker.Item label="Counting" value="Counting" />
+        </Picker>
 
-      {/* Display Report */}
-      {loading ? (
-        <Text style={styles.loadingText}>Loading...</Text>
-      ) : reportData.length > 0 ? (
-        <FlatList
-          data={reportData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.resultItem}>
-              {selectedSubject === "Counting" ? (
-                <Text style={styles.resultText}>
-                  Number: {item.number} | Recognized: {item.recognized} |
-                  Accuracy: {item.accuracy}%
+        {/* View Progress Button */}
+        <TouchableOpacity style={styles.button} onPress={fetchReport}>
+          <Text style={styles.buttonText}>View Progress</Text>
+        </TouchableOpacity>
+
+        {/* Display Report */}
+        {loading ? (
+          <Text style={styles.loadingText}>Loading...</Text>
+        ) : reportData.length > 0 ? (
+          <FlatList
+            data={reportData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.resultItem}>
+                {selectedSubject === "Counting" ? (
+                  <Text style={styles.resultText}>
+                    Number: {item.number} | Recognized: {item.recognized} |
+                    Accuracy: {item.accuracy}%
+                  </Text>
+                ) : (
+                  <Text style={styles.resultText}>
+                    Letter: {item.letter} | Recognized: {item.recognized} |
+                    Accuracy: {item.accuracy}%
+                  </Text>
+                )}
+                <Text style={styles.timestamp}>
+                  {new Date(item.timestamp).toLocaleString()}
                 </Text>
-              ) : (
-                <Text style={styles.resultText}>
-                  Letter: {item.letter} | Recognized: {item.recognized} |
-                  Accuracy: {item.accuracy}%
-                </Text>
-              )}
-              <Text style={styles.timestamp}>
-                {new Date(item.timestamp).toLocaleString()}
-              </Text>
-            </View>
-          )}
-        />
-      ) : (
-        <Text style={styles.noDataText}>No report found.</Text>
-      )}
-    </LinearGradient>
+              </View>
+            )}
+          />
+        ) : (
+          <Text style={styles.noDataText}>No report found.</Text>
+        )}
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
@@ -177,6 +185,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   title: {
     fontSize: 24,

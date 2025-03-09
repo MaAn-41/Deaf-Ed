@@ -1,7 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import { Video } from "expo-av";
-import { LinearGradient } from "expo-linear-gradient";
 
 const CountingAnimations = ({ route }) => {
   const { number } = route.params;
@@ -23,44 +28,53 @@ const CountingAnimations = ({ route }) => {
   const videos = videoPaths[number] || [];
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
-        <Text style={styles.title}>Animations for Number {number}</Text>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {videos.length > 0 ? (
-            videos.map((videoSource, index) => (
-              <View key={index} style={styles.videoWrapper}>
-                <Video
-                  source={videoSource}
-                  style={styles.video}
-                  useNativeControls
-                  resizeMode="contain"
-                  isLooping
-                />
-              </View>
-            ))
-          ) : (
-            <Text style={styles.noVideoText}>
-              No videos available for this number.
-            </Text>
-          )}
-        </ScrollView>
-      </LinearGradient>
-    </View>
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlay}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Animations for Number {number}</Text>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {videos.length > 0 ? (
+              videos.map((videoSource, index) => (
+                <View key={index} style={styles.videoWrapper}>
+                  <Video
+                    source={videoSource}
+                    style={styles.video}
+                    useNativeControls
+                    resizeMode="contain"
+                    isLooping
+                  />
+                </View>
+              ))
+            ) : (
+              <Text style={styles.noVideoText}>
+                No videos available for this number.
+              </Text>
+            )}
+          </ScrollView>
+        </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  gradientBackground: {
-    flex: 1,
-    padding: 20,
     alignItems: "center",
+    padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Slightly transparent white overlay for readability
+    alignItems: "center",
+    width: "100%",
   },
   title: {
     fontSize: 28,
@@ -75,7 +89,7 @@ const styles = StyleSheet.create({
   },
   videoWrapper: {
     borderWidth: 8,
-    borderColor: "#007BFF", // Blue border
+    borderColor: "#007BFF",
     borderRadius: 10,
     overflow: "hidden",
   },

@@ -7,8 +7,8 @@ import {
   Alert,
   StyleSheet,
   Modal,
+  ImageBackground,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL from "../../config";
 
 const ForgotPasswordScreen = ({ navigation, route }) => {
@@ -105,40 +105,44 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
   };
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#E3F2FD"]} style={styles.container}>
-      {!otpVerified ? (
-        <>
-          <Text style={styles.title}>Reset Password</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            placeholderTextColor="#aaa"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
-          <TouchableOpacity style={styles.button} onPress={handleRequestOtp}>
-            <Text style={styles.buttonText}>Request OTP</Text>
-          </TouchableOpacity>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Enter OTP"
-            placeholderTextColor="#aaa"
-            value={otp}
-            onChangeText={setOtp}
-            keyboardType="numeric"
-          />
-          <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
-            <Text style={styles.buttonText}>Verify OTP</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <Text style={styles.title}>Set New Password</Text>
-
-          <View style={styles.inputContainer}>
+    <ImageBackground
+      source={require("../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        {!otpVerified ? (
+          <>
+            <Text style={styles.title}>
+              Reset <Text style={styles.titleHighlight}>Password</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your email"
+              placeholderTextColor="#aaa"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+            <TouchableOpacity style={styles.button} onPress={handleRequestOtp}>
+              <Text style={styles.buttonText}>Request OTP</Text>
+            </TouchableOpacity>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter OTP"
+              placeholderTextColor="#aaa"
+              value={otp}
+              onChangeText={setOtp}
+              keyboardType="numeric"
+            />
+            <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
+              <Text style={styles.buttonText}>Verify OTP</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Text style={styles.title}>
+              Set <Text style={styles.titleHighlight}>New Password</Text>
+            </Text>
             <TextInput
               style={styles.input}
               placeholder="Enter new password"
@@ -146,19 +150,7 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
               value={newPassword}
               onChangeText={setNewPassword}
               secureTextEntry={!isPasswordVisible}
-              textContentType="newPassword"
             />
-            <TouchableOpacity
-              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-              style={styles.eyeIcon}
-            >
-              <Text style={styles.eyeText}>
-                {isPasswordVisible ? "Hide" : "Show"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Confirm new password"
@@ -168,46 +160,45 @@ const ForgotPasswordScreen = ({ navigation, route }) => {
               secureTextEntry={!isConfirmPasswordVisible}
             />
             <TouchableOpacity
-              onPress={() =>
-                setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
-              }
-              style={styles.eyeIcon}
+              style={styles.button}
+              onPress={handleResetPassword}
             >
-              <Text style={styles.eyeText}>
-                {isConfirmPasswordVisible ? "Hide" : "Show"}
-              </Text>
+              <Text style={styles.buttonText}>Reset Password</Text>
             </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-            <Text style={styles.buttonText}>Reset Password</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </LinearGradient>
+          </>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     padding: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: "bold",
     color: "#2196F3",
     textAlign: "center",
     marginBottom: 20,
   },
-  inputContainer: {
-    width: "90%",
-    position: "relative",
-    marginBottom: 15,
+  titleHighlight: {
+    color: "#000000",
   },
   input: {
-    width: "100%",
+    width: "90%",
     height: 55,
     borderColor: "#ccc",
     borderWidth: 1,
@@ -218,15 +209,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginTop: 20,
   },
-  eyeIcon: {
-    position: "absolute",
-    right: 15,
-    top: 18,
-  },
-  eyeText: {
-    fontSize: 14,
-    color: "#2196F3",
-  },
   button: {
     width: "90%",
     height: 55,
@@ -235,10 +217,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     marginTop: 30,
   },
   buttonText: {

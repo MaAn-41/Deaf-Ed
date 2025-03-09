@@ -8,6 +8,7 @@ import {
   BackHandler,
   TextInput,
   Modal,
+  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -174,237 +175,254 @@ const StudentDashboard = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
-        {drawerOpen && <View style={styles.overlay} />}
-        <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setDrawerOpen(false)}
-          >
-            <Text style={styles.closeButtonText}>X</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => {
-              setEditFullname(studentData?.fullname || "");
-              setEditDob(studentData?.dob || "");
-              setProfileModalVisible(true);
-            }}
-          >
-            <Text style={styles.drawerButtonText}>My Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.drawerButtonText}>Change Password</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.drawerButton}
-            onPress={handleDeleteProfile}
-          >
-            <Text style={styles.drawerButtonText}>Delete Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerButton} onPress={handleLogout}>
-            <Text style={styles.drawerButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          style={[
-            styles.drawerToggle,
-            drawerOpen && { backgroundColor: "transparent" },
-          ]}
-          onPress={() => setDrawerOpen((prevState) => !prevState)}
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Update the path to your image
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <LinearGradient
+          colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.6)"]}
+          style={styles.gradientBackground}
         >
-          <Text
-            style={[styles.drawerToggleText, drawerOpen && { display: "none" }]}
-          >
-            {drawerOpen ? null : "Menu"}
-          </Text>
-        </TouchableOpacity>
-
-        <View style={styles.content}>
-          <View style={styles.welcomeCard}>
-            <Text style={styles.welcomeText}>
-              Welcome {studentName || "Guest"}!
-            </Text>
-          </View>
-
-          <View style={styles.buttonsContainer}>
+          {drawerOpen && <View style={styles.overlay} />}
+          <View style={[styles.drawer, drawerOpen && styles.drawerOpen]}>
             <TouchableOpacity
-              style={[styles.button, styles.lessonButton]}
-              onPress={() =>
-                navigation.navigate("LessonScreen", { Username: studentName })
-              }
+              style={styles.closeButton}
+              onPress={() => setDrawerOpen(false)}
             >
-              <Icon name="book" size={20} color="#fff" />
-              <Text style={styles.buttonText}>Lesson</Text>
+              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button, styles.testButton]}
-              onPress={() =>
-                navigation.navigate("TestScreen", { Username: studentName })
-              }
-            >
-              <Icon name="pencil" size={20} color="#fff" />
-              <Text style={styles.buttonText}>Test</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, styles.reportButton]}
-              onPress={() =>
-                navigation.navigate("ProgressReportScreen", {
-                  Username: studentName,
-                })
-              }
-            >
-              <Icon name="bar-chart" size={20} color="#fff" />
-              <Text style={styles.buttonText}>Progress Report</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </LinearGradient>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Change Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="New Password"
-              secureTextEntry
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity
-              style={[styles.button, styles.modalButton]}
-              onPress={handleChangePassword}
-            >
-              <Text style={styles.buttonText}>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.modalButton]}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={profileModalVisible}
-        onRequestClose={() => setProfileModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>My Profile</Text>
-
-            <Text style={styles.label}>Full Name:</Text>
-            <TextInput
-              style={styles.input}
-              value={editFullname}
-              onChangeText={setEditFullname}
-              placeholder="Enter your full name"
-            />
-
-            <Text style={styles.label}>Date of Birth:</Text>
-            <TouchableOpacity
-              onPress={() => setShowDatePicker(true)}
-              style={styles.input}
-            >
-              <Text style={{ color: editDob ? "#000" : "#aaa" }}>
-                {editDob ? formatDate(editDob) : "Select your date of birth"}
-              </Text>
-            </TouchableOpacity>
-
-            {showDatePicker && (
-              <DateTimePicker
-                value={editDob ? new Date(editDob) : new Date()}
-                mode="date"
-                display="default"
-                onChange={handleDateChange}
-              />
-            )}
-
-            <Text style={styles.label}>Username:</Text>
-            <Text style={styles.staticText}>{studentData?.name}</Text>
-
-            <Text style={styles.label}>Email:</Text>
-            <Text style={styles.staticText}>{studentData?.email}</Text>
-
-            <TouchableOpacity
-              style={[styles.button, styles.modalButton]}
-              onPress={async () => {
-                try {
-                  const response = await fetch(`${BASE_URL}/students`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      email: studentData.email,
-                      fullname: editFullname,
-                      dob: editDob,
-                    }),
-                  });
-                  const data = await response.json();
-                  if (response.ok) {
-                    Alert.alert("Success", "Profile updated successfully!");
-                    setStudentData((prevData) => ({
-                      ...prevData,
-                      fullname: editFullname,
-                      dob: editDob,
-                    }));
-                    setProfileModalVisible(false);
-                  } else {
-                    Alert.alert("Error", data.message || "Update failed.");
-                  }
-                } catch (error) {
-                  Alert.alert("Error", "Failed to update profile.");
-                }
+              style={styles.drawerButton}
+              onPress={() => {
+                setEditFullname(studentData?.fullname || "");
+                setEditDob(studentData?.dob || "");
+                setProfileModalVisible(true);
               }}
             >
-              <Text style={styles.buttonText}>Save</Text>
+              <Text style={styles.drawerButtonText}>My Profile</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button, styles.modalButton]}
-              onPress={() => setProfileModalVisible(false)}
+              style={styles.drawerButton}
+              onPress={() => setModalVisible(true)}
             >
-              <Text style={styles.buttonText}>Close</Text>
+              <Text style={styles.drawerButtonText}>Change Password</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.drawerButton}
+              onPress={handleDeleteProfile}
+            >
+              <Text style={styles.drawerButtonText}>Delete Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.drawerButton}
+              onPress={handleLogout}
+            >
+              <Text style={styles.drawerButtonText}>Logout</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </Modal>
-    </View>
+
+          <TouchableOpacity
+            style={[
+              styles.drawerToggle,
+              drawerOpen && { backgroundColor: "transparent" },
+            ]}
+            onPress={() => setDrawerOpen((prevState) => !prevState)}
+          >
+            <Text
+              style={[
+                styles.drawerToggleText,
+                drawerOpen && { display: "none" },
+              ]}
+            >
+              {drawerOpen ? null : "Menu"}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.content}>
+            <View style={styles.welcomeCard}>
+              <Text style={styles.welcomeText}>
+                Welcome {studentName || "Guest"}!
+              </Text>
+            </View>
+
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.lessonButton]}
+                onPress={() =>
+                  navigation.navigate("LessonScreen", { Username: studentName })
+                }
+              >
+                <Icon name="book" size={20} color="#fff" />
+                <Text style={styles.buttonText}>Lesson</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, styles.testButton]}
+                onPress={() =>
+                  navigation.navigate("TestScreen", { Username: studentName })
+                }
+              >
+                <Icon name="pencil" size={20} color="#fff" />
+                <Text style={styles.buttonText}>Test</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, styles.reportButton]}
+                onPress={() =>
+                  navigation.navigate("ProgressReportScreen", {
+                    Username: studentName,
+                  })
+                }
+              >
+                <Icon name="bar-chart" size={20} color="#fff" />
+                <Text style={styles.buttonText}>Progress Report</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </LinearGradient>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Change Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="New Password"
+                secureTextEntry
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity
+                style={[styles.button, styles.modalButton]}
+                onPress={handleChangePassword}
+              >
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.modalButton]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={profileModalVisible}
+          onRequestClose={() => setProfileModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>My Profile</Text>
+
+              <Text style={styles.label}>Full Name:</Text>
+              <TextInput
+                style={styles.input}
+                value={editFullname}
+                onChangeText={setEditFullname}
+                placeholder="Enter your full name"
+              />
+
+              <Text style={styles.label}>Date of Birth:</Text>
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(true)}
+                style={styles.input}
+              >
+                <Text style={{ color: editDob ? "#000" : "#aaa" }}>
+                  {editDob ? formatDate(editDob) : "Select your date of birth"}
+                </Text>
+              </TouchableOpacity>
+
+              {showDatePicker && (
+                <DateTimePicker
+                  value={editDob ? new Date(editDob) : new Date()}
+                  mode="date"
+                  display="default"
+                  onChange={handleDateChange}
+                />
+              )}
+
+              <Text style={styles.label}>Username:</Text>
+              <Text style={styles.staticText}>{studentData?.name}</Text>
+
+              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.staticText}>{studentData?.email}</Text>
+
+              <TouchableOpacity
+                style={[styles.button, styles.modalButton]}
+                onPress={async () => {
+                  try {
+                    const response = await fetch(`${BASE_URL}/students`, {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        email: studentData.email,
+                        fullname: editFullname,
+                        dob: editDob,
+                      }),
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                      Alert.alert("Success", "Profile updated successfully!");
+                      setStudentData((prevData) => ({
+                        ...prevData,
+                        fullname: editFullname,
+                        dob: editDob,
+                      }));
+                      setProfileModalVisible(false);
+                    } else {
+                      Alert.alert("Error", data.message || "Update failed.");
+                    }
+                  } catch (error) {
+                    Alert.alert("Error", "Failed to update profile.");
+                  }
+                }}
+              >
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, styles.modalButton]}
+                onPress={() => setProfileModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent", // Make the container transparent to see the background
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   gradientBackground: {
     flex: 1,
@@ -476,9 +494,6 @@ const styles = StyleSheet.create({
     transform: [{ translateX: 0 }],
     transition: "transform 0.3s ease-in-out",
   },
-  contentShifted: {
-    transform: [{ translateX: 250 }],
-  },
   welcomeCard: {
     backgroundColor: "#E3F2FD", // Soft light blue
     padding: 20,
@@ -493,13 +508,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#90CAF9", // Slight border for a defined look
   },
-
   welcomeText: {
     fontSize: 26,
     fontWeight: "bold",
     color: "#1565C0", // Dark blue for contrast
   },
-
   buttonsContainer: {
     width: "80%",
     alignItems: "stretch",

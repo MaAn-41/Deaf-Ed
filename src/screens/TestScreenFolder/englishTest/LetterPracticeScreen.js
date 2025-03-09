@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import BASE_URL2 from "../../../../config2";
 import BASE_URL from "../../../../config";
+
 const LetterPracticeScreen = () => {
   const route = useRoute();
   const { Username, letter } = route.params;
@@ -45,48 +52,61 @@ const LetterPracticeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require("../../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
       <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
+        colors={["rgba(255,255,255,0.6)", "rgba(255,255,255,0.8)"]}
+        style={styles.overlay}
       >
-        <Text style={styles.title}>Test Gesture for: {letter}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={startTest}
-          disabled={isTesting}
-        >
-          <Text style={styles.buttonText}>
-            {isTesting ? "Testing..." : "Start Test"}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <Text style={styles.title}>Test Gesture for: {letter}</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={startTest}
+            disabled={isTesting}
+          >
+            <Text style={styles.buttonText}>
+              {isTesting ? "Testing..." : "Start Test"}
+            </Text>
+          </TouchableOpacity>
 
-        {result && (
-          <Text style={styles.result}>
-            {result.status}: {result.recognized} ({result.accuracy}%)
-          </Text>
-        )}
+          {result && (
+            <Text style={styles.result}>
+              {result.status}: {result.recognized} ({result.accuracy}%)
+            </Text>
+          )}
+        </View>
       </LinearGradient>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
-  gradientBackground: {
+  overlay: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#FF7043",
     marginBottom: 20,
+    textAlign: "center",
   },
   button: {
     width: 200,

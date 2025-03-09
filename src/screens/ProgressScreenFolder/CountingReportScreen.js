@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ImageBackground,
+} from "react-native";
 import BASE_URL from "../../../config";
 
 const CountingReportScreen = ({ route }) => {
@@ -26,43 +32,54 @@ const CountingReportScreen = ({ route }) => {
   }, [Username]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Couting Report</Text>
-      <Text style={styles.subtitle}>Welcome, {Username}</Text>
+    <ImageBackground
+      source={require("../../../assets/a.webp")} // Background image added
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Counting Report</Text>
+        <Text style={styles.subtitle}>Welcome, {Username}</Text>
 
-      {loading ? (
-        <Text style={styles.loadingText}>Loading results...</Text>
-      ) : results.length > 0 ? (
-        <FlatList
-          data={results}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.resultItem}>
-              <Text style={styles.resultText}>
-                Number: {item.number} | Recognized: {item.recognized}
-              </Text>
-              <Text style={styles.resultText}>
-                Accuracy: {item.accuracy}% | Status: {item.status}
-              </Text>
-              <Text style={styles.timestamp}>
-                {new Date(item.timestamp).toLocaleString()}
-              </Text>
-            </View>
-          )}
-        />
-      ) : (
-        <Text style={styles.noDataText}>No test results found.</Text>
-      )}
-    </View>
+        {loading ? (
+          <Text style={styles.loadingText}>Loading results...</Text>
+        ) : results.length > 0 ? (
+          <FlatList
+            data={results}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.resultItem}>
+                <Text style={styles.resultText}>
+                  Number: {item.number} | Recognized: {item.recognized}
+                </Text>
+                <Text style={styles.resultText}>
+                  Accuracy: {item.accuracy}% | Status: {item.status}
+                </Text>
+                <Text style={styles.timestamp}>
+                  {new Date(item.timestamp).toLocaleString()}
+                </Text>
+              </View>
+            )}
+          />
+        ) : (
+          <Text style={styles.noDataText}>No test results found.</Text>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Light overlay for readability
     padding: 20,
   },
   title: {

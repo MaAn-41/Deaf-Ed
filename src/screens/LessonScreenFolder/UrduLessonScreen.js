@@ -5,8 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 import BASE_URL from "../../../config";
 
@@ -83,11 +83,11 @@ const UrduLessonScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#FFFFFF", "#FFFFFF"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>اردو اسباق</Text>
         <Text style={styles.subtitle}>سیکھنے کے لیے منتخب کریں</Text>
 
@@ -107,21 +107,22 @@ const UrduLessonScreen = ({ navigation, route }) => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Light overlay for readability
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
   },
   title: {
     fontSize: 32,

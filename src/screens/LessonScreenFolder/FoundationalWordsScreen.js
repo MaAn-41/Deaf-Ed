@@ -1,33 +1,33 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 
-const FoundationalWordsScreen = (navigation, route) => {
+const FoundationalWordsScreen = ({ navigation, route }) => {
   const { Username } = route.params;
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["#1e3c72", "#2a5298"]}
-        style={styles.gradientBackground}
-      >
+    <ImageBackground
+      source={require("../../../assets/a.webp")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
         <Text style={styles.title}>Foundational Words</Text>
         <Text style={styles.subtitle}>Content Coming Soon...</Text>
-      </LinearGradient>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  gradientBackground: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Light overlay for readability
     padding: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
   },
   title: {
     fontSize: 28,
