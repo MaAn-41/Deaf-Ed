@@ -65,7 +65,7 @@ const RelationAnimations = ({ route }) => {
                 resizeMode="contain"
                 isLooping
               />
-              <View style={styles.overlay}>
+              <View style={styles.iconOverlay}>
                 <Icon name={name} size={40} color={color} style={styles.icon} />
                 <Text style={styles.itemText}>{word}</Text>
               </View>
@@ -93,9 +93,9 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Semi-transparent background
     alignItems: "center",
-    width: "100%",
+    justifyContent: "center", // Center content vertically
   },
   title: {
     fontSize: 28,
@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
   },
-  overlay: {
+  iconOverlay: {
     position: "absolute",
     left: 10,
     top: 10,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(255, 255, 255, 0.7)", // Slightly transparent overlay for the icon
     padding: 5,
     borderRadius: 10,
     zIndex: 1,

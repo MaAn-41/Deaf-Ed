@@ -345,7 +345,7 @@ const UrduAnimations = ({ route }) => {
       source={require("../../../assets/a.webp")}
       style={styles.backgroundImage}
     >
-      <View style={styles.overlay}>
+      <View style={styles.overlay1}>
         <View style={styles.container}>
           <Text style={styles.title}>Animations for Letter {letter}</Text>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -358,7 +358,13 @@ const UrduAnimations = ({ route }) => {
                 };
 
                 return (
-                  <View key={index} style={styles.itemContainer}>
+                  <View
+                    key={index}
+                    style={[
+                      styles.itemContainer,
+                      index === 1 && styles.secondVideo,
+                    ]}
+                  >
                     <View style={styles.videoWrapper}>
                       <Video
                         source={source}
@@ -367,15 +373,18 @@ const UrduAnimations = ({ route }) => {
                         resizeMode="contain"
                         isLooping
                       />
-                      <View style={styles.overlay}>
-                        <Icon
-                          name={name}
-                          size={40}
-                          color={color}
-                          style={styles.icon}
-                        />
-                        <Text style={styles.itemText}>{word}</Text>
-                      </View>
+
+                      {index === 1 && (
+                        <View style={styles.overlay}>
+                          <Icon
+                            name={name}
+                            size={40}
+                            color={color}
+                            style={styles.icon}
+                          />
+                          <Text style={styles.itemText}>{word}</Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                 );
@@ -391,7 +400,6 @@ const UrduAnimations = ({ route }) => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -402,7 +410,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
   },
-  overlay: {
+  overlay1: {
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     alignItems: "center",
@@ -422,6 +430,9 @@ const styles = StyleSheet.create({
   itemContainer: {
     alignItems: "center",
     marginBottom: 20,
+  },
+  secondVideo: {
+    marginTop: 60, // Moves the second video lower
   },
   videoWrapper: {
     borderWidth: 8,
@@ -461,5 +472,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
 export default UrduAnimations;

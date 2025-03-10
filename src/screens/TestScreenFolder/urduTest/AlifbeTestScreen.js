@@ -10,44 +10,48 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const romanUrduLabels = [
-  "1-Hay",
-  "Ain",
-  "Alif",
-  "Bay",
-  "Byeh",
-  "Chay",
-  "Cyeh",
-  "Daal",
-  "Dal",
-  "Dochahay",
-  "Fay",
-  "Gaaf",
-  "Ghain",
-  "Hamza",
-  "Kaf",
-  "Khay",
-  "Kiaf",
-  "Lam",
-  "Meem",
-  "Nuun",
-  "Nuungh",
-  "Pay",
-  "Ray",
-  "Say",
-  "Seen",
-  "Sheen",
-  "Suad",
-  "Taay",
-  "Tay",
-  "Tuey",
-  "Wao",
-  "Zaal",
-  "Zaey",
-  "Zay",
-  "Zuad",
-  "Zuey",
-];
+const urduLabels = {
+  "Alif mad": "آ",
+  Alif: "ا",
+  Bay: "ب",
+  Pay: "پ",
+  Tay: "ت",
+  Taay: "ٹ",
+  Say: "ث",
+  Jeem: "ج",
+  Chay: "چ",
+  "1-Hay": "ح",
+  Khay: "خ",
+  Dal: "د",
+  Daal: "ڈ",
+  Zaal: "ذ",
+  Ray: "ر",
+  Aray: "ڑ",
+  Zay: "ز",
+  Zaey: "ژ",
+  Seen: "س",
+  Sheen: "ش",
+  Suad: "ص",
+  Zuad: "ض",
+  Tuey: "ط",
+  Zuey: "ظ",
+  Ain: "ع",
+  Ghain: "غ",
+  Fay: "ف",
+  Kaf: "ق",
+  Kiaf: "ک",
+  Gaaf: "گ",
+  Lam: "ل",
+  Meem: "م",
+  Nuun: "ن",
+  Nuungh: "ں",
+  Wao: "و",
+  Hay: "ہ",
+  Dochahay: "ھ",
+  Hamza: "ء",
+  Cyeh: "ئ",
+  Byeh: "ے",
+};
 
 const AlifBeTestScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -66,15 +70,19 @@ const AlifBeTestScreen = ({ route }) => {
           <Text style={styles.title}>Alif Be Test</Text>
 
           <ScrollView contentContainerStyle={styles.buttonsContainer}>
-            {romanUrduLabels.map((label, index) => (
+            {Object.entries(urduLabels).map(([roman, urdu], index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.button}
                 onPress={() =>
-                  navigation.navigate("HurfPracticeScreen", { label, Username })
+                  navigation.navigate("HurfPracticeScreen", {
+                    roman,
+                    urdu,
+                    Username,
+                  })
                 }
               >
-                <Text style={styles.buttonText}>{label}</Text>
+                <Text style={styles.buttonText}>{`${roman} - ${urdu}`}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>

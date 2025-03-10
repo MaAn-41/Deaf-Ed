@@ -62,7 +62,7 @@ const NumberPracticeScreen = () => {
       style={styles.backgroundImage}
     >
       <LinearGradient
-        colors={["rgba(255,255,255,0.6)", "rgba(255,255,255,0.8)"]}
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 0.8)"]}
         style={styles.overlay}
       >
         <View style={styles.container}>
