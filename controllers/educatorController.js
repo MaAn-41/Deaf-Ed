@@ -3,6 +3,10 @@ const AlphabetsProgress = require("../models/AlphabetsProgress");
 const CountingProgress = require("../models/CountingProgress");
 const Educator_Student = require("../models/Educator_Student");
 const section = require("../models/Section");
+
+const UrduAlphabetsProgress = require("../models/UrduAlphabetsProgress");
+const FoodProgress = require("../models/FoodProgress");
+const RelationProgress = require("../models/RelationProgress");
 exports.retrieveEducatortData = async (req, res) => {
   try {
     const { email } = req.params;
@@ -44,6 +48,10 @@ exports.deleteEducator = async (req, res) => {
 
     await AlphabetsProgress.deleteMany({ username: educatorName });
     await CountingProgress.deleteMany({ username: educatorName });
+
+    await UrduAlphabetsProgress.deleteMany({ username: educatorName });
+    await FoodProgress.deleteMany({ username: educatorName });
+    await RelationProgress.deleteMany({ username: educatorName });
 
     return res.status(200).json({
       message: `Educator and related data deleted successfully from User, Educator_Student, Section, AlphabetsProgress, and CountingProgress schemas.`,

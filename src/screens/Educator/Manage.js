@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   sectionButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
   },
   studentsButton: {
-    backgroundColor: "#FF9800",
+    backgroundColor: "#2196F3",
   },
   buttonText: {
     fontSize: 20,

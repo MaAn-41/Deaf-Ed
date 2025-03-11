@@ -524,10 +524,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   lessonButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
   },
   testButton: {
-    backgroundColor: "#FF9800",
+    backgroundColor: "#2196F3",
   },
   reportButton: {
     backgroundColor: "#2196F3",

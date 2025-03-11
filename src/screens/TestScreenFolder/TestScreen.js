@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   englishButton: {
-    backgroundColor: "#FF7043",
+    backgroundColor: "#2196F3",
   },
   urduButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
   },
   countingButton: {
     backgroundColor: "#2196F3",

@@ -2,6 +2,15 @@ const Student = require("../models/User");
 const AlphabetsProgress = require("../models/AlphabetsProgress");
 const CountingProgress = require("../models/CountingProgress");
 const Educator_Student = require("../models/Educator_Student");
+
+const UrduAlphabetsProgress = require("../models/UrduAlphabetsProgress");
+const FoodProgress = require("../models/FoodProgress");
+const RelationProgress = require("../models/RelationProgress");
+
+const urduResultModel = require("../models/urduResultModel");
+const EnglishResultModel = require("../models/EnglishResultModel");
+const countingResultModel = require("../models/countingResultModel");
+
 exports.retrieveStudentData = async (req, res) => {
   try {
     const { email } = req.params;
@@ -41,6 +50,13 @@ exports.deleteStudent = async (req, res) => {
 
     await AlphabetsProgress.deleteMany({ username: studentName });
     await CountingProgress.deleteMany({ username: studentName });
+
+    await UrduAlphabetsProgress.deleteMany({ username: studentName });
+    await FoodProgress.deleteMany({ username: studentName });
+    await RelationProgress.deleteMany({ username: studentName });
+    await urduResultModel.deleteMany({ username: studentName });
+    await EnglishResultModel.deleteMany({ username: studentName });
+    await countingResultModel.deleteMany({ username: studentName });
 
     return res.status(200).json({
       message: `Student deleted from User and AlphabetsProgress, CountingProgress schemas.`,

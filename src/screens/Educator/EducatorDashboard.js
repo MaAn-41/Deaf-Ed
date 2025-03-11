@@ -402,10 +402,10 @@ const EducatorDashboard = () => {
 
 const styles = StyleSheet.create({
   lessonButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
   },
   ManageStudentButton: {
-    backgroundColor: "#FF9800",
+    backgroundColor: "#2196F3",
   },
   reportButton: {
     backgroundColor: "#2196F3",

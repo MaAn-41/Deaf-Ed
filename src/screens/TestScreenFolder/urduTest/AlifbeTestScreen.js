@@ -11,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const urduLabels = {
-  "Alif mad": "آ",
   Alif: "ا",
   Bay: "ب",
   Pay: "پ",

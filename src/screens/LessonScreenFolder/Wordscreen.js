@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   foodButton: {
-    backgroundColor: "#FF9800",
+    backgroundColor: "#2196F3",
   },
   relationsButton: {
     backgroundColor: "#2196F3",

@@ -109,13 +109,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   countingButton: {
-    backgroundColor: "#FF9800",
+    backgroundColor: "#2196F3",
   },
   urduButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
   },
   wordsButton: {
-    backgroundColor: "#9C27B0",
+    backgroundColor: "#2196F3",
   },
   buttonText: {
     fontSize: 20,
