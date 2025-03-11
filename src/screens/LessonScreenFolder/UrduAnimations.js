@@ -14,293 +14,185 @@ const UrduAnimations = ({ route }) => {
 
   const videoPaths = {
     ا: [
-      {
-        source: require("../../../assets/alifbe/Alif.mp4"),
-        word: "Pomegranate",
-      },
-      {
-        source: require("../../../assets/urduwords/anaar.mp4"),
-        word: "Pomegranate",
-      },
+      { source: require("../../../assets/alifbe/Alif.mp4"), word: "انار" },
+      { source: require("../../../assets/urduwords/anaar.mp4"), word: "انار" },
     ],
     ب: [
-      { source: require("../../../assets/alifbe/Bee.mp4"), word: "Duck" },
-      {
-        source: require("../../../assets/alphabets/Duck.mp4"),
-        word: "Duck",
-      },
+      { source: require("../../../assets/alifbe/Bee.mp4"), word: "بطخ" },
+      { source: require("../../../assets/alphabets/Duck.mp4"), word: "بطخ" },
     ],
     پ: [
-      { source: require("../../../assets/alifbe/Pee.mp4"), word: "Pencil" },
+      { source: require("../../../assets/alifbe/Pee.mp4"), word: "پینسل" },
       {
         source: require("../../../assets/alphabets/Pencil.mp4"),
-        word: "Pencil",
+        word: "پینسل",
       },
     ],
     ت: [
-      { source: require("../../../assets/alifbe/Tee.mp4"), word: "Butterfly" },
-      {
-        source: require("../../../assets/urduwords/titli.mp4"),
-        word: "Butterfly",
-      },
+      { source: require("../../../assets/alifbe/Tee.mp4"), word: "تتلی" },
+      { source: require("../../../assets/urduwords/titli.mp4"), word: "تتلی" },
     ],
     ٹ: [
-      { source: require("../../../assets/alifbe/Tee.mp4"), word: "Tap" },
-      {
-        source: require("../../../assets/alphabets/Tap.mp4"),
-        word: "Tap",
-      },
+      { source: require("../../../assets/alifbe/Tee.mp4"), word: "ٹوٹی" },
+      { source: require("../../../assets/alphabets/Tap.mp4"), word: "ٹوٹی" },
     ],
     ث: [
-      { source: require("../../../assets/alifbe/Saa.mp4"), word: "Fruit" },
-      {
-        source: require("../../../assets/urduwords/samar.mp4"),
-        word: "Fruit",
-      },
+      { source: require("../../../assets/alifbe/Saa.mp4"), word: "ثمر" },
+      { source: require("../../../assets/urduwords/samar.mp4"), word: "ثمر" },
     ],
     ج: [
-      { source: require("../../../assets/alifbe/jeem.mp4"), word: "Jug" },
-      { source: require("../../../assets/alphabets/Jug.mp4"), word: "Jug" },
+      { source: require("../../../assets/alifbe/jeem.mp4"), word: "گھڑا" },
+      { source: require("../../../assets/alphabets/Jug.mp4"), word: "گھڑا" },
     ],
     چ: [
-      { source: require("../../../assets/alifbe/chee.mp4"), word: "Sparrow" },
+      { source: require("../../../assets/alifbe/chee.mp4"), word: "چڑیا" },
       {
         source: require("../../../assets/urduwords/chiriya.mp4"),
-        word: "Sparrow",
+        word: "چڑیا",
       },
     ],
     ح: [
-      { source: require("../../../assets/alifbe/Hee.mp4"), word: "Halwa pori" },
+      { source: require("../../../assets/alifbe/Hee.mp4"), word: "حلوہ پوری" },
       {
         source: require("../../../assets/urduwords/halwa poori.mp4"),
-        word: "Halwa pori",
+        word: "حلوہ پوری",
       },
     ],
     خ: [
-      { source: require("../../../assets/alifbe/khee.mp4"), word: "Melon" },
+      { source: require("../../../assets/alifbe/khee.mp4"), word: "خربوزہ" },
       {
         source: require("../../../assets/urduwords/kharbooza.mp4"),
-        word: "Melon",
+        word: "خربوزہ",
       },
     ],
     د: [
-      { source: require("../../../assets/alifbe/daal.mp4"), word: "Door" },
+      { source: require("../../../assets/alifbe/daal.mp4"), word: "دروازہ" },
       {
         source: require("../../../assets/urduwords/darwaza.mp4"),
-        word: "Door",
+        word: "دروازہ",
       },
     ],
     ڈ: [
-      {
-        source: require("../../../assets/alifbe/dhaal.mp4"),
-        word: "Sparrow",
-      },
+      { source: require("../../../assets/alifbe/dhaal.mp4"), word: "چڑیا" },
       {
         source: require("../../../assets/urduwords/chiriya.mp4"),
-        word: "Sparrow",
+        word: "چڑیا",
       },
     ],
     ذ: [
-      { source: require("../../../assets/alifbe/zaal.mp4"), word: "Taste" },
-      {
-        source: require("../../../assets/urduwords/zaiqa.mp4"),
-        word: "Taste",
-      },
+      { source: require("../../../assets/alifbe/zaal.mp4"), word: "ذائقہ" },
+      { source: require("../../../assets/urduwords/zaiqa.mp4"), word: "ذائقہ" },
     ],
     ر: [
-      { source: require("../../../assets/alifbe/reey.mp4"), word: "Rope" },
-      { source: require("../../../assets/alphabets/Rope.mp4"), word: "Rope" },
+      { source: require("../../../assets/alifbe/reey.mp4"), word: "رسی" },
+      { source: require("../../../assets/alphabets/Rope.mp4"), word: "رسی" },
     ],
     ڑ: [
-      {
-        source: require("../../../assets/alifbe/areey.mp4"),
-        word: "Mountain",
-      },
-      {
-        source: require("../../../assets/urduwords/pahaar.mp4"),
-        word: "Mountain",
-      },
+      { source: require("../../../assets/alifbe/areey.mp4"), word: "پہاڑ" },
+      { source: require("../../../assets/urduwords/pahaar.mp4"), word: "پہاڑ" },
     ],
     ز: [
-      { source: require("../../../assets/alifbe/zeey.mp4"), word: "Zebra" },
-      {
-        source: require("../../../assets/urduwords/zebra.mp4"),
-        word: "Zebra",
-      },
+      { source: require("../../../assets/alifbe/zeey.mp4"), word: "زیبرا" },
+      { source: require("../../../assets/urduwords/zebra.mp4"), word: "زیبرا" },
     ],
     ژ: [
-      {
-        source: require("../../../assets/alifbe/saay.mp4"),
-        word: "Hail storm",
-      },
+      { source: require("../../../assets/alifbe/saay.mp4"), word: "ژالہ باری" },
       {
         source: require("../../../assets/urduwords/zala baari.mp4"),
-        word: "Hail storm",
+        word: "ژالہ باری",
       },
     ],
     س: [
-      { source: require("../../../assets/alifbe/seen.mp4"), word: "School" },
-      {
-        source: require("../../../assets/alphabets/School.mp4"),
-        word: "School",
-      },
+      { source: require("../../../assets/alifbe/seen.mp4"), word: "سکول" },
+      { source: require("../../../assets/alphabets/School.mp4"), word: "سکول" },
     ],
     ش: [
-      {
-        source: require("../../../assets/alifbe/sheen.mp4"),
-        word: "Lion",
-      },
-      {
-        source: require("../../../assets/urduwords/shair.mp4"),
-        word: "Lion",
-      },
+      { source: require("../../../assets/alifbe/sheen.mp4"), word: "شیر" },
+      { source: require("../../../assets/urduwords/shair.mp4"), word: "شیر" },
     ],
     ص: [
-      {
-        source: require("../../../assets/alifbe/suaad.mp4"),
-        word: "Soap",
-      },
-      {
-        source: require("../../../assets/urduwords/sabun.mp4"),
-        word: "Soap",
-      },
+      { source: require("../../../assets/alifbe/suaad.mp4"), word: "صابن" },
+      { source: require("../../../assets/urduwords/sabun.mp4"), word: "صابن" },
     ],
     ض: [
-      {
-        source: require("../../../assets/alifbe/zuaad.mp4"),
-        word: "Soap",
-      },
-      {
-        source: require("../../../assets/urduwords/sabun.mp4"),
-        word: "Soap",
-      },
+      { source: require("../../../assets/alifbe/zuaad.mp4"), word: "صابن" },
+      { source: require("../../../assets/urduwords/sabun.mp4"), word: "صابن" },
     ],
     ط: [
-      {
-        source: require("../../../assets/alifbe/toeen.mp4"),
-        word: "Parrot",
-      },
-      { source: require("../../../assets/urduwords/tota.mp4"), word: "Parrot" },
+      { source: require("../../../assets/alifbe/toeen.mp4"), word: "طوطا" },
+      { source: require("../../../assets/urduwords/tota.mp4"), word: "طوطا" },
     ],
     ظ: [
-      {
-        source: require("../../../assets/alifbe/zoeen.mp4"),
-        word: "Parrot",
-      },
-      { source: require("../../../assets/urduwords/tota.mp4"), word: "Parrot" },
+      { source: require("../../../assets/alifbe/zoeen.mp4"), word: "طوطا" },
+      { source: require("../../../assets/urduwords/tota.mp4"), word: "طوطا" },
     ],
     ع: [
-      { source: require("../../../assets/alifbe/aeen.mp4"), word: "Glasses" },
-      {
-        source: require("../../../assets/urduwords/ainak.mp4"),
-        word: "Glasses",
-      },
+      { source: require("../../../assets/alifbe/aeen.mp4"), word: "عینک" },
+      { source: require("../../../assets/urduwords/ainak.mp4"), word: "عینک" },
     ],
     غ: [
-      {
-        source: require("../../../assets/alifbe/ghaeen.mp4"),
-        word: "Balloon",
-      },
+      { source: require("../../../assets/alifbe/ghaeen.mp4"), word: "غبارہ" },
       {
         source: require("../../../assets/urduwords/gubara.mp4"),
-        word: "Balloon",
+        word: "غبارہ",
       },
     ],
     ف: [
-      { source: require("../../../assets/alifbe/fee.mp4"), word: "Shower" },
-      {
-        source: require("../../../assets/urduwords/fuara.mp4"),
-        word: "Shower",
-      },
+      { source: require("../../../assets/alifbe/fee.mp4"), word: "فوارہ" },
+      { source: require("../../../assets/urduwords/fuara.mp4"), word: "فوارہ" },
     ],
     ق: [
-      { source: require("../../../assets/alifbe/kaaf.mp4"), word: "Chair" },
-      {
-        source: require("../../../assets/urduwords/kursi.mp4"),
-        word: "Chair",
-      },
+      { source: require("../../../assets/alifbe/kaaf.mp4"), word: "کرسی" },
+      { source: require("../../../assets/urduwords/kursi.mp4"), word: "کرسی" },
     ],
     ک: [
-      { source: require("../../../assets/alifbe/kaef.mp4"), word: "Chair" },
-      {
-        source: require("../../../assets/urduwords/kursi.mp4"),
-        word: "Chair",
-      },
+      { source: require("../../../assets/alifbe/kaef.mp4"), word: "کرسی" },
+      { source: require("../../../assets/urduwords/kursi.mp4"), word: "کرسی" },
     ],
     گ: [
+      { source: require("../../../assets/alifbe/ghaaf.mp4"), word: "گھونسلا" },
       {
-        source: require("../../../assets/alifbe/ghaaf.mp4"),
-        word: "Nest",
+        source: require("../../../assets/alphabets/Nest.mp4"),
+        word: "گھونسلا",
       },
-      { source: require("../../../assets/alphabets/Nest.mp4"), word: "Nest" },
     ],
     ل: [
-      { source: require("../../../assets/alifbe/laam.mp4"), word: "Fox" },
+      { source: require("../../../assets/alifbe/laam.mp4"), word: "لومڑی" },
       {
         source: require("../../../assets/urduwords/loomri.mp4"),
-        word: "Fox",
+        word: "لومڑی",
       },
     ],
     م: [
-      { source: require("../../../assets/alifbe/meem.mp4"), word: "Peacock" },
-      {
-        source: require("../../../assets/urduwords/moor.mp4"),
-        word: "Peacock",
-      },
+      { source: require("../../../assets/alifbe/meem.mp4"), word: "مور" },
+      { source: require("../../../assets/urduwords/moor.mp4"), word: "مور" },
     ],
     ن: [
-      { source: require("../../../assets/alifbe/noon.mp4"), word: "Tap" },
-      { source: require("../../../assets/alphabets/Tap.mp4"), word: "Tap" },
-    ],
-    ں: [
-      { source: require("../../../assets/alifbe/noon.mp4"), word: "Tap" },
-      { source: require("../../../assets/alphabets/Tap.mp4"), word: "Tap" },
+      { source: require("../../../assets/alifbe/noon.mp4"), word: "نل" },
+      { source: require("../../../assets/alphabets/Tap.mp4"), word: "نل" },
     ],
     و: [
-      { source: require("../../../assets/alifbe/waoo.mp4"), word: "Van" },
-      {
-        source: require("../../../assets/alphabets/Van.mp4"),
-        word: "Van",
-      },
+      { source: require("../../../assets/alifbe/waoo.mp4"), word: "وین" },
+      { source: require("../../../assets/alphabets/Van.mp4"), word: "وین" },
     ],
     ہ: [
       {
         source: require("../../../assets/alifbe/hee hathi wala.mp4"),
-        word: "Aeroplane",
+        word: "ہوائی جہاز",
       },
       {
         source: require("../../../assets/urduwords/hawai jahaz.mp4"),
-        word: "Aeroplane",
-      },
-    ],
-    ء: [
-      {
-        source: require("../../../assets/alifbe/hamza.mp4"),
-        word: "Aeroplane",
-      },
-      {
-        source: require("../../../assets/urduwords/hawai jahaz.mp4"),
-        word: "Aeroplane",
+        word: "ہوائی جہاز",
       },
     ],
     ی: [
       {
         source: require("../../../assets/alifbe/choti yee.mp4"),
-        word: "Hail storm",
+        word: "ژالہ باری",
       },
       {
         source: require("../../../assets/urduwords/zala baari.mp4"),
-        word: "Hail storm",
-      },
-    ],
-    ے: [
-      {
-        source: require("../../../assets/alifbe/bari yee.mp4"),
-        word: "Hail storm",
-      },
-      {
-        source: require("../../../assets/urduwords/zala baari.mp4"),
-        word: "Hail storm",
+        word: "ژالہ باری",
       },
     ],
   };
@@ -308,36 +200,33 @@ const UrduAnimations = ({ route }) => {
   const videos = videoPaths[letter] || [];
 
   const iconMap = {
-    Pomegranate: { name: "fruit-pomegranate", color: "#FF7043" },
-    Duck: { name: "duck", color: "#FFEB3B" },
-    Pencil: { name: "pencil", color: "#FFC107" },
-    Butterfly: { name: "butterfly", color: "#FF5722" },
-    Tap: { name: "tap", color: "#03A9F4" },
-    Fruit: { name: "fruit", color: "#4CAF50" },
-    Jug: { name: "jug", color: "#FFC107" },
-    Sparrow: { name: "bird", color: "#9C27B0" },
-    "Halwa pori": { name: "cake", color: "#FF9800" },
-    Melon: { name: "watermelon", color: "#4CAF50" },
-    Door: { name: "door", color: "#795548" },
-    Taste: { name: "food", color: "#FF5722" },
-    Rope: { name: "rope", color: "#FFEB3B" },
-    Mountain: { name: "mountain", color: "#3F51B5" },
-    Zebra: { name: "zebra", color: "#000" },
-    "Hail storm": { name: "weather-hail", color: "#B0BEC5" },
-    School: { name: "school", color: "#2196F3" },
-    Lion: { name: "lion", color: "#FF9800" },
-    Soap: { name: "soap", color: "#FFC107" },
-    Parrot: { name: "parrot", color: "#4CAF50" },
-    Glasses: { name: "glasses", color: "#9C27B0" },
-    Balloon: { name: "balloon", color: "#FF5722" },
-    Shower: { name: "shower", color: "#03A9F4" },
-    Chair: { name: "chair", color: "#795548" },
-    Nest: { name: "nest", color: "#4CAF50" },
-    Fox: { name: "fox", color: "#FF5722" },
-    Peacock: { name: "peacock", color: "#3F51B5" },
-    Van: { name: "van", color: "#FF9800" },
-    Aeroplane: { name: "airplane", color: "#2196F3" },
-    "Hail storm": { name: "weather-hail", color: "#B0BEC5" },
+    انار: { name: "fruit-pomegranate", color: "#FF7043" },
+    بطخ: { name: "duck", color: "#FFEB3B" },
+    پنسل: { name: "pencil", color: "#FFC107" },
+    تتلی: { name: "butterfly", color: "#FF5722" },
+    نل: { name: "tap", color: "#03A9F4" },
+    ٹوٹی: { name: "tap", color: "#03A9F4" },
+    ثمر: { name: "fruit", color: "#4CAF50" },
+    گھڑا: { name: "jug", color: "#FFC107" },
+    چڑیا: { name: "bird", color: "#9C27B0" },
+    "حلوہ پوری": { name: "cake", color: "#FF9800" },
+    خربوزہ: { name: "watermelon", color: "#4CAF50" },
+    دروازہ: { name: "door", color: "#795548" },
+    ذائقہ: { name: "food", color: "#FF5722" },
+    رسی: { name: "rope", color: "#FFEB3B" },
+    پہاڑ: { name: "mountain", color: "#3F51B5" },
+    زیبرا: { name: "zebra", color: "#000" },
+    اسکول: { name: "school", color: "#2196F3" },
+    شیر: { name: "lion", color: "#FF9800" },
+    صابن: { name: "soap", color: "#FFC107" },
+    طوطا: { name: "parrot", color: "#4CAF50" },
+    عینک: { name: "glasses", color: "#9C27B0" },
+    غبارہ: { name: "balloon", color: "#FF5722" },
+    فوارہ: { name: "shower", color: "#03A9F4" },
+    کرسی: { name: "chair", color: "#795548" },
+    مور: { name: "peacock", color: "#3F51B5" },
+    وین: { name: "van", color: "#FF9800" },
+    " ژالہ باری": { name: "weather-hail", color: "#B0BEC5" },
   };
 
   return (

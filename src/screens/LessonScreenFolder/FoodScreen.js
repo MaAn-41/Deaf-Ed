@@ -66,8 +66,8 @@ const FoodScreen = ({ navigation, route }) => {
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>کھانے کی اشیاء</Text>
-        <Text style={styles.subtitle}>سیکھنے کے لیے منتخب کریں</Text>
+        <Text style={styles.title}>Food Items</Text>
+        <Text style={styles.subtitle}> Select to Learn</Text>
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
           {foodItems.map((item, index) => (

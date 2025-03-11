@@ -67,8 +67,8 @@ const RelationScreen = ({ navigation, route }) => {
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>رشتہ دار</Text>
-        <Text style={styles.subtitle}>سیکھنے کے لیے منتخب کریں</Text>
+        <Text style={styles.title}>Realtions </Text>
+        <Text style={styles.subtitle}>Select to Learn</Text>
 
         <ScrollView contentContainerStyle={styles.buttonsContainer}>
           {relationWords.map((item, index) => (
